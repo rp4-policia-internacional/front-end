@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+    <div class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1" id="criminosoFugitivoModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 3px solid red;">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">O criminoso escapou</h5>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn btn-close fas fa-home" data-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img src="../../shared/images/procurado.svg"></img>
+                    <p class="text-center">Criminoso 
+                        <span id="idCriminoso"></span> escapou do local em que foi identificado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#criminosoFugitivoModal").modal("show"); 
+        });
+    </script>
+
+<script>
+    // ajax request
+    fetch('http://localhost:8080/api/captura/')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        
+        const idCriminoso = document.getElementById('idCriminoso');
+        
+        idCriminoso.textContent = data[0].id_criminoso;
+    })
+    .catch(error => {
+        console.error('Erro ao buscar dados da API:', error);
+    });
+</script>
+
+</body>
+</html>
