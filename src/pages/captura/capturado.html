@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
 <body>
@@ -42,21 +43,15 @@
     </script>
 
     <script>
-        // ajax request
-        fetch('http://localhost:8080/api/captura/')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            
-            const idCriminoso = document.getElementById('idCriminoso');
-            const idPaisCapturado = document.getElementById('idPaisCapturado');
 
-            idCriminoso.textContent = data[0].id_criminoso;
-            idPaisCapturado.textContent = data[0].id_pais_capturado;
+        axios.get('http://localhost:3333/api/captura/').then( (response) =>{
+            var data = response.data;
+
+            data.forEach(dataElement => {
+                $('body').append(`<p> ${dataElement.id} </p> <br/>`);
+            });
         })
-        .catch(error => {
-            console.error('Erro ao buscar dados da API:', error);
-        });
+        
     </script>
 
 </body>
