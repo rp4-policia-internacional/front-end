@@ -1,58 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-</head>
-<body>
+    </head>
+    <body>
 
-    <div class="modal" data-backdrop="static" data-keyboard="false" id="criminosoCapturadoModal">
-        <div class="modal-dialog">
-            <div class="modal-content" style="border: 3px solid green;">
-                <!-- Conteúdo do modal -->
-                <div class="modal-header">
-                    <h4 class="modal-title text-center">O criminoso foi capturado</h4>
-                </div>
-                <div class="modal-body d-flex justify-content-center align-items-center">
-                    <img src="../../shared/images/procurado.svg"></img>
-                    <p class="text-center">Criminoso <span id="idCriminoso"></span> 
-                        foi capturado pelos policiais. O país <span id="idPaisCapturado"></span> 
-                        está aguardando o pedido de extradição.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Enviar pedido de extradição</button>
+        <div class="modal" data-backdrop="static" data-keyboard="false" id="criminosoCapturadoModal">
+            <div class="modal-dialog">
+                <div class="modal-content" style="border: 3px solid green;">
+                    <!-- Conteúdo do modal -->
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center">O criminoso foi capturado</h4>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center align-items-center">
+                        <img src="../../shared/images/procurado.svg"></img>
+                        <p class="text-center">Criminoso <span id="idCriminoso"></span> 
+                            foi capturado pelos policiais. O país <span id="idPaisCapturado"></span> 
+                            está aguardando o pedido de extradição.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Enviar pedido de extradição</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-    <script>
-        $(document).ready(function() {
-            $("#criminosoCapturadoModal").modal("show"); 
-        });
-    </script>
-
-    <script>
-
-        axios.get('http://localhost:3333/api/captura/').then( (response) =>{
-            var data = response.data;
-
-            data.forEach(dataElement => {
-                $('body').append(`<p> ${dataElement.id} </p> <br/>`);
+        <script>
+            $(document).ready(function() {
+                $("#criminosoCapturadoModal").modal("show"); 
             });
-        })
-        
-    </script>
+        </script>
 
-</body>
+        <script>
+            axios.get('http://localhost:3338/api/criminoso/').then( (response) =>{
+                console.log(response.data);
+                var criminoso_data = response.data;
+
+                $('#idCriminoso').text(`${criminoso_data[0].nome} ${criminoso_data[0].sobrenome}`);
+               
+            })
+            
+        </script>
+
+    </body>
 </html>
