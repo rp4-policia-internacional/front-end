@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+    <div class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1" id="criminosoFugitivoModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 3px solid red;">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">O criminoso escapou</h5>
+                    <div data-bs-theme="dark">
+                        <button type="button" class="btn btn-close fas fa-home" data-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img src="../../shared/images/procurado.svg"></img>
+                    <p class="text-center">O criminoso 
+                        <span id="idCriminoso"></span> escapou do local em que foi identificado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#criminosoFugitivoModal").modal("show"); 
+        });
+    </script>
+
+    <script>
+        axios.get('http://localhost:3338/api/criminoso/').then( (response) =>{
+            console.log(response.data);
+            var criminoso_data = response.data;
+
+            $('#idCriminoso').text(`${criminoso_data[0].nome} ${criminoso_data[0].sobrenome}`);
+        
+        })
+        
+    </script>
+
+</body>
+</html>
