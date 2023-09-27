@@ -1,6 +1,6 @@
 <html>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="estilo.css">
     
     <head>
-    <title> Pedidos de extradicao </title>
+    <title> Resumo da Extradição </title>
     <div >
         <img src="/src/shared/images/logo.png" width="100px" alt="logo"
         
@@ -34,30 +34,35 @@
     </div>
     </head>
     <body>
-        <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 100px;">
-            <thead>
-                <tr>
-                    <th>Código do Pedido</th>
-                    <th>Grupo ou criminoso capturado</th>
-                    <th>Agentes da OPI</th>
-                    <th>Data Inicial </th>
-                    <th>Data final</th>
-
-
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>19078-89</td>
-                    <td>Goro Akechi</td>
-                   <td><img style="margin-left: 30%;" width="56" height="64" src="/src/shared/images/agente.png" alt="Imagem"></a>
-                    </td>
-                    <td>25/09/2023</td>
-                    <td>5/10/2023</td>
-                </tr>
-               
-              
-            </tbody>
-        </table>
+       
+              <div class="modal-content" style="margin-top: 5%; width: 600; margin-left: 25%;">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Detalhes da extradição</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    Policiais responsáveis:
+                    <div>
+                        Mitsuro Kirijo
+                    </div>
+                    Data que ocorrerá:
+        
+                        <div>27/09/2023
+        
+                        </div>
+                        Meio de Locomoção:
+        
+                        <div> Avião</div>
+                       
+                </div>
+                <div class="modal-footer">
+               <a href="extradicaoFeita.html">   <button data-toggle="modal" data-target="#extradicaoLabel" type="button" class="btn btn-primary">Confirmar visualização</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+         
     </body>
 </html>
