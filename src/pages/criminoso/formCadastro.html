@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Formulário Criminoso</title>
+    <img src="../../../src/shared/images/logo.png" width="100px" alt="logo"/>
+
 </head>
 <body>
 
     <div class="container mt-5">
-        <form>
+        <form id="formCadastroCriminoso" action="/api/criminoso/create" method="post">
             <div class="form-group">
                 <label for="imagem">Inserir imagem</label>
                 <input type="file" class="form-control-file" id="imagem" accept="image/*">
@@ -53,7 +55,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="altura">Altura</label>
-                        <input type="text" class="form-control" id="altura" placeholder="167">
+                        <input type="double" class="form-control" id="altura" placeholder="167">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -70,13 +72,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="idade">Idade</label>
-                        <input type="text" class="form-control" id="idade">
+                        <input type="number" class="form-control" id="idade">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="paisUltimaVez">País em que foi visto pela última vez</label>
-                        <input type="text" class="form-control" id="paisUltimaVez" placeholder="Brasil">
+                        <label for="paisVistoPorUltimo">País em que foi visto pela última vez</label>
+                        <input type="text" class="form-control" id="paisVistoPorUltimo" placeholder="Brasil">
                     </div>
                 </div>
             </div>
@@ -132,19 +134,55 @@
         });
 
         // Quando o formulário for enviado
-        document.querySelector('form').addEventListener('submit', function (e) {
-            e.preventDefault(); // Evita o comportamento padrão de envio do formulário
-
+        document.getElementById("formCadastroCriminoso").addEventListener("submit", function (event) {
+          event.preventDefault(); ; // Evita o comportamento padrão de envio do formulário
+            
+            const nome= document.getElementById("nome").value;
+            const sobrenome= document.getElementById("sobrenome").value;
+            const nacionalidade = document.getElementById("nacionalidade").value;
+            const dataNascimento = document.getElementById("dataNascimento").value;
+            const apelido = document.getElementById("apelido").value;
+            const altura = document.getElementById("altura").value;
+            const genero = document.getElementById("genero").value;
+            const idade = document.getElementById("idade").value;
+            const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+            const status= document.getElementById("status").value;
+            const foto =  document.getElementById("imagem").value;
             const formData = new FormData();
             formData.append('imagem', imageUploadInput.files[0]);
+            
+            const data = {
 
-            axios.post('http://localhost:8080/api/criminoso/upload', formData).then((response) => {
-                console.log(response.data);
+                nome: nome,
+                sobrenome: sobrenome,
+                nacionalidade: nacionalidade,
+                dataNascimento:dataNascimento,
+                apelido: apelido,
+                altura: altura,
+                genero: genero,
+                idade: idade,
+                id_paisVistoPorUltimo: id_paisVistoPorUltimo,
+                status:status,
+                foto: foto // foto uploaded
+            };
+
+            // Envia os dados como JSON em uma solicitação POST
+            axios.post("http://localhost:3338/api/criminoso/", data)
+            .then(function (response) {
+            // Trate a resposta do back-end, se necessário
+            console.log("Cadastro de criminoso bem-sucedido!", response.data);
+            //  modal de feedback
+            $("#cadastroCriminosoModal").modal("show");
+            })
+            .catch(function (error) {
+            console.error("Erro ao cadastrar criminoso:", error);
             });
+
+            //axios.post('http://localhost:8080/api/criminoso/upload', formData).then((response) => {
+            //    console.log(response.data);
+            //});
         });
     });
-
-
 
     </script>
 </body>
