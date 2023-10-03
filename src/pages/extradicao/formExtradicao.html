@@ -1,121 +1,80 @@
-<html>
-    <html>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Extradição</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        
-        
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
-        <link rel="stylesheet" href="css/bootstrap.css">
-        
-        <link rel="stylesheet" type="text/css" href="estilo.css">
-        
-        <head>
-        <title> Formulário de extradicao </title>
-        <div >
-            <img src="/src/shared/images/logo.png" width="100px" alt="logo"
-            
-        class="img"  >
-        </div class="container">
-        <div >
-          <img style="position: absolute; top: 50px; left: 1300px; bottom: 50px;" src="/src/shared/images/user.png" width="56" height="64" alt="user"
-          
-        class="img"  >
-        </div>
-        
-          <img style="position: absolute; top: 50px; left: 1200px; bottom: 50px;" src="/src/shared/images/notification.png" width="56" height="64" alt="user"
-          
-        class="img"  >
-        </div>
-        </head>
+</head>
+<body>
+<div>
+    <img src="/src/shared/images/logo.png" width="100px" alt="logo">
+    <!-- Resto do seu código HTML aqui -->
+</div>
+</body>
+</html>
+
 <body>
   <div>  
-    <form   method="POST" name="formulario" > 
+    <form id="formExtradicao"   method="POST" name="formulario" > 
 
         <div class="form-group">
             <div class="   col-md-6 offset-md-3">
-                <label > Data:</label>
-                <input type="date" name="data" class="form-control " placeholder=" Data:" required="" >    
+                <label > Data inicio:</label>
+                <input id="data" type="text" name="data" class="form-control " placeholder=" Data:" required="" >    
             </div>
         </div>
-
         <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <div class="dropdown">
-                <button  class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Pais de origem do criminoso
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Brasil</a>
-                  <a class="dropdown-item" href="#">Japão</a>
-                  <a class="dropdown-item" href="#">Rússia</a>
-                </div>
-              </div>            </div>
-        </div>      
+          <div class="   col-md-6 offset-md-3">
+              <label > Data fim:</label>
+              <input id="dataF" type="text" name="dataF" class="form-control " placeholder=" Data:" required="" >    
+          </div>
+      </div>
         <div class="form-group">
           <div class="col-md-6 offset-md-3">
-              <div class="dropdown">
-              <button  class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           País responsável pela extradicao             </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Brasil</a>
-                <a class="dropdown-item" href="#">Japão</a>
-                <a class="dropdown-item" href="#">Rússia</a>
+                  <label for="paisOrigem">País de origem:*</label>
+                  <input type="text" id="paisOrigem" name="paisOrigem" class="form-control" placeholder="Informe o país de origem do criminoso" required>
               </div>
-            </div>            </div>
-      </div>   
+              </div>
       
       <div class="form-group">
         <div class="col-md-6 offset-md-3">
-            <div class="dropdown">
-            <button  class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Agente responsável              </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Mitsuro Kirijo</a>
-              <a class="dropdown-item" href="#">Junpei Iori</a>
+                <label for="agente">Agente:*</label>
+                <input type="text" id="agente" name="agente" class="form-control" placeholder="Informe o nome do agente" required>
             </div>
-          </div>            </div>
-    </div> 
+            </div>
     <div class="form-group">
-        <div class="col-md-6 offset-md-3">
-            <div class="dropdown">
-            <button  class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Nome do criminoso              </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Masayoshi Shido</a>
-              <a class="dropdown-item" href="#">Goro Akechi</a>
-            </div>
-          </div>            </div>
-    </div> 
-    
+      <div class="col-md-6 offset-md-3">
+              <label for="nomeCriminoso">Nome do criminoso:*</label>
+              <input type="text" id="nomeCriminoso" name="nomeCriminoso" class="form-control" placeholder="Informe o nome do criminoso" required>
+          </div>
+          </div>
     <label style="margin-left: 28%;"> Transporte em que o criminoso será extraditado</label>
 
-    <div class="form-check">
-        <input style="margin-left: 400px;" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-        <label style=" margin-left:420px;" class="form-check-label" for="flexRadioDefault1">
-          Navio
-        </label>
-      </div>
-      <div class="form-check">
-        <input style="margin-left: 400px;" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-        <label style=" margin-left:420px;" class="form-check-label" for="flexRadioDefault2">
-         Avião
-        </label>
-      </div>
-      <div class="form-control form-control-lg" style="width: 500px; margin-left: 25%; margin-top: 2%;">
-        <label for="exampleFormControlTextarea1">Descrição do crime</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>  
+      <div class="form-group">
+        <div class="col-md-6 offset-md-3">
+                <label for="transporte">Transporte:*</label>
+                <input type="text" id="transporte" name="transporte" class="form-control" placeholder="Informe o transporte" required>
+            </div>
+            </div>
+     
         <div class="form-group">
             <div style="width: 500px;"class="col-md-6 offset-md-3">
-                <a href="resumoExtradicao.html"><button style="margin-top: 15%;" type="button" class="btn btn-primary btn-lg btn-block text-center" data-toggle="modal" data-target="#extradicaoLabel">
-Enviar                  </button></a>
+              <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" data-toggle="modal" data-target="#extradicaoLabel">
+Enviar                  </button>
 
             </div>
         </div>
@@ -124,5 +83,50 @@ Enviar                  </button></a>
   
     </form> 
 </div>
+<script>
+  document.getElementById("formExtradicao").addEventListener("submit", function (event) {
+    event.preventDefault(); // Impede o envio padrão do formulário
+
+    // Coleta os valores dos campos
+    const dataE = document.getElementById("data").value;
+    const dataF = document.getElementById("dataF").value;
+
+    const id_paisDeOrigem = document.getElementById("paisOrigem").value;
+    const agente = document.getElementById("agente").value;
+    const nomeCriminoso = document.getElementById("nomeCriminoso").value;
+    const transporte = document.getElementById("transporte").value;
+    // Coleta os valores dos outros campos do formulário da mesma forma
+    const formatedDate = new Date(dataE).toISOString();
+           const formatedDate2 = new Date(dataF).toISOString();
+    console.log(id_paisDeOrigem.toString());
+    console.log(agente.toString());
+    console.log(nomeCriminoso.toString());
+    console.log(transporte.toString());
+
+
+    // Cria um objeto com os valores
+    const data = {
+     
+      dataE: new Date(formatedDate),
+      dataF:new Date(formatedDate2),
+      id_paisDeOrigem: id_paisDeOrigem,
+      agente:agente,
+      nomeCriminoso: nomeCriminoso,
+     transporte: transporte,
+    };
+
+    // Envia os dados como JSON em uma solicitação POST
+    axios.post("http://localhost:3336/api/extradicao/", data)
+      .then(function (response) {
+        // Trate a resposta do back-end, se necessário
+        console.log("Cadastro de extradicao bem-sucedido!", response.data);
+      })
+      .catch(function (error) {
+  
+          
+        console.error("Erro ao cadastrar extradicao:", error);
+      });
+  });
+</script>
 </body>
 </html>
