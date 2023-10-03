@@ -1,39 +1,48 @@
 <html>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="css/bootstrap.css">
-    
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-    
     <head>
-    <title> Criminosos foragidos </title>
-    <div >
-        <img src="/src/shared/images/logo.png" width="100px" alt="logo"
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         
-    class="img"  >
-    </div class="container">
-    <div >
-      <img style="position: absolute; top: 50px; left: 1300px; bottom: 50px;" src="/src/shared/images/user.png" width="56" height="64" alt="user"
-      
-    class="img"  >
-    </div>
-    
-      <img style="position: absolute; top: 50px; left: 1200px; bottom: 50px;" src="/src/shared/images/notification.png" width="56" height="64" alt="user"
-      
-    class="img"  >
-    </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="css/bootstrap.css">
+        
+        <link rel="stylesheet" type="text/css" href="estilo.css">
+        
+        
+        <title> Criminosos foragidos </title>
+
+        <style>
+            #loadingModal {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        </style>
     </head>
+    
     <body>
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
+                <div class="modal-content bg-transparent border-0">
+                    <div class="modal-body text-center bg-transparent">
+                        <div class="progress bg-transparent">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
+                        <p class="text-white"  style="margin-top: 10px;">Realizando busca de reconhecimento facial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+   
         <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 100px;">
             <thead>
                 <tr>
@@ -42,25 +51,114 @@
                     <th>Gênero</th>
                     <th>Idade</th>
                     <th>Status</th>
-
-
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Masayoshi Shido</td>
-                    <td>Japão</td>
-                    <td>Masculino</td>
-                    <td>30 anos</td>
-                    <td>Foragido</td>
-                   <td><a href="detalhesCriminoso.html"> <button type="button" class="btn btn-light">Ver detalhes</button></a>
-                    </td>
-                    <td><button type="button" class="btn btn-danger">Emitir pedido de busca e captura</button>
-                    </td>
-                </tr>
-               
-              
-            </tbody>
+            <tbody id="criminososTabela"></tbody>
         </table>
+
+
+        <script>
+
+        let criminosoSelecionadoId;
+
+        axios.get('http://localhost:3338/api/criminoso/')
+            .then(function (response) {
+                const criminosos = response.data;
+                const criminososTabela = document.getElementById('criminososTabela');
+
+                criminosos.forEach(function (criminoso) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${criminoso.nome + ' ' + criminoso.sobrenome}</td>
+                        <td>${criminoso.id_paisOrigem}</td>
+                        <td>${criminoso.genero}</td>
+                        <td>${criminoso.idade} anos</td>
+                        <td>${criminoso.status}</td>
+                    `;
+
+                    //botao ver detalhes
+                    const verDetalhesButton = document.createElement('button');
+                    verDetalhesButton.type = 'button';
+                    verDetalhesButton.className = 'btn btn-secondary';
+                    verDetalhesButton.textContent = 'Ver detalhes';
+                    verDetalhesButton.addEventListener('click', function () {
+                        //lidar com clique do ver detalhes
+                        criminosoSelecionadoId = criminoso.id;
+                        window.location.href = `detalhesCriminoso.html?id=${criminoso.id}`;
+                    });
+                    const verDetalhesCell = document.createElement('td');
+                    verDetalhesCell.appendChild(verDetalhesButton);
+
+                    // emitir epdido de busca e captura
+                    const emitirPedidoButton = document.createElement('button');
+                    emitirPedidoButton.type = 'button';
+                    emitirPedidoButton.className = 'btn btn-danger';
+                    emitirPedidoButton.textContent = 'Emitir pedido de busca e captura';
+                    emitirPedidoButton.addEventListener('click', function () {
+                        
+                        const criminosoId = criminoso.id;
+                        this.criminosoSelecionadoId = criminoso.id;
+                        emitirPedidoDeBuscaECaptura(criminosoId);
+                        
+                    });
+
+                    const emitirPedidoCell = document.createElement('td');
+                    emitirPedidoCell.appendChild(emitirPedidoButton);
+
+                    row.appendChild(verDetalhesCell);
+                    row.appendChild(emitirPedidoCell);
+
+                    criminososTabela.appendChild(row);
+                });
+            })
+            .catch(function (error) {
+                console.error('Erro ao buscar criminosos:', error);
+            });
+            
+            function emitirPedidoDeBuscaECaptura(criminosoID) {
+                axios.get(`http://localhost:3338/api/criminoso/${criminosoID}`)
+                .then(function (response) {
+                    decisaoCapturadoFugitivo(criminosoID);
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar criminoso: ', error);
+                });
+            }
+
+            function mostrarLoadingEAgendarRedirecionamento(url) {
+                const loadingModal = document.getElementById('loadingModal');
+                $(loadingModal).modal('show');
+
+                setTimeout(function () {
+                    $(loadingModal).modal('hide');
+                    window.location.href = url; 
+                }, 3000); 
+            }
+
+            function decisaoCapturadoFugitivo(idCriminoso) {
+                const data = {
+                    id_criminoso: idCriminoso,
+                    id_pais_capturado: "Aleatorio",
+                    id_pais_origem: "Aleatorio",
+                    data: new Date(),
+                    probabilidade:0
+                }
+                axios.post('http://localhost:3333/api/captura/', data)
+                .then(function (response) {
+                    // condicao para escolha de página
+                    if (response.data.probabilidade > 5) {
+                        const dataEncode = encodeURIComponent(JSON.stringify(data));
+                        mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoEncontrado.html?data=${dataEncode}`);
+                    } else {
+                        const dataEncode = encodeURIComponent(JSON.stringify(data));
+                        mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoNaoEncontrado.html?data=${dataEncode}`);
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar criminoso: ', error);
+                });
+            }
+            
+        </script>
     </body>
 </html>

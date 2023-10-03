@@ -45,6 +45,20 @@
             $(document).ready(function() {
                 $("#criminosoEncontradoModal").modal("show"); 
             });
+            const queryString = window.location.search;
+
+            //remover o ? do início da string
+            const queryParams = new URLSearchParams(queryString.substring(1));
+            const dataParam = queryParams.get("data");
+
+            if (dataParam) {
+            //decodificar a string JSON e converter dnv p json
+            const dataObject = JSON.parse(decodeURIComponent(dataParam));
+            console.log(dataObject);
+            } else {
+            console.error("Parâmetro 'data' não encontrado na URL");
+            }
+
         </script>
 
     </body>

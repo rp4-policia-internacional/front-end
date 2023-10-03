@@ -6,16 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-
     <title>Cadastro de Vítimas</title>
 </head>
 
@@ -28,24 +18,13 @@
                 </a>
             </div>
             <div class="col-md-9 mt-5">
-                <h1>Michele Silva</h1>
-                <div class="d-flex">
-
+                <h1 id="detalhesVitima">Carregando...</h1>
+                <div class="d-flex align-items-start">
                     <div class="ml-2">
                         <img src="/src/shared/images/vitima.png"
                             class="rounded float-start border" alt="Foto da Vítima">
                     </div>
-
-                    <div class="ml-4">
-                        <p><strong>Nome Completo:</strong> Michele Silva</p>
-                        <p><strong>País de Origem:</strong> Brasil</p>
-                        <p><strong>Autor do Crime:</strong> Adam Scott</p>
-                        <p><strong>Nacionalidade:</strong> Brasileira</p>
-                        <p><strong>Altura:</strong> 1,70m</p>
-                        <p><strong>Gênero:</strong> Feminino</p>
-                        <p><strong>Idade:</strong> 30 anos</p>
-                        <p><strong>País Visto por Último:</strong> Estados Unidos</p>
-                        <p><strong>Status:</strong> Desaparecida</p>
+                    <div class="ml-4" id="detalhesVitima">
                     </div>
                 </div>
             </div>
@@ -53,38 +32,85 @@
                 <a href="editarCadastroVitima.html">
                     <button type="button" class="btn btn-secondary">Editar</button>
                 </a>
+                <button type="button" class="btn btn-danger" id="removerVitima">Remover</button>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <style>
+        body {
+            font-size: 16px;
+        }
+
+        h1,
+        p {
+            font-size: 14px;
+        }
+    </style>
 
     <script>
-        // Fazer uma requisição Axios GET para obter a lista de vítimas
-        axios.get('http://localhost:3337/api/vitima/')
-            .then(function (response) {
-                const vitimas = response.data;
-                const vitimasTabela = document.getElementById('vitimasTabela');
+        function getURLParametro(nome) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nome);
+        }
 
-                // Preencher a tabela com os dados das vítimas
-                vitimas.forEach(function (vitima) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${vitima.nomeCompleto}</td>
-                        <td>${vitima.id_paisDeOrigem}</td>
-                        <td>${vitima.genero}</td>
-                        <td>${vitima.idade} anos</td>
-                        <td>${vitima.statusDaVitima}</td>
-                        <td><a href="detalhesVitima.html?id=${vitima.id}"><button type="button" class="btn btn-secondary">Ver detalhes</button></a></td>
-                        <td><button type="button" class="btn btn-danger">Emitir pedido de busca e captura</button></td>
+        // detalhes da vítima pelo no ID
+        function buscarDetalhesVitima(id) {
+            axios.get(`http://localhost:3337/api/vitima/${id}`)
+                .then(function (response) {
+                    const vitima = response.data;
+                    const detalhesVitima = document.getElementById('detalhesVitima');
+
+                    detalhesVitima.innerHTML = `
+                        <h1>${vitima.nomeCompleto}</h1>
+                        <div class="mt-3">
+                            <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
+                            <p><strong>País de Origem:</strong> ${vitima.id_paisDeOrigem}</p>
+                            <p><strong>Autor do Crime:</strong> ${vitima.id_autorDoCrime}</p>
+                            <p><strong>Nacionalidade:</strong> ${vitima.nacionalidade}</p>
+                            <p><strong>Altura:</strong> ${vitima.altura}</p>
+                            <p><strong>Gênero:</strong> ${vitima.genero}</p>
+                            <p><strong>Idade:</strong> ${vitima.idade} anos</p>
+                            <p><strong>País Visto por Último:</strong> ${vitima.id_paisVistoPorUltimo}</p>
+                            <p><strong>Status:</strong> ${vitima.statusDaVitima}</p>
+                        </div>
                     `;
-                    vitimasTabela.appendChild(row);
+
+                    // Adicione um evento de clique ao botão "Remover"
+                    const removerVitimaBtn = document.getElementById('removerVitima');
+                    removerVitimaBtn.addEventListener('click', function () {
+                        // Confirmação para remover a vítima
+                        if (confirm('Tem certeza de que deseja remover esta vítima?')) {
+                            removerVitima(id);
+                        }
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar detalhes da vítima:', error);
                 });
-            })
-            .catch(function (error) {
-                console.error('Erro ao buscar vítimas:', error);
-            });
+        }
+
+        //  remover uma vítima pelo ID
+        function removerVitima(id) {
+            axios.delete(`http://localhost:3337/api/vitima/${id}`)
+                .then(function (response) {
+                    alert('Vítima removida com sucesso!');
+                    // Redireciona para a página de lista de vítimas
+                    window.location.href = 'listaDeVitima.html';
+                })
+                .catch(function (error) {
+                    console.error('Erro ao remover vítima:', error);
+                });
+        }
+
+        // busca os detalhes da vítima pelo ID 
+        window.addEventListener('load', function () {
+            const idVitima = getURLParametro('id');
+            buscarDetalhesVitima(idVitima);
+        });
     </script>
-    
 </body>
 
 </html>
