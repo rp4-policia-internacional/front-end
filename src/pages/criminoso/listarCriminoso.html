@@ -127,12 +127,12 @@
 
             function mostrarLoadingEAgendarRedirecionamento(url) {
                 const loadingModal = document.getElementById('loadingModal');
-                $(loadingModal).modal('show'); // Mostrar o modal de loading
+                $(loadingModal).modal('show');
 
                 setTimeout(function () {
-                    $(loadingModal).modal('hide'); // Ocultar o modal de loading após 3 segundos
-                    window.location.href = url; // Redireciona após 3 segundos
-                }, 3000); // 3 segundos em milissegundos
+                    $(loadingModal).modal('hide');
+                    window.location.href = url; 
+                }, 3000); 
             }
 
             function decisaoCapturadoFugitivo(idCriminoso) {
