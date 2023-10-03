@@ -6,9 +6,30 @@
         <title>Document</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <style>
+            #loadingModal {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        </style>
 
     </head>
     <body>
+
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
+                <div class="modal-content bg-transparent border-0">
+                    <div class="modal-body text-center bg-transparent">
+                        <div class="progress bg-transparent">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
+                        <p class="text-white"  style="margin-top: 10px;">Comunicando a polícia local.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true"></div>
 
         <div class="modal" data-backdrop="static" data-keyboard="false" id="criminosoEncontradoModal">
             <div class="modal-dialog">
@@ -25,7 +46,7 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        <button id="btnAcionarPolicia" type="button" class="btn btn-dark" data-dismiss="modal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                               </svg>
@@ -41,25 +62,65 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $("#criminosoEncontradoModal").modal("show"); 
-            });
-            const queryString = window.location.search;
-
-            //remover o ? do início da string
-            const queryParams = new URLSearchParams(queryString.substring(1));
-            const dataParam = queryParams.get("data");
-
-            if (dataParam) {
-            //decodificar a string JSON e converter dnv p json
+<script>
+    $(document).ready(function() {
+        $("#criminosoEncontradoModal").modal("show"); 
+        
+        $("#btnAcionarPolicia").click(function() {
+            // Exibir o modal de progresso
+            $("#loadingModal").modal("show");
+            
+            
+            setTimeout(function() {
+                window.location.href = "extradicao.html";
+            }, 2000);
+        });
+        
+        const queryString = window.location.search;
+        
+        //remover o ? do início da string
+        const queryParams = new URLSearchParams(queryString.substring(1));
+        const dataParam = queryParams.get("data");
+        
+        if (dataParam) {
+            // Decodificar a string JSON e converter novamente para JSON
             const dataObject = JSON.parse(decodeURIComponent(dataParam));
             console.log(dataObject);
-            } else {
+        
+            getNomeCriminoso(dataObject.id_criminoso);
+        } else {
             console.error("Parâmetro 'data' não encontrado na URL");
-            }
+        }
+        
+        function getNomeCriminoso(criminosoID) {
+            axios.get(`http://localhost:3338/api/criminoso/${criminosoID}`)
+            .then(function (response) {
+                const data = response.data;
+                console.log(response.data);
+                $('#idCriminoso').text(`${data.nome} ${data.sobrenome}`);
 
-        </script>
+                const probabilidade = data.probabilidade; // Suponha que a probabilidade está em data.probabilidade
+            
+            if (probabilidade > 5) {
+                // Probabilidade maior que 5, redirecionar para "a.html"
+                setTimeout(function() {
+                    window.location.href = "../capturamodelCapturado.html";
+                }, 2000);
+            } else {
+                // Probabilidade menor ou igual a 5, redirecionar para "b.html"
+                setTimeout(function() {
+                    window.location.href = "../capturamodelNaoCapturado.html";
+                }, 2000);
+            }
+            })
+            .catch(function (error) {
+                console.error('Erro ao buscar criminoso: ', error);
+            });
+        }
+    });
+</script>
+
+        
 
     </body>
 </html>
