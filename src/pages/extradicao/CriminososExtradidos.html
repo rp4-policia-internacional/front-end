@@ -55,10 +55,10 @@
         </table>
         <script>
             // Fazer uma requisição Axios GET para obter a lista de vítimas
-            axios.post('http://localhost:3338/api/criminoso/')
+            axios.get('http://localhost:3338/api/criminoso/')
                 .then(function (response) {
-                    const criminoso = response.data;
-                    const criminosoTabela = document.getElementById('listaCriminososExtraditados');
+                    const criminosos = response.data;
+                    const criminososTabela = document.getElementById('listaCriminososExtraditados');
     
                     // Preencher a tabela com os criminosos extraditados
                     vitimas.forEach(function (criminoso) {
@@ -74,9 +74,9 @@
                             <td>${criminoso.foto}</td>
                             <td>${criminoso.paisOrigem}</td>
                             <td>${criminoso.paisVistoPorUltimo}</td>
-                            <td>${vitima.genero}</td>
-                            <td>${vitima.idade} anos</td>
-                            <td>${vitima.statusCriminoso}</td>
+                            <td>${criminoso.genero}</td>
+                            <td>${criminoso.idade} anos</td>
+                            <td>${criminoso.statusCriminoso}</td>
                             <td><a href="detalhesCriminoso.html?id=${criminoso.id}"><button type="button" class="btn btn-secondary">Ver detalhes</button></a></td>
                             <td><button type="button" class="btn btn-danger">Emitir pedido de busca e captura</button></td>
                         `;
