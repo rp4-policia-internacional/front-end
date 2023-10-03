@@ -7,9 +7,6 @@
     <title>Formulário Criminoso</title>
 </head>
 <body>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
     <div class="container mt-5">
         <form>
@@ -86,7 +83,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="apelido">Apelido:</label>
+                        <label for="apelido">Apelido</label>
                         <input type="text" class="form-control" id="apelido" placeholder="Rubinho">
                     </div>
                 </div>
@@ -106,30 +103,49 @@
         </form>
     </div>
     
-   
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const imageUploadInput = document.getElementById('imagem');
-            const imagePreview = document.getElementById('imagemPreview');
+        const imageUploadInput = document.getElementById('imagem');
+        const imagePreview = document.getElementById('imagemPreview');
 
-            imageUploadInput.addEventListener('change', function () {
-                if (imageUploadInput.files.length > 0) {
-                    const file = imageUploadInput.files[0];
-                    const reader = new FileReader();
+        imageUploadInput.addEventListener('change', function () {
+            if (imageUploadInput.files.length > 0) {
+                const file = imageUploadInput.files[0];
+                const reader = new FileReader();
 
-                    reader.onload = function (e) {
-                        imagePreview.src = e.target.result;
-                        imagePreview.style.display = 'block';
-                    };
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
 
-                    reader.readAsDataURL(file);
-                } else {
-                    // Se nenhum arquivo foi selecionado, esconda a prévia
-                    imagePreview.src = '';
-                    imagePreview.style.display = 'none';
-                }
+                reader.readAsDataURL(file);
+            } else {
+                // Se nenhum arquivo foi selecionado, esconda a prévia
+                imagePreview.src = '';
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        // Quando o formulário for enviado
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Evita o comportamento padrão de envio do formulário
+
+            const formData = new FormData();
+            formData.append('imagem', imageUploadInput.files[0]);
+
+            axios.post('http://localhost:8080/api/criminoso/upload', formData).then((response) => {
+                console.log(response.data);
             });
         });
+    });
+
+
+
     </script>
 </body>
 </html>
