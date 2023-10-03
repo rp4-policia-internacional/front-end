@@ -99,14 +99,37 @@
             function emitirPedidoDeBuscaECaptura(criminosoID) {
                 axios.get(`http://localhost:3338/api/criminoso/${criminosoID}`)
                 .then(function (response) {
-                    console.log(criminosoID);
+                    decisaoCapturadoFugitivo(criminosoID);
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar criminoso: ', error);
+                });
+            }
+
+            function decisaoCapturadoFugitivo(idCriminoso) {
+                const data = {
+                    id_criminoso: idCriminoso,
+                    id_pais_capturado: "Aleatorio",
+                    id_pais_origem: "Aleatorio",
+                    data: new Date(),
+                    probabilidade:0
+                }
+                axios.post('http://localhost:3333/api/captura/', data)
+                .then(function (response) {
+                    // condicao para escolha de página
+                    if (response.data.probabilidade > 6) {
+                        const dataEncode = encodeURIComponent(JSON.stringify(data));
+                        window.location.href = `../reconhecimentoFacial/modelCriminosoEncontrado.html?data=${dataEncode}`;
+                    } else {
+                        const dataEncode = encodeURIComponent(JSON.stringify(data));
+                        window.location.href = `../reconhecimentoFacial/modelCriminosoNaoEncontrado.html?data=${dataEncode}`;
+                    }
                 })
                 .catch(function (error) {
                     console.error('Erro ao buscar criminoso: ', error);
                 });
             }
             
-
         </script>
     </body>
 </html>
