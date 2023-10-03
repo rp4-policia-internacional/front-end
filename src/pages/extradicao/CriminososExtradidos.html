@@ -1,65 +1,91 @@
-<html>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Extradição</title>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="css/bootstrap.css">
-    
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-    
-    <head>
-    <title> Criminosos Extradidos </title>
-    <div >
-        <img src="/src/shared/images/logo.png" width="100px" alt="logo"
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         
-    class="img"  >
-    </div class="container">
-    <div >
-      <img style="position: absolute; top: 50px; left: 1300px; bottom: 50px;" src="/src/shared/images/user.png" width="56" height="64" alt="user"
-      
-    class="img"  >
-    </div>
-    
-      <img style="position: absolute; top: 50px; left: 1200px; bottom: 50px;" src="/src/shared/images/notification.png" width="56" height="64" alt="user"
-      
-    class="img"  >
-    </div>
-    </head>
+</head>
+<body>
+<div>
+    <img src="/src/shared/images/logo.png" width="100px" alt="logo">
+    <!-- Resto do seu código HTML aqui -->
+</div>
+</body>
+</html>
     <body>
         <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 100px;">
             <thead>
                 <tr>
-                    <th>Nome Completo</th>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Altura</th>
+                    <th>Idade</th>
+                    <th>Data de nascimento</th>
+                    <th>Apelido</th>
+                    <th>Caracteristicas</th>
+                    <th>Foto</th>
                     <th>País de origem</th>
+                    <th>País visto por ultimo</th>
                     <th>Gênero</th>
                     <th>Idade</th>
                     <th>Status</th>
 
 
-
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Monika</td>
-                    <td>Japão</td>
-                    <td>Feminino</td>
-                    <td>19 anos</td>
-                    <td>Extradidas</td>
-                   <td><a href="/src/pages/criminoso/detalhesCriminoso.html"> <button type="button" class="btn btn-light">Ver detalhes</button></a>
-                    </td>
-                </tr>
+            <tbody id="listaCriminososExtraditados">
+               
                
               
             </tbody>
         </table>
+        <script>
+            // Fazer uma requisição Axios GET para obter a lista de vítimas
+            axios.get('http://localhost:3338/api/criminoso/')
+                .then(function (response) {
+                    const criminosos = response.data;
+                    const criminososTabela = document.getElementById('listaCriminososExtraditados');
+    
+                    // Preencher a tabela com os criminosos extraditados
+                    vitimas.forEach(function (criminoso) {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${criminoso.nome}</td>
+                            <td>${criminoso.sobrenome}</td>
+                            <td>${criminoso.altura}</td>
+                            <td>${criminoso.idade}</td>
+                            <td>${criminoso.dataN}</td>
+                            <td>${criminoso.apelido}</td>
+                            <td>${criminoso.caracteristicas}</td>
+                            <td>${criminoso.foto}</td>
+                            <td>${criminoso.paisOrigem}</td>
+                            <td>${criminoso.paisVistoPorUltimo}</td>
+                            <td>${criminoso.genero}</td>
+                            <td>${criminoso.idade} anos</td>
+                            <td>${criminoso.statusCriminoso}</td>
+                            <td><a href="detalhesCriminoso.html?id=${criminoso.id}"><button type="button" class="btn btn-secondary">Ver detalhes</button></a></td>
+                            <td><button type="button" class="btn btn-danger">Emitir pedido de busca e captura</button></td>
+                        `;
+                        criminosoTabela.appendChild(row);
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar buscarCriminoso:', error);
+                });
+        </script>
     </body>
 </html>
