@@ -19,114 +19,102 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         
 </head>
-<body>
-<div>
-    <img src="/src/shared/images/logo.png" width="100px" alt="logo">
-    <!-- Resto do seu código HTML aqui -->
-</div>
-</body>
-</html>
 
-<body>
-  <div>  
-    <form id="formExtradicao"   method="POST" name="formulario" > 
 
-        <div class="form-group">
+
+  <body>
+    <div>  
+      <form id="formExtradicao"   method="POST" name="formulario" > 
+
+          <div class="form-group">
+              <div class="   col-md-6 offset-md-3">
+                  <label > Data inicio:</label>
+                  <input id="dataE" type="text" name="data" class="form-control " placeholder=" Data:" required="" >    
+              </div>
+          </div>
+          <div class="form-group">
             <div class="   col-md-6 offset-md-3">
-                <label > Data inicio:</label>
-                <input id="data" type="text" name="data" class="form-control " placeholder=" Data:" required="" >    
+                <label > Data fim:</label>
+                <input id="dataF" type="text" name="dataF" class="form-control " placeholder=" Data:" required="" >    
             </div>
         </div>
-        <div class="form-group">
-          <div class="   col-md-6 offset-md-3">
-              <label > Data fim:</label>
-              <input id="dataF" type="text" name="dataF" class="form-control " placeholder=" Data:" required="" >    
-          </div>
-      </div>
+          <div class="form-group">
+            <div class="col-md-6 offset-md-3">
+                    <label for="paisOrigem">País de origem:*</label>
+                    <input type="text" id="paisOrigem" name="paisOrigem" class="form-control" placeholder="Informe o país de origem do criminoso" required>
+                </div>
+                </div>
+        
         <div class="form-group">
           <div class="col-md-6 offset-md-3">
-                  <label for="paisOrigem">País de origem:*</label>
-                  <input type="text" id="paisOrigem" name="paisOrigem" class="form-control" placeholder="Informe o país de origem do criminoso" required>
+                  <label for="agente">Agente:*</label>
+                  <input type="text" id="agente" name="agente" class="form-control" placeholder="Informe o nome do agente" required>
+              </div>
+              </div>
+        <div class="form-group">
+          <div class="col-md-6 offset-md-3">
+                <label for="nomeCriminoso">Nome do criminoso:*</label>
+                <input type="text" id="nomeCriminoso" name="nomeCriminoso" class="form-control" placeholder="Informe o nome do criminoso" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-6 offset-md-3">
+                  <label for="transporte">Tipo de transporte em que o criminoso será extraditado:*</label>
+                  <input type="text" id="transporte" name="transporte" class="form-control" placeholder="Informe o transporte" required>
               </div>
               </div>
       
-      <div class="form-group">
-        <div class="col-md-6 offset-md-3">
-                <label for="agente">Agente:*</label>
-                <input type="text" id="agente" name="agente" class="form-control" placeholder="Informe o nome do agente" required>
-            </div>
-            </div>
-    <div class="form-group">
-      <div class="col-md-6 offset-md-3">
-              <label for="nomeCriminoso">Nome do criminoso:*</label>
-              <input type="text" id="nomeCriminoso" name="nomeCriminoso" class="form-control" placeholder="Informe o nome do criminoso" required>
+          <div class="form-group">
+              <div style="width: 500px;"class="col-md-6 offset-md-3">
+                <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" data-toggle="modal" data-target="#extradicaoLabel">
+                    Enviar                  
+                </button>
+
+              </div>
           </div>
-          </div>
-    <label style="margin-left: 28%;"> Transporte em que o criminoso será extraditado</label>
+    
+      </form> 
+    </div>
 
-      <div class="form-group">
-        <div class="col-md-6 offset-md-3">
-                <label for="transporte">Transporte:*</label>
-                <input type="text" id="transporte" name="transporte" class="form-control" placeholder="Informe o transporte" required>
-            </div>
-            </div>
-     
-        <div class="form-group">
-            <div style="width: 500px;"class="col-md-6 offset-md-3">
-              <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" data-toggle="modal" data-target="#extradicaoLabel">
-Enviar                  </button>
+    <script>
+      document.getElementById("formExtradicao").addEventListener("submit", function (event) {
+        event.preventDefault(); // Impede o envio padrão do formulário
 
-            </div>
-        </div>
+        // Coleta os valores dos campos
+        const dataE = document.getElementById("dataE").value;
+        const dataF = document.getElementById("dataF").value;
 
-       
-  
-    </form> 
-</div>
-<script>
-  document.getElementById("formExtradicao").addEventListener("submit", function (event) {
-    event.preventDefault(); // Impede o envio padrão do formulário
+        const id_paisDeOrigem = document.getElementById("paisOrigem").value;
+        const agente = document.getElementById("agente").value;
+        const nomeCriminoso = document.getElementById("nomeCriminoso").value;
+        const transporte = document.getElementById("transporte").value;
 
-    // Coleta os valores dos campos
-    const dataE = document.getElementById("data").value;
-    const dataF = document.getElementById("dataF").value;
+        const dataEObj = new Date(dataE);
+        const dataFObj = new Date(dataF);
+        console.log(dataFObj);
 
-    const id_paisDeOrigem = document.getElementById("paisOrigem").value;
-    const agente = document.getElementById("agente").value;
-    const nomeCriminoso = document.getElementById("nomeCriminoso").value;
-    const transporte = document.getElementById("transporte").value;
-    // Coleta os valores dos outros campos do formulário da mesma forma
-    const formatedDate = new Date(dataE).toISOString();
-           const formatedDate2 = new Date(dataF).toISOString();
-    console.log(id_paisDeOrigem.toString());
-    console.log(agente.toString());
-    console.log(nomeCriminoso.toString());
-    console.log(transporte.toString());
+        const data = {
+          data_inicio: dataEObj,
+          data_fim: dataEObj,
+          id_pais_origem: id_paisDeOrigem,
+          agente_id: agente,
+          id_criminoso: nomeCriminoso,
+          transporte: transporte,
+        };
 
-
-    // Cria um objeto com os valores
-    const data = {
-     
-      dataE: new Date(formatedDate),
-      dataF:new Date(formatedDate2),
-      id_paisDeOrigem: id_paisDeOrigem,
-      agente:agente,
-      nomeCriminoso: nomeCriminoso,
-     transporte: transporte,
-    };
-
-    // Envia os dados como JSON em uma solicitação POST
-    axios.post("http://localhost:3336/api/extradicao/", data)
-      .then(function (response) {
-        // Trate a resposta do back-end, se necessário
-        console.log("Cadastro de extradicao bem-sucedido!", response.data);
-      })
-      .catch(function (error) {
-  
-          
-        console.error("Erro ao cadastrar extradicao:", error);
+        // Envia os dados como JSON em uma solicitação POST
+        axios.post("http://localhost:3336/api/extradicao/", data)
+          .then(function (response) {
+            // Trate a resposta do back-end, se necessário
+            console.log("Cadastro de extradicao bem-sucedido!", response.data);
+          })
+          .catch(function (error) {
+      
+              
+            console.error("Erro ao cadastrar extradicao:", error);
+          });
       });
-  });
-</script>
-</body>
+    </script>
+  </body>
 </html>
