@@ -82,7 +82,6 @@
         document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
             event.preventDefault(); 
 
-            // Obtenha os valores dos campos do formulário
             const idVitima = getURLParametro('id');
             const nomeCompleto = document.getElementById("nomeCompleto").value;
             const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
@@ -95,7 +94,12 @@
             const statusDaVitima = document.getElementById("status").value;
             const foto =  document.getElementById("foto").value;
 
-            // Crie um objeto com os dados a serem atualizados
+         
+
+
+
+
+            
             const data = {
                 id_paisDeOrigem: id_paisDeOrigem,
                 id_autorDoCrime: id_autorDoCrime,
