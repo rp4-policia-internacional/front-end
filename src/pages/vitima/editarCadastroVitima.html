@@ -68,9 +68,53 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy"></script>
 
+    <script>
+        document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
+            event.preventDefault(); 
 
+            // Obtenha os valores dos campos do formulário
+            const idVitima = getURLParametro('id');
+            const nomeCompleto = document.getElementById("nomeCompleto").value;
+            const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
+            const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
+            const nacionalidade = document.getElementById("nacionalidade").value;
+            const altura = document.getElementById("altura").value;
+            const genero = document.getElementById("genero").value;
+            const idade = document.getElementById("idade").value;
+            const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+            const statusDaVitima = document.getElementById("status").value;
+            const foto =  document.getElementById("foto").value;
+
+            // Crie um objeto com os dados a serem atualizados
+            const data = {
+                id_paisDeOrigem: id_paisDeOrigem,
+                id_autorDoCrime: id_autorDoCrime,
+                nomeCompleto: nomeCompleto,
+                nacionalidade: nacionalidade,
+                altura: altura,
+                genero: genero,
+                idade: idade,
+                id_paisVistoPorUltimo: id_paisVistoPorUltimo,
+                statusDaVitima: statusDaVitima,
+                foto: foto // foto atualizada
+            };
+
+            // Envia os dados como JSON em uma solicitação PUT ou PATCH
+            axios.put(`http://localhost:3337/api/vitima/`, data) 
+                .then(function (response) {
+                  
+                    console.log("Atualização de vítima bem-sucedida!", response.data);
+                
+                    window.location.href = `detalhesVitima.html?id=${idVitima}`;
+                })
+                .catch(function (error) {
+                    console.error("Erro ao atualizar vítima:", error);
+                });
+        });
+    </script>
+
+    
 </body>
-
 </html>
