@@ -38,32 +38,49 @@
                 <input id="dataF" type="text" name="dataF" class="form-control " placeholder=" Data:" required="" >    
             </div>
         </div>
-          <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                    <label for="paisOrigem">País de origem:*</label>
-                    <input type="text" id="paisOrigem" name="paisOrigem" class="form-control" placeholder="Informe o país de origem do criminoso" required>
-                </div>
-                </div>
-        
         <div class="form-group">
           <div class="col-md-6 offset-md-3">
-                  <label for="agente">Agente:*</label>
-                  <input type="text" id="agente" name="agente" class="form-control" placeholder="Informe o nome do agente" required>
-              </div>
-              </div>
-        <div class="form-group">
-          <div class="col-md-6 offset-md-3">
-                <label for="nomeCriminoso">Nome do criminoso:*</label>
-                <input type="text" id="nomeCriminoso" name="nomeCriminoso" class="form-control" placeholder="Informe o nome do criminoso" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-md-6 offset-md-3">
-                  <label for="transporte">Tipo de transporte em que o criminoso será extraditado:*</label>
-                  <input type="text" id="transporte" name="transporte" class="form-control" placeholder="Informe o transporte" required>
-              </div>
-              </div>
+          <label for="paisOrigem">País de origem:*</label>
+          <select id="paisOrigem" name="paisOrigem" class="form-control">
+              <option selected>Selecionar</option>
+              <option>Brasil</option>
+              <option>Japão</option>
+              <option>EUA</option>
+          </select>
+      </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-6 offset-md-3">
+        <label for="agente">Agente:*</label>
+        <select id="agente" name="agente" class="form-control">
+            <option selected>Selecionar</option>
+            <option>Mitsuro Kirijo</option>
+            <option> Aigis</option>
+            <option>Junpei Iori</option>
+        </select>
+    </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-6 offset-md-3">
+      <label for="nomeCriminoso">País de origem:*</label>
+      <select id="nomeCriminoso" name="nomeCriminoso" class="form-control">
+          <option selected>Selecionar</option>
+          <option>Monika</option>
+          <option>Goro Akechi</option>
+      </select>
+  </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-6 offset-md-3">
+    <label for="transporte">Transporte:*</label>
+    <select id="transporte" name="transporte" class="form-control">
+        <option selected>Selecionar</option>
+        <option>Terrestre</option>
+        <option>Aquático</option>
+        <option>Aéreo</option>
+    </select>
+</div>
+</div>
       
           <div class="form-group">
               <div style="width: 500px;"class="col-md-6 offset-md-3">
@@ -93,7 +110,11 @@
         const dataEObj = new Date(dataE);
         const dataFObj = new Date(dataF);
         console.log(dataFObj);
-
+           console.log(id_paisDeOrigem);
+           console.log(agente);
+           console.log(nomeCriminoso);
+           console.log(transporte);
+           
         const data = {
           data_inicio: dataEObj,
           data_fim: dataEObj,
