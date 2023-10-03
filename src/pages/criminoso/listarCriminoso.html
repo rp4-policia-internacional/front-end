@@ -18,7 +18,8 @@
         
         <link rel="stylesheet" type="text/css" href="estilo.css">
         
-        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
         <title> Criminosos foragidos </title>
 
         <style>
@@ -42,8 +43,21 @@
             </div>
         </div>
         
-   
-        <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 100px;">
+    
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true"></div>
+
+        <div class="col-md-3" style="margin-top: 100px">
+            <a href="../home/telaInicial.html">
+                <button type="button" class="btn btn-secondary">Voltar</button>
+            </a>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center mb-5" style="margin-right: 80px;" onclick="direcionaNovoCriminosoPage()">
+            <i class="fas fa-user-plus fa-lg"></i>  
+        </div>
+
+ 
+        <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 20px;">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -53,6 +67,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
+            <!-- Corpo da tabela (mantido como antes) -->
             <tbody id="criminososTabela"></tbody>
         </table>
 
@@ -157,6 +172,10 @@
                 .catch(function (error) {
                     console.error('Erro ao buscar criminoso: ', error);
                 });
+            }
+
+            function direcionaNovoCriminosoPage() {
+                    window.location.href = "../criminoso/formCadastro.html";
             }
             
         </script>
