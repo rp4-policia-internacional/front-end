@@ -38,29 +38,75 @@
 
 
         <script>
-            axios.get('http://localhost:3338/api/criminoso/')
-                .then(function (response) {
-                    const criminosos = response.data;
-                    const criminososTabela = document.getElementById('criminososTabela');
-    
-                    // Preencher a tabela com os dados das vítimas
-                    criminosos.forEach(function (criminoso) {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${criminoso.nome + '' + criminoso.sobrenome}</td>
-                            <td>${criminoso.id_paisOrigem}</td>
-                            <td>${criminoso.genero}</td>
-                            <td>${criminoso.idade} anos</td>
-                            <td>${criminoso.status}</td>
-                            <td><a href="detalhesCriminoso.html?id=${criminoso.id}"><button type="button" class="btn btn-secondary">Ver detalhes</button></a></td>
-                            <td><button type="button" class="btn btn-danger">Emitir pedido de busca e captura</button></td>
-                        `;
-                        criminososTabela.appendChild(row);
+
+        let criminosoSelecionadoId;
+
+        axios.get('http://localhost:3338/api/criminoso/')
+            .then(function (response) {
+                const criminosos = response.data;
+                const criminososTabela = document.getElementById('criminososTabela');
+
+                criminosos.forEach(function (criminoso) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${criminoso.nome + ' ' + criminoso.sobrenome}</td>
+                        <td>${criminoso.id_paisOrigem}</td>
+                        <td>${criminoso.genero}</td>
+                        <td>${criminoso.idade} anos</td>
+                        <td>${criminoso.status}</td>
+                    `;
+
+                    //botao ver detalhes
+                    const verDetalhesButton = document.createElement('button');
+                    verDetalhesButton.type = 'button';
+                    verDetalhesButton.className = 'btn btn-secondary';
+                    verDetalhesButton.textContent = 'Ver detalhes';
+                    verDetalhesButton.addEventListener('click', function () {
+                        //lidar com clique do ver detalhes
+                        criminosoSelecionadoId = criminoso.id;
+                        window.location.href = `detalhesCriminoso.html?id=${criminoso.id}`;
                     });
+                    const verDetalhesCell = document.createElement('td');
+                    verDetalhesCell.appendChild(verDetalhesButton);
+
+                    // emitir epdido de busca e captura
+                    const emitirPedidoButton = document.createElement('button');
+                    emitirPedidoButton.type = 'button';
+                    emitirPedidoButton.className = 'btn btn-danger';
+                    emitirPedidoButton.textContent = 'Emitir pedido de busca e captura';
+                    emitirPedidoButton.addEventListener('click', function () {
+                        
+                        const criminosoId = criminoso.id;
+                        this.criminosoSelecionadoId = criminoso.id;
+                        emitirPedidoDeBuscaECaptura(criminosoId);
+                        
+                    });
+
+                    const emitirPedidoCell = document.createElement('td');
+                    emitirPedidoCell.appendChild(emitirPedidoButton);
+
+                    row.appendChild(verDetalhesCell);
+                    row.appendChild(emitirPedidoCell);
+
+                    criminososTabela.appendChild(row);
+                });
+            })
+            .catch(function (error) {
+                console.error('Erro ao buscar criminosos:', error);
+            });
+
+            
+            function emitirPedidoDeBuscaECaptura(criminosoID) {
+                axios.get(`http://localhost:3338/api/criminoso/${criminosoID}`)
+                .then(function (response) {
+                    console.log(criminosoID);
                 })
                 .catch(function (error) {
-                    console.error('Erro ao buscar criminosos:', error);
+                    console.error('Erro ao buscar criminoso: ', error);
                 });
+            }
+            
+
         </script>
     </body>
 </html>
