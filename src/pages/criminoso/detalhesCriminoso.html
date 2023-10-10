@@ -1,81 +1,12 @@
-<<<<<<< HEAD
-<html>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="css/bootstrap.css">
-    
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-    
-    <head>
-    <title> Países membros </title>
-    <div >
-        <img src="/src/shared/images/logo.png" width="100px" alt="logo"
-        
-    class="img"  >
-    </div class="container">
-    <div >
-      <img style="position: absolute; top: 50px; left: 1300px; bottom: 50px;" src="/src/shared/images/user.png" width="56" height="64" alt="user"
-      
-    class="img"  >
-    </div>
-    
-      <img style="position: absolute; top: 50px; left: 1200px; bottom: 50px;" src="/src/shared/images/notification.png" width="56" height="64" alt="user"
-      
-    class="img"  >
-    </div>
-    </head>
-    <body>
-        <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 100px;">
-            <thead>
-                <tr>
-                    <th>Foto</th>
-                    <th>Nome</th>
-                    <th>Nacionalidade</th>
-                    <th>Genêro</th>
-                    <th>Altura</th>
-                    <th>Status</th>
-
-
-
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><img src="Foto do criminoso/Shido.png" alt="Imagem"></td>
-                    <td>Masayoshi Shido</td>
-                   <td>Japonês(a)
-                    </td>
-                    <td>Masculino</td>
-                    <td>Não informado</td>
-                    <td>Foragido(a)</td>
-                </tr>
-               
-              
-            </tbody>
-        </table>
-    </body>
-=======
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <title>Cadastro de Criminosos</title>
+    <title>Detalhes do Criminoso</title>
 </head>
-
 <body>
     <div class="container mt-5">
         <div class="row">
@@ -85,27 +16,13 @@
                 </a>
             </div>
             <div class="col-md-9 mt-5">
-                <h1>Adam Scott</h1>
-                <div class="d-flex">
-
+                <h1 id="detalhesCriminoso">Carregando...</h1>
+                <div class="d-flex align-items-start">
                     <div class="ml-2">
-                        <img src="/src/shared/images/procurado.svg" class="rounded float-start border"
-                            alt="Foto do criminoso">
+                        <img src="/src/shared/images/procurado.svg"
+                            class="rounded float-start border" alt="Foto do criminoso">
                     </div>
-                    <div class="ml-4">
-                        <p><strong>Nome:</strong> Adam</p>
-                        <p><strong>Sobrenome:</strong> Scott</p>
-                        <p><strong>Nacionalidade:</strong> Estadunidense</p>
-                        <p><strong>Data de nascimento</strong> 01/09/1989</p>
-                        <p><strong>Altura:</strong> 1,70m</p>
-                        <p><strong>Gênero:</strong> Masculino</p>
-                        <p><strong>Idade:</strong> 30 anos</p>
-                        <p><strong>País Visto por Último:</strong> Estados Unidos</p>
-                        <p><strong>Apelido:</strong> Mestre do disfarce</p>
-                        <p><strong>Descrição do criminoso:</strong>Adam Scott possui uma tatuagem de um dragão nas
-                            costas, que se estende desde o pescoço até a cintura. Além disso, ele tem uma pequena
-                            tatuagem de uma caveira no antebraço direito.</p>
-                        <p><strong>Status:</strong> Foragido</p>
+                    <div class="ml-4" id="detalhesCriminoso">
                     </div>
                 </div>
             </div>
@@ -117,18 +34,67 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+    <style>
+        body {
+            font-size: 16px;
+        }
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+        h1,
+        p {
+            font-size: 14px;
+        }
+    </style>
+
+    <script>
+        function getURLParametro(nome) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nome);
+        }
+
+        // Detalhes do criminoso pelo ID
+        function buscarDetalhesCriminoso(id) {
+            axios.get(`http://localhost:3337/api/criminoso/${id}`)
+                .then(function (response) {
+                    const criminoso = response.data;
+                    const detalhesCriminoso = document.getElementById('detalhesCriminoso');
+
+                    detalhesCriminoso.innerHTML = `
+                        <h1>${criminoso.nome} ${criminoso.sobrenome}</h1>
+                        <div class="mt-3">
+                            <p><strong>Nome:</strong> ${criminoso.nome}</p>
+                            <p><strong>Sobrenome:</strong> ${criminoso.sobrenome}</p>
+                            <p><strong>Nacionalidade:</strong> ${criminoso.nacionalidade}</p>
+                            <p><strong>Data de Nascimento:</strong> ${criminoso.dataNascimento}</p>
+                            <p><strong>Altura:</strong> ${criminoso.altura}</p>
+                            <p><strong>Gênero:</strong> ${criminoso.genero}</p>
+                            <p><strong>Idade:</strong> ${calcularIdade(criminoso.dataNascimento)} anos</p>
+                            <p><strong>País Visto por Último:</strong> ${criminoso.paisUltimaVez}</p>
+                            <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
+                            <p><strong>Descrição do criminoso:</strong> ${criminoso.descricao}</p>
+                            <p><strong>Status:</strong> ${criminoso.status}</p>
+                        </div>
+                    `;
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar detalhes do criminoso:', error);
+                });
+        }
+
+        // Função para calcular a idade com base na data de nascimento
+        function calcularIdade(dataNascimento) {
+            const dataNasc = new Date(dataNascimento);
+            const hoje = new Date();
+            const diff = Math.abs(hoje - dataNasc);
+            return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+        }
+
+        // Buscar detalhes do criminoso pelo ID 
+        window.addEventListener('load', function () {
+            const idCriminoso = getURLParametro('id');
+            buscarDetalhesCriminoso(idCriminoso);
+        });
+    </script>
 </body>
-
->>>>>>> milena
 </html>

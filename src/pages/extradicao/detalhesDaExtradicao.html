@@ -1,68 +1,81 @@
-<html>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
-    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo da Extradição</title>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+
+    <!-- Seu arquivo de estilo CSS (se necessário) -->
     <link rel="stylesheet" href="css/bootstrap.css">
-    
     <link rel="stylesheet" type="text/css" href="estilo.css">
-    
-    <head>
-    <title> Resumo da Extradição </title>
-    <div >
-        <img src="/src/shared/images/logo.png" width="100px" alt="logo"
-        
-    class="img"  >
-    </div class="container">
-    <div >
-      <img style="position: absolute; top: 50px; left: 1300px; bottom: 50px;" src="/src/shared/images/user.png" width="56" height="64" alt="user"
-      
-    class="img"  >
+</head>
+<body>
+    <!-- Modal de Carregamento -->
+    <div class="modal" id="loadingModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <p>Aguardando carregamento...</p>
+                </div>
+            </div>
+        </div>
     </div>
-    
-      <img style="position: absolute; top: 50px; left: 1200px; bottom: 50px;" src="/src/shared/images/notification.png" width="56" height="64" alt="user"
-      
-    class="img"  >
-    </div>
-    </head>
-    <body>
-       
-              <div class="modal-content" style="margin-top: 5%; width: 600; margin-left: 25%;">
+
+    <!-- Modal de Detalhes da Extradição (inicialmente oculto) -->
+    <div class="modal" id="extradicaoModal">
+        <div class="modal-dialog" style="width: 600px; margin-left: 25%;">
+            <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Detalhes da extradição</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                    <h5 class="modal-title">Detalhes da Extradição</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    Policiais responsáveis:
-                    <div>
-                        Mitsuro Kirijo
-                    </div>
-                    Data que ocorrerá:
-        
-                        <div>27/09/2023
-        
-                        </div>
-                        Meio de Locomoção:
-        
-                        <div> Avião</div>
-                       
+                    <!-- Conteúdo dos detalhes da extradição -->
+                    <p id="policiaisResponsaveis"></p>
+                    <p id="dataOcorrencia"></p>
+                    <p id="meioLocomocao"></p>
                 </div>
-                <div class="modal-footer">
-               <a href="extradicaoFeita.html">   <button data-toggle="modal" data-target="#extradicaoLabel" type="button" class="btn btn-primary">Confirmar visualização</button></a>
+                
+                    <div class="modal-footer">
+                      <!-- Botão para confirmar visualização (redirecionar) -->
+                      <a href="../extradicao/extradicaoFinalizada.html">
+                          <button type="button" class="btn btn-primary">Confirmar visualização</button>
+                      </a>
+                  </div>
+                  
                 </div>
-              </div>
             </div>
-          </div>
-         
-    </body>
+        </div>
+    </div>
+
+    <!-- Seu código JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        async function carregarDetalhesExtradicao() {
+            // Simule um atraso (3 segundos) para demonstrar o carregamento
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Atualize os detalhes da extradição (substitua com seus próprios dados)
+            document.getElementById("policiaisResponsaveis").textContent = "Policiais responsáveis: Roger Rodrigues, Alice Johnson, e John Smith";
+            document.getElementById("dataOcorrencia").textContent = "Data que ocorrerá: 27/10/2023";
+            document.getElementById("meioLocomocao").textContent = "Meio de Locomoção: transporte aéreo";
+
+            // Esconda o modal de carregamento
+            $("#loadingModal").modal("hide");
+            // Mostre o modal de detalhes da extradição
+            $("#extradicaoModal").modal("show");
+        }
+
+        // Chame a função para carregar os detalhes da extradição
+        carregarDetalhesExtradicao();
+    </script>
+</body>
 </html>
