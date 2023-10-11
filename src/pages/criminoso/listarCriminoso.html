@@ -84,7 +84,7 @@
                 criminosos.forEach(function (criminoso) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${criminoso.nome + ' ' + criminoso.sobrenome}</td>
+                        <td>${criminoso.nomeCompleto}</td>
                         <td>${criminoso.id_paisOrigem}</td>
                         <td>${criminoso.genero}</td>
                         <td>${criminoso.idade} anos</td>

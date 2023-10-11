@@ -54,42 +54,45 @@
         }
 
         // Detalhes do criminoso pelo ID
-        function buscarDetalhesCriminoso(id) {
-            axios.get(`http://localhost:3337/api/criminoso/${id}`)
-                .then(function (response) {
-                    const criminoso = response.data;
-                    const detalhesCriminoso = document.getElementById('detalhesCriminoso');
+        async function buscarDetalhesCriminoso(id) {
+            try {
+            const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+            const criminoso = response.data;
+            const detalhesCriminoso = document.getElementById('detalhesCriminoso');
+            const nomeOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
 
-                    detalhesCriminoso.innerHTML = `
-                        <h1>${criminoso.nome} ${criminoso.sobrenome}</h1>
-                        <div class="mt-3">
-                            <p><strong>Nome:</strong> ${criminoso.nome}</p>
-                            <p><strong>Sobrenome:</strong> ${criminoso.sobrenome}</p>
-                            <p><strong>Nacionalidade:</strong> ${criminoso.nacionalidade}</p>
-                            <p><strong>Data de Nascimento:</strong> ${criminoso.dataNascimento}</p>
-                            <p><strong>Altura:</strong> ${criminoso.altura}</p>
-                            <p><strong>Gênero:</strong> ${criminoso.genero}</p>
-                            <p><strong>Idade:</strong> ${calcularIdade(criminoso.dataNascimento)} anos</p>
-                            <p><strong>País Visto por Último:</strong> ${criminoso.paisUltimaVez}</p>
-                            <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
-                            <p><strong>Descrição do criminoso:</strong> ${criminoso.descricao}</p>
-                            <p><strong>Status:</strong> ${criminoso.status}</p>
+                detalhesCriminoso.innerHTML = `
+                    <h1>${criminoso.nomeCompleto}</h1>
+                    <div class="mt-3">
+                        <p><strong>Nome Completo:</strong> ${criminoso.nomeCompleto}</p>
+                        <p><strong>Altura:</strong> ${criminoso.altura}</p>
+                        <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
+                        <p><strong>Data de Nascimento:</strong> ${criminoso.dataNascimento}</p>
+                        <p><strong>Nacionalidade:</strong> ${criminoso.id_paisOrigem}</p>
+                        <p><strong>Gênero:</strong> ${criminoso.genero}</p>
+                        <p><strong>País Visto por Último:</strong> ${criminoso.id_paisVistoPorUltimo}</p>
+                        <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
+                        <p><strong>Descrição do criminoso:</strong> ${criminoso.caracteristicas}</p>
+                        <p><strong>Status:</strong> ${criminoso.status}</p>
+                        <p><strong>Organização:</strong> ${nomeOrganizacao}</p>
                         </div>
-                    `;
-                })
-                .catch(function (error) {
-                    console.error('Erro ao buscar detalhes do criminoso:', error);
-                });
+                `;console.log(nomeOrganizacao);
+            }catch {
+                console.error('Erro ao buscar detalhes do criminoso:', error)
+            }             
         }
 
-        // Função para calcular a idade com base na data de nascimento
-        function calcularIdade(dataNascimento) {
-            const dataNasc = new Date(dataNascimento);
-            const hoje = new Date();
-            const diff = Math.abs(hoje - dataNasc);
-            return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+        async function buscarOrganizacao(id) {
+            try {
+                const response = await axios.get(`http://localhost:3338/api/organizacao/${id}`);
+                return response.data.nome;
+            } catch (error) {
+                console.error('Erro ao buscar organização:', error);
+                throw error; // Rejeita a Promise em caso de erro, se necessário.
+            }
         }
 
+       
         // Buscar detalhes do criminoso pelo ID 
         window.addEventListener('load', function () {
             const idCriminoso = getURLParametro('id');

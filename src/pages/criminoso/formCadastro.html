@@ -110,10 +110,9 @@
                     <div class="form-group">
                         <label for="id_organizacao">Organização:</label>
                         <select id="id_organizacao" class="form-control">
-
+                            <option value="0">Nenhum Grupo</option>
                         </select>
                     </div>
-                    <div id="teste"></div>
                 </div>
             </div>
     
@@ -148,10 +147,12 @@
                     imagePreview.style.display = 'none';
                 }
             });
+        
 
             // Quando o formulário for enviado
             document.getElementById("formCadastroCriminoso").addEventListener("submit", function (event) {
-            event.preventDefault(); ; // Evita o comportamento padrão de envio do formulário
+            event.preventDefault();
+             // Evita o comportamento padrão de envio do formulário
                 
                 const nomeCompleto= document.getElementById("nomeCompleto").value;
                 const altura = parseFloat(document.getElementById("altura").value);
@@ -198,6 +199,7 @@
             });
         });
 
+        //Coloca as organizações do banco no select
         axios.get("http://localhost:3338/api/organizacao/")
         .then(function (response) {
             const select = document.getElementById("id_organizacao");
@@ -206,7 +208,6 @@
                 
                     let option = document.createElement('option');
                         option.text = response.data[i].nome;
-                        console.log(option.value = response.data[i].id_organizacao);
                         option.value = response.data[i].id;
                         select.add(option);
                 }
@@ -216,7 +217,7 @@
                 }            
                 // Adicione o evento de mudança ao select
                 select.addEventListener('change', alteraValor);
-                console.log(response.data);
+                
            
         })
         .catch(function (error) {
