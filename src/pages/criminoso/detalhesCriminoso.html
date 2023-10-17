@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col-md-3 ml-4 text-right">
-                <a href="editarCadastroCriminoso.html">
+                <a onclick="formEditarCriminoso()">
                     <button type="button" class="btn btn-secondary">Editar</button>
                 </a>
             </div>
@@ -51,6 +51,13 @@
         function getURLParametro(nome) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(nome);
+        }
+        function getIdURL() {
+            const url = window.location.href;
+            // Cria um objeto URL para analisar a URL
+            const urlObj = new URL(url);
+             // Obtém o valor do parâmetro 'id' da URL
+            return idC = urlObj.searchParams.get("id");
         }
 
         // Detalhes do criminoso pelo ID
@@ -87,7 +94,7 @@
                 const response = await axios.get(`http://localhost:3338/api/organizacao/${id}`);
                 return response.data.nome;
             } catch (error) {
-                console.error('Erro ao buscar organização:', error);
+                alert('Erro ao buscar organização:', error);
                 throw error; // Rejeita a Promise em caso de erro, se necessário.
             }
         }
@@ -98,6 +105,15 @@
             const idCriminoso = getURLParametro('id');
             buscarDetalhesCriminoso(idCriminoso);
         });
+
+        function formEditarCriminoso() {
+            // Pega a URL atual
+            const idC = getIdURL();
+            // Após obter os dados do criminoso, redirecione para a página de edição com o id na query string
+            location.href = `../criminoso/editarCadastroCriminoso.html?id=${idC}`;
+            
+            
+        }
     </script>
 </body>
 </html>
