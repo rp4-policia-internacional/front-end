@@ -85,8 +85,61 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function getURLParametro(nome) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nome);
+        }
+
+        document.getElementById("editarCadastroCriminosoForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const id = getURLParametro('id');
+            console.log(id);
+
+            const nome = document.getElementById("nome").value;
+            const sobrenome = document.getElementById("sobrenome").value;
+            const nacionalidade = document.getElementById("nacionalidade").value;
+            const dataNascimento = document.getElementById("dataNascimento").value;
+            const altura = document.getElementById("altura").value;
+            const genero = document.getElementById("genero").value;
+            const idade = document.getElementById("idade").value;
+            const paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+            const apelido = document.getElementById("apelido").value;
+            const descricao = document.getElementById("descricao").value;
+            const statusDoCriminoso = document.getElementById("status").value;
+
+            const data = {
+                nome: nome,
+                sobrenome: sobrenome,
+                nacionalidade: nacionalidade,
+                dataNascimento: dataNascimento,
+                altura: altura,
+                genero: genero,
+                idade: idade,
+                paisVistoPorUltimo: paisVistoPorUltimo,
+                apelido: apelido,
+                descricao: descricao,
+                statusDoCriminoso: statusDoCriminoso,
+            };
+
+            axios.put(`http://localhost:3338/api/criminoso/${id}`, data)
+                .then(function (response) {
+                    console.log("Atualização de criminoso bem-sucedida!", response.data);
+                    window.location.href = `detalhesCriminoso.html?id=${id}`;
+                })
+                .catch(function (error) {
+                    console.error("Erro ao atualizar criminoso:", error);
+                });
+        });
+    </script>
+
 
 
 </body>
+
 </html>

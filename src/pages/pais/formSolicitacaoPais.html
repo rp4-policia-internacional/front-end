@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de País</title>
+</head>
+<body>
+    <h1>Formulário de País</h1>
+    <form id="formularioPais" action="URL_DO_SERVIDOR" method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+
+        <label for="gentilico">Gentílico:</label>
+        <input type="text" id="gentilico" name="gentilico" required><br><br>
+
+        <label for="extensaoTerritorial">Extensão Territorial:</label>
+        <input type="number" id="extensaoTerritorial" name="extensaoTerritorial" step="0.01" required><br><br>
+
+        <label for="capital">Capital:</label>
+        <input type="text" id="capital" name="capital" required><br><br>
+
+        <label for="continente">Continente:</label>
+        <input type="text" id="continente" name="continente" required><br><br>
+
+        <label for="governo">Governo:</label>
+        <input type="text" id="governo" name="governo" required><br><br>
+
+        <label for="idioma">Idioma:</label>
+        <input type="text" id="idioma" name="idioma" required><br><br>
+
+        <label for="populacao">População:</label>
+        <input type="number" id="populacao" name="populacao" required><br><br>
+
+        <label for="moeda">Moeda:</label>
+        <input type="text" id="moeda" name="moeda" required><br><br>
+
+        <label for="emailDeContato">Email de Contato:</label>
+        <input type="email" id="emailDeContato" name="emailDeContato" required><br><br>
+
+        <label for="emailDepartamento">Email do Departamento:</label>
+        <input type="email" id="emailDepartamento" name="emailDepartamento" required><br><br>
+
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" required><br><br>
+
+        <label for="dataIngresso">Data de Ingresso:</label>
+        <input type="date" id="dataIngresso" name="dataIngresso" required><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+       document.getElementById("formularioPais").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const nome = document.getElementById("nome").value;
+    const gentilico = document.getElementById("gentilico").value;
+    const extensaoTerritorial = parseFloat(document.getElementById("extensaoTerritorial").value);
+    const capital = document.getElementById("capital").value;
+    const continente = document.getElementById("continente").value;
+    const governo = document.getElementById("governo").value;
+    const idioma = document.getElementById("idioma").value;
+    const populacao = parseFloat(document.getElementById("populacao").value);
+    const moeda = document.getElementById("moeda").value;
+    const emailDeContato = document.getElementById("emailDeContato").value;
+    const emailDepartamento = document.getElementById("emailDepartamento").value;
+    const status = document.getElementById("status").value;
+    const dataIngresso = document.getElementById("dataIngresso").value;
+
+    const data = {
+        nome: nome,
+        gentilico: gentilico,
+        extensaoTerritorial: extensaoTerritorial,
+        capital: capital,
+        continente: continente,
+        governo: governo,
+        idioma: idioma,
+        populacao: populacao,
+        moeda: moeda,
+        emailDeContato: emailDeContato,
+        emailDepartamento: emailDepartamento,
+        status: status,
+        dataIngresso: dataIngresso,
+    };
+
+    axios.post("http://localhost:3339/api/pais/", data)
+        .then(function (response) {
+            console.log("Dados enviados com sucesso:", response.data);
+        })
+        .catch(function (error) {
+            console.error("Erro ao enviar dados:", error);
+        });
+});
+    </script>
+</body>
+</html>

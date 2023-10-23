@@ -29,8 +29,8 @@
                 </div>
             </div>
             <div class="col-md-3 ml-4 text-right">
-                <a href="editarCadastroCriminoso.html">
-                    <button type="button" class="btn btn-secondary">Editar</button>
+                <a href="editarCadastroCriminoso.html" id="editarLink"></a>
+                <button type="button" class="btn btn-secondary">Editar</button>
                 </a>
             </div>
         </div>
@@ -92,10 +92,13 @@
             return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
         }
 
-        // Buscar detalhes do criminoso pelo ID 
+
         window.addEventListener('load', function () {
             const idCriminoso = getURLParametro('id');
             buscarDetalhesCriminoso(idCriminoso);
+
+            const editarLink = document.getElementById('editarLink');
+            editarLink.href = `editarCadastroVitima.html?id=${idCriminoso}`;
         });
     </script>
 </body>

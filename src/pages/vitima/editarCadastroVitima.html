@@ -20,6 +20,7 @@
                     placeholder="Informe o nome completo">
             </div>
             <div class="form-group">
+
                 <label for="id_paisDeOrigem">País de Origem*:</label>
                 <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control"
                     placeholder="Informe o país de origem">
@@ -27,7 +28,7 @@
             <div class="form-group">
                 <label for="id_autorDoCrime">Autor do Crime*:</label>
                 <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control"
-                    placeholder="Informe o autor do crime" readonly>
+                    placeholder="Informe o autor do crime" >
             </div>
             <div class="form-group">
                 <label for="nacionalidade">Nacionalidade*:</label>
@@ -85,17 +86,20 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+      
+      function getURLParametro(nome) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(nome);
+    }
 
-        // Defina a função getURLParametro antes de usá-la
-        function getURLParametro(nome) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(nome);
-        }
-
+       
         document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
             event.preventDefault();
-
-            const idVitima = getURLParametro('id');
+    
+            
+            const id = getURLParametro('id');
+            console.log(id);
+    
             const nomeCompleto = document.getElementById("nomeCompleto").value;
             const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
             const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
@@ -103,17 +107,12 @@
             const altura = document.getElementById("altura").value;
             const genero = document.getElementById("genero").value;
             const idade = document.getElementById("idade").value;
-            const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+            const paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
             const statusDaVitima = document.getElementById("status").value;
             const foto = document.getElementById("foto").value;
-
-
-
-
-
-
-
+    
             const data = {
+
                 id_paisDeOrigem: id_paisDeOrigem,
                 id_autorDoCrime: id_autorDoCrime,
                 nomeCompleto: nomeCompleto,
@@ -121,26 +120,23 @@
                 altura: altura,
                 genero: genero,
                 idade: idade,
-                id_paisVistoPorUltimo: id_paisVistoPorUltimo,
+                id_paisVistoPorUltimo: paisVistoPorUltimo,
                 statusDaVitima: statusDaVitima,
-                foto: foto // foto atualizada
+                foto: foto
             };
+    
 
-            // Envia os dados como JSON em uma solicitação PUT ou PATCH
-            axios.put(`http://localhost:3337/api/vitima/`, data)
+            axios.put(`http://localhost:3337/api/vitima/${id}`, data)
                 .then(function (response) {
-
                     console.log("Atualização de vítima bem-sucedida!", response.data);
-
-                    window.location.href = `detalhesVitima.html?id=${idVitima}`;
+                    
+                    window.location.href = `detalhesVitima.html?id=${id}`;
                 })
                 .catch(function (error) {
                     console.error("Erro ao atualizar vítima:", error);
                 });
         });
     </script>
-
-
+    
 </body>
-
 </html>

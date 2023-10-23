@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-md-3 ml-4 text-right">
-                <a href="editarCadastroVitima.html">
+                <a href="editarCadastroVitima.html?id=" id="editarLink">
                     <button type="button" class="btn btn-secondary">Editar</button>
                 </a>
                 <button type="button" class="btn btn-danger" id="removerVitima">Remover</button>
@@ -104,10 +104,15 @@
                 });
         }
 
-        // busca os detalhes da vítima pelo ID 
+
         window.addEventListener('load', function () {
             const idVitima = getURLParametro('id');
             buscarDetalhesVitima(idVitima);
+
+
+
+            const editarLink = document.getElementById('editarLink');
+            editarLink.href = `editarCadastroVitima.html?id=${idVitima}`;
         });
     </script>
 </body>
