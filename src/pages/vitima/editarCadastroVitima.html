@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Editar Cadastro de Vítima</title>
 </head>
+
 <body>
     <div class="container-fluid col-md-8 mt-5 pt-5">
         <h1>Editar Cadastro de Vítima</h1>
@@ -13,23 +16,27 @@
         <form id="editarCadastroVitimaForm">
             <div class="form-group">
                 <label for="nomeCompleto">Nome Completo*:</label>
-                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control" placeholder="Informe o nome completo" >
+                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control"
+                    placeholder="Informe o nome completo">
             </div>
             <div class="form-group">
                 <label for="id_paisDeOrigem">País de Origem*:</label>
-                <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control" placeholder="Informe o país de origem" >
+                <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control"
+                    placeholder="Informe o país de origem">
             </div>
             <div class="form-group">
                 <label for="id_autorDoCrime">Autor do Crime*:</label>
-                <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control" placeholder="Informe o autor do crime" readonly>
+                <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control"
+                    placeholder="Informe o autor do crime" readonly>
             </div>
             <div class="form-group">
                 <label for="nacionalidade">Nacionalidade*:</label>
-                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" placeholder="Informe a nacionalidade" >
+                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control"
+                    placeholder="Informe a nacionalidade">
             </div>
             <div class="form-group">
                 <label for="altura">Altura*:</label>
-                <input type="text" id="altura" name="altura" class="form-control" placeholder="Informe a altura" >
+                <input type="text" id="altura" name="altura" class="form-control" placeholder="Informe a altura">
             </div>
             <div class="form-group">
                 <label for="genero">Gênero*:</label>
@@ -40,11 +47,12 @@
             </div>
             <div class="form-group">
                 <label for="idade">Idade*:</label>
-                <input type="text" id="idade" name="idade" class="form-control" placeholder="Informe a idade" >
+                <input type="text" id="idade" name="idade" class="form-control" placeholder="Informe a idade">
             </div>
             <div class="form-group">
                 <label for="id_paisVistoPorUltimo">País Visto por Último*:</label>
-                <input type="text" id="paisVistoPorUltimo" name="paisVistoPorUltimo" class="form-control" placeholder="Informe o país visto por último" >
+                <input type="text" id="paisVistoPorUltimo" name="paisVistoPorUltimo" class="form-control"
+                    placeholder="Informe o país visto por último">
             </div>
             <div class="form-group">
                 <label for="status">Status*:</label>
@@ -57,7 +65,7 @@
             </div>
             <div class="form-group">
                 <label for="foto">Foto*:</label>
-                <input type="text" id="foto" name="foto" class="form-control" placeholder="Informe a URL da foto" >
+                <input type="text" id="foto" name="foto" class="form-control" placeholder="Informe a URL da foto">
             </div>
             <button type="submit" class="btn  btn-secondary">Salvar Alterações</button>
             <a href="detalhesVitima.html">
@@ -66,13 +74,18 @@
         </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        
+
         // Defina a função getURLParametro antes de usá-la
         function getURLParametro(nome) {
             const urlParams = new URLSearchParams(window.location.search);
@@ -80,7 +93,7 @@
         }
 
         document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
-            event.preventDefault(); 
+            event.preventDefault();
 
             const idVitima = getURLParametro('id');
             const nomeCompleto = document.getElementById("nomeCompleto").value;
@@ -92,14 +105,14 @@
             const idade = document.getElementById("idade").value;
             const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
             const statusDaVitima = document.getElementById("status").value;
-            const foto =  document.getElementById("foto").value;
-
-         
+            const foto = document.getElementById("foto").value;
 
 
 
 
-            
+
+
+
             const data = {
                 id_paisDeOrigem: id_paisDeOrigem,
                 id_autorDoCrime: id_autorDoCrime,
@@ -114,11 +127,11 @@
             };
 
             // Envia os dados como JSON em uma solicitação PUT ou PATCH
-            axios.put(`http://localhost:3337/api/vitima/`, data) 
+            axios.put(`http://localhost:3337/api/vitima/`, data)
                 .then(function (response) {
-                  
+
                     console.log("Atualização de vítima bem-sucedida!", response.data);
-                
+
                     window.location.href = `detalhesVitima.html?id=${idVitima}`;
                 })
                 .catch(function (error) {
@@ -127,6 +140,7 @@
         });
     </script>
 
-    
+
 </body>
+
 </html>

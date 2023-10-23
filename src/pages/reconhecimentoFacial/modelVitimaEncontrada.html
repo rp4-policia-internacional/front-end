@@ -1,51 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-        <div class="modal" data-backdrop="static" data-keyboard="false" id="vitimaEncontradaModal">
-            <div class="modal-dialog">
-                <div class="modal-content" style="border: 3px solid green;">
-                    <!-- Conteúdo do modal -->
-                    <div class="modal-header">
-                        <h4 class="modal-title text-center">A vítima foi identificada</h4>
-                    </div>
-                    <div class="modal-body d-flex justify-content-center align-items-center">
-                        <img src="../../shared/images/procurado.svg"></img>
-                        <p class="text-center">A vítima <span id="idCriminoso"></span> 
-                            foi encontrada no país <span id="idPaisCapturado"></span> 
-                            por uma das câmeras de segurança! 
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                              </svg>
-                            Acionar resgate</button>
-                    </div>
-                    
-                     
+</head>
+
+<body>
+
+    <div class="modal" data-backdrop="static" data-keyboard="false" id="vitimaEncontradaModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 3px solid green;">
+                <!-- Conteúdo do modal -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">A vítima foi identificada</h4>
                 </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img src="../../shared/images/procurado.svg"></img>
+                    <p class="text-center">A vítima <span id="idCriminoso"></span>
+                        foi encontrada no país <span id="idPaisCapturado"></span>
+                        por uma das câmeras de segurança!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                        Acionar resgate</button>
+                </div>
+
+
             </div>
         </div>
+    </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $("#vitimaEncontradaModal").modal("show"); 
-            });
-        </script>
+    <script>
+        $(document).ready(function () {
+            $("#vitimaEncontradaModal").modal("show");
+        });
+    </script>
 
-    </body>
+</body>
+
 </html>

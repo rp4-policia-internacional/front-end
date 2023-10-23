@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 </head>
+
 <body>
 
     <div class="modal" data-backdrop="static" data-keyboard="false" id="criminosoCapturadoModal">
@@ -19,13 +20,14 @@
                 </div>
                 <div class="modal-body d-flex justify-content-center align-items-center">
                     <img src="../../shared/images/procurado.svg"></img>
-                    <p class="text-center">Criminoso <span id="idCriminoso"></span> 
-                        foi capturado pelos policiais. O país <span id="idPaisCapturado"></span> 
+                    <p class="text-center">Criminoso <span id="idCriminoso"></span>
+                        foi capturado pelos policiais. O país <span id="idPaisCapturado"></span>
                         está aguardando o pedido de extradição.
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" onclick="enviarPedidoExtradicao()">Enviar pedido de extradição</button>
+                    <button type="button" class="btn btn-dark" onclick="enviarPedidoExtradicao()">Enviar pedido de
+                        extradição</button>
                 </div>
             </div>
         </div>
@@ -36,8 +38,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $("#criminosoCapturadoModal").modal("show"); 
+        $(document).ready(function () {
+            $("#criminosoCapturadoModal").modal("show");
         });
     </script>
 
@@ -50,10 +52,8 @@
         });
 
         function enviarPedidoExtradicao() {
-            // Redirecionar para a página dentro da pasta "extradicao"
             window.location.href = '../extradicao/detalhesDaExtradicao.html';
         }
     </script>
-
 </body>
 </html>

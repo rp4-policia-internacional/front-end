@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuário</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+
 <body>
+
     <div class="container mt-5">
         <h2 class="text-center">Cadastro de Usuário</h2>
         <form id="userForm">
@@ -34,35 +38,56 @@
         </form>
     </div>
 
-    <!-- Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <!-- ... outros cabeçalhos ... -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- ... outros scripts ... -->
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Crie um elemento para carregar o cabeçalho
+            var headerContainer = document.createElement("div");
+            headerContainer.id = "header-container";
+            document.body.prepend(headerContainer);
+
+            // Carregue o conteúdo do cabeçalho
+            fetch("../../shared/components/header.html")
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (data) {
+                    headerContainer.innerHTML = data;
+                });
+        });
+    </script>
     <script>
         document.getElementById("userForm").addEventListener("submit", function (event) {
             event.preventDefault();
-    
+
             const nome = document.getElementById("nome").value;
             const email = document.getElementById("email").value;
             const senha = document.getElementById("senha").value;
-            const tipoUsuario = document.getElementById("tipoUsuario").value; // Obter o valor selecionado do select
-    
+            const tipoUsuario = document.getElementById("tipoUsuario").value;
+
             const data = {
                 nome: nome,
                 email: email,
                 senha: senha,
-                tipoUsuario: tipoUsuario // Incluir o tipo de usuário no objeto de dados
+                tipoUsuario: tipoUsuario
             };
-    
+
             axios.post("http://localhost:8080/api/login/", data)
                 .then(function (response) {
                     console.log("Cadastro de usuário bem-sucedido!", response.data);
-                    // Mostrar modal de feedback ou mensagem de sucesso
-                    
+
+
                 })
                 .catch(function (error) {
                     console.error("Erro ao cadastrar usuário:", error);
@@ -70,4 +95,5 @@
         });
     </script>
 </body>
+
 </html>
