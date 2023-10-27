@@ -20,9 +20,9 @@
             <div class="col-md-9 mt-5">
                 <h1 id="detalhesVitima">Carregando...</h1>
                 <div class="d-flex align-items-start">
-                    <div class="ml-2">
-                        <img src="../../shared/images/vitima.png" class="rounded float-start border"
-                            alt="Foto da Vítima">
+                    <div class="form-group">
+                        <label for="imagem">Inserir imagem</label>
+                        <input type="file" class="form-control-file" id="imagem" accept="image/*">
                     </div>
                     <div class="ml-4" id="detalhesVitima">
                     </div>
@@ -74,6 +74,8 @@
                             <p><strong>Idade:</strong> ${vitima.idade} anos</p>
                             <p><strong>País Visto por Último:</strong> ${vitima.id_paisVistoPorUltimo}</p>
                             <p><strong>Status:</strong> ${vitima.statusDaVitima}</p>
+                            <p><strong>Imagem:</strong></p>
+                            <img src="../../shared/images/pessoa.png" class="rounded float-start border"
                         </div>
                     `;
 
