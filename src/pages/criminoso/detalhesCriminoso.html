@@ -19,7 +19,7 @@
                 <h1 id="detalhesCriminoso">Carregando...</h1>
                 <div class="d-flex align-items-start">
                     <div class="ml-2">
-                        <img src="/src/shared/images/procurado.svg"
+                        <img src="../../shared/images/procurado.svg"
                             class="rounded float-start border" alt="Foto do criminoso">
                     </div>
                     <div class="ml-4" id="detalhesCriminoso">
@@ -55,7 +55,7 @@
 
         // Detalhes do criminoso pelo ID
         function buscarDetalhesCriminoso(id) {
-            axios.get(`http://localhost:3337/api/criminoso/${id}`)
+            axios.get(`http://localhost:3338/api/criminoso/${id}`)
                 .then(function (response) {
                     const criminoso = response.data;
                     const detalhesCriminoso = document.getElementById('detalhesCriminoso');
@@ -65,14 +65,12 @@
                         <div class="mt-3">
                             <p><strong>Nome:</strong> ${criminoso.nome}</p>
                             <p><strong>Sobrenome:</strong> ${criminoso.sobrenome}</p>
-                            <p><strong>Nacionalidade:</strong> ${criminoso.nacionalidade}</p>
                             <p><strong>Data de Nascimento:</strong> ${criminoso.dataNascimento}</p>
                             <p><strong>Altura:</strong> ${criminoso.altura}</p>
                             <p><strong>Gênero:</strong> ${criminoso.genero}</p>
                             <p><strong>Idade:</strong> ${calcularIdade(criminoso.dataNascimento)} anos</p>
-                            <p><strong>País Visto por Último:</strong> ${criminoso.paisUltimaVez}</p>
+                            <p><strong>País Visto por Último:</strong> ${criminoso.id_paisVistoPorUltimo}</p>
                             <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
-                            <p><strong>Descrição do criminoso:</strong> ${criminoso.descricao}</p>
                             <p><strong>Status:</strong> ${criminoso.status}</p>
                         </div>
                     `;
