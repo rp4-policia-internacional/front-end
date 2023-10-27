@@ -99,8 +99,16 @@
             
             const id = getURLParametro('id');
             console.log(id);
-    
-            const nomeCompleto = document.getElementById("nomeCompleto").value;
+            var vitima;
+
+         
+            axios.get(`http://localhost:3337/api/vitima/${id}`).then((response) => {
+            console.log(response.data);
+           vitima = response.data;
+        });
+            
+
+            /*const nomeCompleto = document.getElementById("nomeCompleto").value;
             const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
             const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
             const nacionalidade = document.getElementById("nacionalidade").value;
@@ -109,20 +117,20 @@
             const idade = document.getElementById("idade").value;
             const paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
             const statusDaVitima = document.getElementById("status").value;
-            const foto = document.getElementById("foto").value;
+            const foto = document.getElementById("foto").value;*/
     
             const data = {
 
-                id_paisDeOrigem: id_paisDeOrigem,
-                id_autorDoCrime: id_autorDoCrime,
-                nomeCompleto: nomeCompleto,
-                nacionalidade: nacionalidade,
-                altura: altura,
-                genero: genero,
-                idade: idade,
-                id_paisVistoPorUltimo: paisVistoPorUltimo,
-                statusDaVitima: statusDaVitima,
-                foto: foto
+                id_paisDeOrigem: vitima.id_paisDeOrigem,
+                id_autorDoCrime: vitima.id_autorDoCrime,
+                nomeCompleto: vitima.nomeCompleto,
+                nacionalidade: vitima.nacionalidade,
+                altura: vitima.altura,
+                genero: vitima.genero,
+                idade: vitima.idade,
+                id_paisVistoPorUltimo: vitima.paisVistoPorUltimo,
+                statusDaVitima: vitima.statusDaVitima,
+                foto: vitima.foto
             };
     
 
