@@ -20,7 +20,7 @@
             </div>
         </div>
 
-
+        <input type="hidden" id="idVitima" name="idVitima">
 
         <form id="cadastroVitimaForm" action="/api/vitima/create" method="post" style="margin-top: 20px;">
             <div class="row">
@@ -31,13 +31,14 @@
                         <label for="imagem">Inserir imagem</label>
                         <input type="file" class="form-control-file" id="imagem" accept="image/*">
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="text-center">
-                            <img id="imagemPreview" src="" alt="Prévia da imagem" style="max-width: 300px; display: none; max-height: 100px">
+                            <img id="imagemPreview" src="" alt="Prévia da imagem"
+                                style="max-width: 300px; display: none; max-height: 100px">
                         </div>
                     </div>
-                    
+
 
 
                     <div class="form-group">
@@ -120,37 +121,78 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="imagem">Inserir imagem</label>
-                        <input type="file" class="form-control-file" id="imagem" accept="image/*">
-                    </div>
-                    
-                </div>
+
             </div>
+    </div>
 
 
 
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
 
 
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageUploadInput = document.getElementById('imagem');
+            const idVitimaInput = document.getElementById('idVitima');
+            const imagePreview = document.getElementById('imagemPreview');
+
+            // Restaurar a imagem da vítima ao carregar a página
+            const idVitima = idVitimaInput.value; // Obtém o ID da vítima
+            const savedImage = localStorage.getItem(idVitima + '_imagemDaVitima'); // Use o ID para recuperar a imagem correta
+
+            if (savedImage) {
+                imagePreview.src = savedImage;
+                imagePreview.style.display = 'block';
+            }
+
+            imageUploadInput.addEventListener('change', function () {
+                if (imageUploadInput.files.length > 0) {
+                    const file = imageUploadInput.files[0];
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const imageDataURL = e.target.result;
+
+                        // Use o ID da vítima para salvar a imagem no armazenamento local
+                        localStorage.setItem(idVitima + '_imagemDaVitima', imageDataURL);
+
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.src = '';
+                    imagePreview.style.display = 'none';
+                }
+            });
+
+
+
+            /*document.addEventListener('DOMContentLoaded', function () {
                 const imageUploadInput = document.getElementById('imagem');
-                const imagePreview = document.getElementById('imagemPreview');
-            
+                const imagePreview = document.getElementById('imagemPreview');COMENTEI
+                
                 imageUploadInput.addEventListener('change', function () {
                     if (imageUploadInput.files.length > 0) {
                         const file = imageUploadInput.files[0];
                         const reader = new FileReader();
             
                         reader.onload = function (e) {
+                            const imageDataURL = e.target.result;
+                // Salvar a imagem localmente no navegador
+                localStorage.setItem('imagemDaVitima', imageDataURL);
+                // Exibir a imagem no elemento de prévia
+                            
+                            
+                            
                             imagePreview.src = e.target.result;
                             imagePreview.style.display = 'block';
                         };
@@ -163,53 +205,67 @@
 
                 });
             
-                document.getElementById("cadastroVitimaForm").addEventListener("submit", function (event) {
-                    event.preventDefault();
-            
-                    const nomeCompleto = document.getElementById("nomeCompleto").value;
-                    const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
-                    const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
-                    const nacionalidade = document.getElementById("nacionalidade").value;
-                    const altura = document.getElementById("altura").value;
-                    const genero = document.getElementById("genero").value;
-                    const idade = document.getElementById("idade").value;
-                    const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
-                    const statusDaVitima = document.getElementById("status").value;
-            
-                    const imageUploadInput = document.getElementById('imagem');
-                    const imagemFile = imageUploadInput.files[0]; // Pega o arquivo de imagem
-            
-                    if (imagemFile) {
-                        const nomeDaImagem = imagemFile.name; // Pega o nome do arquivo de imagem
-            
-                        const data = {
-                            id_paisDeOrigem: id_paisDeOrigem,
-                            id_autorDoCrime: id_autorDoCrime,
-                            nomeCompleto: nomeCompleto,
-                            nacionalidade: nacionalidade,
-                            altura: parseFloat(altura),
-                            genero: genero,
-                            idade: parseInt(idade),
-                            id_paisVistoPorUltimo: id_paisVistoPorUltimo,
-                            statusDaVitima: statusDaVitima,
-                            foto: nomeDaImagem // nome da imagem, não é uma URL
-                        };
-            
-                        axios.post("http://localhost:3337/api/vitima/", data)
-                            .then(function (response) {
-                                console.log("Cadastro de vítima bem-sucedido!", response.data);
-                                //$("#cadastroVitimaModal").modal("show");  ADD
-                                // Redireciona para a página de detalhes da vítima com o ID da vítima recém-criada
-        window.location.href = `detalhesVitima.html?id=${response.data.id}`;
-                            })
-                            .catch(function (error) {
-                                console.error("Erro ao cadastrar vítima:", error);
-                            });
-                    }
-                });
+
+// Restaurar a imagem da vítima ao carregar a página
+const savedImage = localStorage.getItem('imagemDaVitima');
+    if (savedImage) {
+        imagePreview.src = savedImage;
+        imagePreview.style.display = 'block';
+    }*/
+
+
+            document.getElementById("cadastroVitimaForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const nomeCompleto = document.getElementById("nomeCompleto").value;
+                const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
+                const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
+                const nacionalidade = document.getElementById("nacionalidade").value;
+                const altura = document.getElementById("altura").value;
+                const genero = document.getElementById("genero").value;
+                const idade = document.getElementById("idade").value;
+                const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+                const statusDaVitima = document.getElementById("status").value;
+
+                const imageUploadInput = document.getElementById('imagem');
+                const imagemFile = imageUploadInput.files[0]; // Pega o arquivo de imagem
+
+                if (imagemFile) {
+                    const nomeDaImagem = imagemFile.name; // Pega o nome do arquivo de imagem
+
+                    const data = {
+                        id_paisDeOrigem: id_paisDeOrigem,
+                        id_autorDoCrime: id_autorDoCrime,
+                        nomeCompleto: nomeCompleto,
+                        nacionalidade: nacionalidade,
+                        altura: parseFloat(altura),
+                        genero: genero,
+                        idade: parseInt(idade),
+                        id_paisVistoPorUltimo: id_paisVistoPorUltimo,
+                        statusDaVitima: statusDaVitima,
+                        foto: nomeDaImagem
+                    };
+
+                    axios.post("http://localhost:3337/api/vitima/", data)
+                        .then(function (response) {
+                            console.log("Cadastro de vítima bem-sucedido!", response.data);
+
+
+                            const vitimaId = response.data.id; // Obtém o ID da vítima recém-criada
+                            document.getElementById("idVitima").value = vitimaId = vitimaId; // Define o ID da vítima no campo oculto
+
+                            //$("#cadastroVitimaModal").modal("show");  ADD
+                            // Redireciona para a página de detalhes da vítima com o ID da vítima recém-criada
+                            window.location.href = `detalhesVitima.html?id=${response.data.id}`;
+                        })
+                        .catch(function (error) {
+                            console.error("Erro ao cadastrar vítima:", error);
+                        });
+                }
             });
-            </script>
-            
+        });
+    </script>
+
 </body>
 
 </html>
