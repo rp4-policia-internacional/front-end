@@ -10,7 +10,7 @@
 <body>
 
     <div class="container-fluid col-md-8 mt-5 pt-5">
-        <form >
+        <form id="formCadastroOrg" action="/api/organizacao/create" method="post">
             <div class="form-group">
                 <label for="nome">Nome</label>
                 <input type="text" class="form-control" id="nome" placeholder="Nome">
@@ -27,6 +27,38 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    // Quando o formulário for enviado
+    document.getElementById("formCadastroOrg").addEventListener("submit", function (event) {
+      event.preventDefault(); ; // Evita o comportamento padrão de envio do formulário
+        
+        const nome= document.getElementById("nome").value;
+        const descricao = document.getElementById("descricao").value;
+
+        const data = {
+
+            nome: nome,
+            descricao: descricao, 
+           
+        };
+
+        // Envia os dados como JSON em uma solicitação POST
+        axios.post("http://localhost:3338/api/organizacao/", data)
+        .then(function (response) {
+        // Trate a resposta do back-end, se necessário
+        console.log("Cadastro da organização bem-sucedido!", response.data);
+        //  modal de feedback
+        $("#cadastroCriminosoModal").modal("show");
+        })
+        .catch(function (error) {
+        console.error("Erro ao cadastrar organização:", error);
+        });
+    });
+
+
+</script>
 </body>
 </html>
 

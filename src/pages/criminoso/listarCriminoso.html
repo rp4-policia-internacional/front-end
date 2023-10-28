@@ -30,6 +30,7 @@
     </head>
     
     <body>
+        
         <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
                 <div class="modal-content bg-transparent border-0">
@@ -73,6 +74,9 @@
 
 
         <script>
+             $(document).ready(function () {
+                $("#navbarContainer").load("../../components/header.html");
+            });
 
         let criminosoSelecionadoId;
 
@@ -84,7 +88,7 @@
                 criminosos.forEach(function (criminoso) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${criminoso.nome + ' ' + criminoso.sobrenome}</td>
+                        <td>${criminoso.nomeCompleto}</td>
                         <td>${criminoso.id_paisOrigem}</td>
                         <td>${criminoso.genero}</td>
                         <td>${criminoso.idade} anos</td>

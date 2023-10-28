@@ -12,73 +12,211 @@
         <p>Preencha os campos obrigatórios (*) antes de salvar.</p>
 
         <div class="container-fluid col-md-8 mt-5 pt-5"></div>
-            <form >
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="nome">Nome</label>
-                      <input type="text" class="form-control" id="nome" placeholder="Nome">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="sobrenome">Sobrenome</label>
-                      <input type="text" class="form-control" id="sobrenome" placeholder="Sobrenome">
+            <form id="formEditarCriminoso" action="/api/criminoso/update" method="post">
+                <div class="form-group">
+                    <label for="imagem">Inserir imagem</label>
+                    <input type="file" class="form-control-file" id="imagem" accept="image/*">
+                </div>
+                
+                <div class="form-group">
+                    <div class="text-center">
+                        <img id="imagemPreview" src="" alt="Prévia da imagem" style="max-width: 300px; display: none; max-height: 100px">
                     </div>
                 </div>
-                    <div class="form-group">
-                        <label for="nacionalidade">Nacionalidade</label>
-                        <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil">
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="nomeCompleto">Nome Completo:</label>
+                            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="nacionalidade">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="nacionalidade" placeholder="07/10/2002">
+                </div>
+    
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="altura">Altura:</label>
+                            <input type="double" class="form-control" id="altura" placeholder="1.67">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="nacionalidade">Altura</label>
-                        <input type="text" class="form-control" id="nacionalidade" placeholder="167">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="idade">Idade:</label>
+                            <input type="number" class="form-control" id="idade">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="genero">Gênero</label>
-                        <select id="genero" class="form-control">
-                            <option selected>Feminino</option>
-                            <option>Masculino</option>
-                        </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="genero">Gênero:</label>
+                            <select id="genero" class="form-control">
+                                <option selected>Feminino</option>
+                                <option>Masculino</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="nacionalidade">Idade</label>
-                        <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nacionalidade">Nacionalidade:</label>
+                            <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="nacionalidade">País em que foi visto pela última vez</label>
-                        <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil">
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dataNascimento">Data de Nascimento</label>
+                            <input type="date" class="form-control" id="dataNascimento">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="apelido">Apelido:</label>
-                        <input type="text" class="form-control" id="apelido" placeholder="Rubinho">
-                    </div>     
-                    <div class="form-group">
-                        <label for="descricao">Descrição do Criminoso:</label>
-                        <input type="text" class="form-control" id="descricao" placeholder="Caracteristicas do criminoso">
-                    </div>      
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select id="status" class="form-control">
-                            <option selected>Foragido</option>
-                            <option>Capturado</option>
-                            <option>Extraditado</option>
-                        </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="apelido">Apelido:</label>
+                            <input type="text" class="form-control" id="apelido" placeholder="Rubinho">
+                        </div>
                     </div>
-           
-                    <button type="submit" class="btn btn-secondary">Enviar</button>
-                    <a href="detalhesCriminoso.html">
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                    </a>
-                 </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="status">Status:</label>
+                            <select id="status" class="form-control">
+                                <option selected>Foragido</option>
+                                <option>Capturado</option>
+                                <option>Extraditado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="paisVistoPorUltimo">País em que foi visto pela última vez:</label>
+                            <input type="text" class="form-control" id="paisVistoPorUltimo" placeholder="Brasil">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="caracteristica">Caracteristicas:</label>
+                            <input type="text" class="form-control" id="caracteristica" rows="4" cols="50" placeholder="Adicione caracteristica do criminoso">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_organizacao">Organização:</label>
+                            <select id="id_organizacao" class="form-control">
+                                <option value="0">Nenhum Grupo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+        
+                <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
         </div>
 
+    <script>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        function getIdURL() {
+            const url = window.location.href;
+            // Cria um objeto URL para analisar a URL
+            const urlObj = new URL(url);
+             // Obtém o valor do parâmetro 'id' da URL
+            return idC = urlObj.searchParams.get("id");
+        }
+        const teste = getIdURL();
+
+        async function buscarDetalhesCriminoso(teste) {
+            try {
+            const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+            const criminoso = response.data;
+            const detalhesCriminoso = document.getElementById('detalhesCriminoso');
+            const nomeOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
+
+                detalhesCriminoso.innerHTML = `
+                    <h1>${criminoso.nomeCompleto}</h1>
+                    <div class="mt-3">
+                        <p><strong>Nome Completo:</strong> ${criminoso.nomeCompleto}</p>
+                        <p><strong>Altura:</strong> ${criminoso.altura}</p>
+                        <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
+                        <p><strong>Data de Nascimento:</strong> ${criminoso.dataNascimento}</p>
+                        <p><strong>Nacionalidade:</strong> ${criminoso.id_paisOrigem}</p>
+                        <p><strong>Gênero:</strong> ${criminoso.genero}</p>
+                        <p><strong>País Visto por Último:</strong> ${criminoso.id_paisVistoPorUltimo}</p>
+                        <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
+                        <p><strong>Descrição do criminoso:</strong> ${criminoso.caracteristicas}</p>
+                        <p><strong>Status:</strong> ${criminoso.status}</p>
+                        <p><strong>Organização:</strong> ${nomeOrganizacao}</p>
+                        </div>
+                `;console.log(nomeOrganizacao);
+            }catch {
+                console.error('Erro ao buscar detalhes do criminoso:', error)
+            }             
+        }
+
+        async function buscarOrganizacao(id) {
+            try {
+                const response = await axios.get(`http://localhost:3338/api/organizacao/${id}`);
+                return response.data.nome;
+            } catch (error) {
+                console.error('Erro ao buscar organização:', error);
+                throw error; // Rejeita a Promise em caso de erro, se necessário.
+            }
+        }
+
+         // Buscar detalhes do criminoso pelo ID 
+         window.addEventListener('load', function () {
+            const idCriminoso = getURLParametro('id');
+            buscarDetalhesCriminoso(idCriminoso);
+        });
+
+
+        document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
+            event.preventDefault(); 
+
+            const idVitima = getURLParametro('id');
+            const nomeCompleto = document.getElementById("nomeCompleto").value;
+            const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
+            const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
+            const nacionalidade = document.getElementById("nacionalidade").value;
+            const altura = document.getElementById("altura").value;
+            const genero = document.getElementById("genero").value;
+            const idade = document.getElementById("idade").value;
+            const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+            const statusDaVitima = document.getElementById("status").value;
+            const foto =  document.getElementById("foto").value;
+            
+            const data = {
+                id_paisDeOrigem: id_paisDeOrigem,
+                id_autorDoCrime: id_autorDoCrime,
+                nomeCompleto: nomeCompleto,
+                nacionalidade: nacionalidade,
+                altura: altura,
+                genero: genero,
+                idade: idade,
+                id_paisVistoPorUltimo: id_paisVistoPorUltimo,
+                statusDaVitima: statusDaVitima,
+                foto: foto // foto atualizada
+            };
+
+            // Envia os dados como JSON em uma solicitação PUT ou PATCH
+            axios.put(`http://localhost:3337/api/vitima/`, data) 
+                .then(function (response) {
+                  
+                    console.log("Atualização de vítima bem-sucedida!", response.data);
+                
+                    window.location.href = `detalhesVitima.html?id=${idVitima}`;
+                })
+                .catch(function (error) {
+                    console.error("Erro ao atualizar vítima:", error);
+                });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy"></script>
 
 
 </body>
