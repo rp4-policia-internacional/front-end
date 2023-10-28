@@ -20,7 +20,7 @@
             <div class="col-md-9 mt-5">
                 <h1 id="detalhesVitima">Carregando...</h1>
                 <div class="d-flex align-items-start">
-                    <!-- ID da vítima campo oculto -->
+              
                     <input type="hidden" id="idVitima" name="idVitima">
                     <div class="ml-2">
                         <label for="imagem">Imagem da Vítima:</label>
@@ -61,23 +61,6 @@
             return urlParams.get(nome);
         }
 
-
-        /*document.addEventListener('DOMContentLoaded', function () {
-    const imagePreview = document.getElementById('imagemPreview');
-    const idVitima = getURLParametro('id');
-    
-     // Recupere o ID da vítima do URL
-     document.getElementById("idVitima").value = idVitima;
-    
-    // Restaurar a imagem da vítima ao carregar a página
-    const savedImage = localStorage.getItem(idVitima + '_imagemDaVitima');
-    
-    //const savedImage = localStorage.getItem('imagemDaVitima');COMENTEI
-    if (savedImage) {
-        imagePreview.src = savedImage;
-        imagePreview.style.display = 'block';
-    }
-    });*/
         document.addEventListener('DOMContentLoaded', function () {
             const idVitimaInput = document.getElementById('idVitima');
             const idVitima = idVitimaInput.value; // Obtém o ID da vítima
@@ -91,7 +74,6 @@
                 imagePreview.style.display = 'block';
             }
         });
-
 
         // detalhes da vítima pelo no ID
         function buscarDetalhesVitima(id) {
@@ -111,12 +93,8 @@
                         <p><strong>Idade:</strong> ${vitima.idade} anos</p>
                         <p><strong>País Visto por Último:</strong> ${vitima.id_paisVistoPorUltimo}</p>
                         <p><strong>Status:</strong> ${vitima.statusDaVitima}</p>
-                     
-                       
                     </div>
                 `;
-
-
                     const removerVitimaBtn = document.getElementById('removerVitima');
                     removerVitimaBtn.addEventListener('click', function () {
                         // Confirmação para remover a vítima
@@ -142,18 +120,12 @@
                     console.error('Erro ao remover vítima:', error);
                 });
         }
-
-
         window.addEventListener('load', function () {
             const idVitima = getURLParametro('id');
             buscarDetalhesVitima(idVitima);
-
-
-
             const editarLink = document.getElementById('editarLink');
             editarLink.href = `editarCadastroVitima.html?id=${idVitima}`;
         });
     </script>
 </body>
-
 </html>
