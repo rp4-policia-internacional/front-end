@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link rel="stylesheet" href="../login/CSS/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
 </head>
 <body>
     <div class="container">
@@ -17,20 +15,17 @@
                 <h2 class="title title-primary">Bem vindo!</h2>
                 <p class="description description-primary">Participe da Polícia Internacional</p>
                 <p class="description description-primary">Cadastre-se</p>
-     
             </div>    
             <div class="second-column">
                 <h2 class="title title-second">Cadastro</h2>
-                
                 <p class="description description-second">cadastre-se:</p>
-
-                <form class="form">
+                <form id="userForm" class="form"> <!-- Adicionei o ID "userForm" aqui -->
                     <div class="form-group">
                         <label class="label-input" for="inputNome">
                             <i class="far fa-user icon-modify"></i>
                             <input type="text" class="form-control" id="inputNome" placeholder="Nome">
                         </label>
-                        
+                    </div>
                 <form class="form">
                     <div class="form-group">
                     <label class="label-input" for="">
@@ -52,14 +47,15 @@
                                 <option value="POLICIAL">Policial</option>
                             </select>
                         </label>
-                    
-                    <button class="btn btn-second">Entrar</button>        
+                        
+                      
+                   <button type="submit" class="btn btn-primary">Cadastrar</button>    
                 </form>
             </div><!-- second column -->
         </div><!-- first content -->
         
     </div>
-    <script src="../login/cadastroUsuario.html"></script>
+   
 
 
 
@@ -74,23 +70,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Crie um elemento para carregar o cabeçalho
-            var headerContainer = document.createElement("div");
-            headerContainer.id = "header-container";
-            document.body.prepend(headerContainer);
-
-            // Carregue o conteúdo do cabeçalho
-            fetch("../../shared/components/header.html")
-                .then(function (response) {
-                    return response.text();
-                })
-                .then(function (data) {
-                    headerContainer.innerHTML = data;
-                });
-        });
-    </script>
+    
     <script>
         document.getElementById("userForm").addEventListener("submit", function (event) {
             event.preventDefault();

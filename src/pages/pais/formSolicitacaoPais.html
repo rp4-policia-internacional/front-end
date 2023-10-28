@@ -3,98 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Formulário de País</title>
 </head>
 <body>
-    <h1>Formulário de País</h1>
-    <form id="formularioPais" action="URL_DO_SERVIDOR" method="POST">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="../login/login.html">
+                    <button type="button" class="btn btn-secondary">Voltar</button>
+                </a>
+            </div>
+        </div>
+        <form id="formularioPais" action="URL_DO_SERVIDOR" method="POST" style="margin-top: 20px">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" class="form-control" placeholder="Informe o nome" required>
+            </div>
 
-        <label for="gentilico">Gentílico:</label>
-        <input type="text" id="gentilico" name="gentilico" required><br><br>
+            <div class="form-group">
+                <label for="gentilico">Gentílico:</label>
+                <input type="text" id="gentilico" name="gentilico" class="form-control" placeholder="Informe o gentílico" required>
+            </div>
 
-        <label for="extensaoTerritorial">Extensão Territorial:</label>
-        <input type="number" id="extensaoTerritorial" name="extensaoTerritorial" step="0.01" required><br><br>
+            <div class="form-group">
+                <label for="extensaoTerritorial">Extensão Territorial:</label>
+                <input type="number" id="extensaoTerritorial" name="extensaoTerritorial" class="form-control" step="0.01" placeholder="Informe a extensão territorial" required>
+            </div>
 
-        <label for="capital">Capital:</label>
-        <input type="text" id="capital" name="capital" required><br><br>
+            <div class="form-group">
+                <label for="capital">Capital:</label>
+                <input type="text" id="capital" name "capital" class="form-control" placeholder="Informe a capital" required>
+            </div>
 
-        <label for="continente">Continente:</label>
-        <input type="text" id="continente" name="continente" required><br><br>
+            <div class="form-group">
+                <label for="continente">Continente:</label>
+                <input type="text" id="continente" name="continente" class="form-control" placeholder="Informe o continente" required>
+            </div>
 
-        <label for="governo">Governo:</label>
-        <input type="text" id="governo" name="governo" required><br><br>
+            <div class="form-group">
+                <label for="governo">Governo:</label>
+                <input type="text" id="governo" name="governo" class="form-control" placeholder="Informe o tipo de governo" required>
+            </div>
 
-        <label for="idioma">Idioma:</label>
-        <input type="text" id="idioma" name="idioma" required><br><br>
+            <div class="form-group">
+                <label for="idioma">Idioma:</label>
+                <input type="text" id="idioma" name="idioma" class="form-control" placeholder="Informe o idioma" required>
+            </div>
 
-        <label for="populacao">População:</label>
-        <input type="number" id="populacao" name="populacao" required><br><br>
+            <div class="form-group">
+                <label for="populacao">População:</label>
+                <input type="number" id="populacao" name="populacao" class="form-control" placeholder="Informe a população" required>
+            </div>
 
-        <label for="moeda">Moeda:</label>
-        <input type="text" id="moeda" name="moeda" required><br><br>
+            <div class="form-group">
+                <label for="moeda">Moeda:</label>
+                <input type="text" id="moeda" name="moeda" class="form-control" placeholder="Informe a moeda" required>
+            </div>
 
-        <label for="emailDeContato">Email de Contato:</label>
-        <input type="email" id="emailDeContato" name="emailDeContato" required><br><br>
+            <div class="form-group">
+                <label for="emailDeContato">Email de Contato:</label>
+                <input type="email" id="emailDeContato" name="emailDeContato" class="form-control" placeholder="Informe o email de contato" required>
+            </div>
 
-        <label for="emailDepartamento">Email do Departamento:</label>
-        <input type="email" id="emailDepartamento" name="emailDepartamento" required><br><br>
+            <div class="form-group">
+                <label for="emailDepartamento">Email do Departamento:</label>
+                <input type="email" id="emailDepartamento" name="emailDepartamento" class="form-control" placeholder="Informe o email do departamento" required>
+            </div>
 
-        <label for="status">Status:</label>
-        <input type="text" id="status" name="status" required><br><br>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <input type="text" id="status" name="status" class="form-control" placeholder="Informe o status" required>
+            </div>
 
-        <label for="dataIngresso">Data de Ingresso:</label>
-        <input type="date" id="dataIngresso" name="dataIngresso" required><br><br>
+            <div class="form-group">
+                <label for="dataIngresso">Data de Ingresso:</label>
+                <input type="date" id="dataIngresso" name="dataIngresso" class="form-control" required>
+            </div>
 
-        <input type="submit" value="Enviar">
-    </form>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="termosDeUso" required>
+                <label class="form-check-label" for="termosDeUso">Eu concordo com os Termos de Uso</label>
+                <a href="termoDeUso.html" style="color: blue; text-decoration: none;">Termos de Uso</a>
+            </label>
+            </div>
 
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-       document.getElementById("formularioPais").addEventListener("submit", function (event) {
-    event.preventDefault();
+        document.getElementById("formularioPais").addEventListener("submit", function (event) {
+            event.preventDefault();
 
-    const nome = document.getElementById("nome").value;
-    const gentilico = document.getElementById("gentilico").value;
-    const extensaoTerritorial = parseFloat(document.getElementById("extensaoTerritorial").value);
-    const capital = document.getElementById("capital").value;
-    const continente = document.getElementById("continente").value;
-    const governo = document.getElementById("governo").value;
-    const idioma = document.getElementById("idioma").value;
-    const populacao = parseFloat(document.getElementById("populacao").value);
-    const moeda = document.getElementById("moeda").value;
-    const emailDeContato = document.getElementById("emailDeContato").value;
-    const emailDepartamento = document.getElementById("emailDepartamento").value;
-    const status = document.getElementById("status").value;
-    const dataIngresso = document.getElementById("dataIngresso").value;
+            const nome = document.getElementById("nome").value;
+            const gentilico = document.getElementById("gentilico").value;
+            const extensaoTerritorial = parseFloat(document.getElementById("extensaoTerritorial").value);
+            const capital = document.getElementById("capital").value;
+            const continente = document.getElementById("continente").value;
+            const governo = document.getElementById("governo").value;
+            const idioma = document.getElementById("idioma").value;
+            const populacao = parseFloat(document.getElementById("populacao").value);
+            const moeda = document.getElementById("moeda").value;
+            const emailDeContato = document.getElementById("emailDeContato").value;
+            const emailDepartamento = document.getElementById("emailDepartamento").value;
+            const status = document.getElementById("status").value;
+            const dataIngresso = document.getElementById("dataIngresso").value;
 
-    const data = {
-        nome: nome,
-        gentilico: gentilico,
-        extensaoTerritorial: extensaoTerritorial,
-        capital: capital,
-        continente: continente,
-        governo: governo,
-        idioma: idioma,
-        populacao: populacao,
-        moeda: moeda,
-        emailDeContato: emailDeContato,
-        emailDepartamento: emailDepartamento,
-        status: status,
-        dataIngresso: dataIngresso,
-    };
+            const data = {
+                nome: nome,
+                gentilico: gentilico,
+                extensaoTerritorial: extensaoTerritorial,
+                capital: capital,
+                continente: continente,
+                governo: governo,
+                idioma: idioma,
+                populacao: populacao,
+                moeda: moeda,
+                emailDeContato: emailDeContato,
+                emailDepartamento: emailDepartamento,
+                status: status,
+                dataIngresso: dataIngresso,
+            };
 
-    axios.post("http://localhost:3339/api/pais/", data)
-        .then(function (response) {
-            console.log("Dados enviados com sucesso:", response.data);
-        })
-        .catch(function (error) {
-            console.error("Erro ao enviar dados:", error);
+            axios.post("http://localhost:3339/api/pais/", data)
+                .then(function (response) {
+                    console.log("Dados enviados com sucesso:", response.data);
+                })
+                .catch(function (error) {
+                    console.error("Erro ao enviar dados:", error);
+                });
         });
-});
     </script>
 </body>
 </html>
