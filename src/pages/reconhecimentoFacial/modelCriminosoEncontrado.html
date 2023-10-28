@@ -41,7 +41,7 @@
                     <div class="modal-body d-flex justify-content-center align-items-center">
                         <img src="../../shared/images/procurado.svg"></img>
                         <p class="text-center">Criminoso <span id="nomeCriminoso"></span> 
-                            foi encontrado no país <span id="idPaisCapturado"></span> 
+                            foi encontrado no país <span id="nomePaisEncontrado"></span> 
                             por uma das câmeras de segurança! 
                         </p>
                     </div>
@@ -89,17 +89,18 @@
             dataObject = JSON.parse(decodeURIComponent(dataParam));
             console.log(dataObject);
         
-            getNomeCriminoso(dataObject.id_criminoso);
+            getCriminoso(dataObject);
         } else {
             console.error("Parâmetro 'data' não encontrado na URL");
         }
         
-        function getNomeCriminoso(criminosoID) {
-            axios.get(`http://localhost:3338/api/criminoso/${criminosoID}`)
+        function getCriminoso(criminoso) {
+            axios.get(`http://localhost:3338/api/criminoso/${criminoso.id_criminoso}`)
             .then(function (response) {
                 const data = response.data;
                 console.log(response.data);
                 $('#nomeCriminoso').text(`${data.nomeCompleto}`);
+                $('#nomePaisEncontrado').text(`${data.id_paisVistoPorUltimo}`);
             
             })
             .catch(function (error) {
