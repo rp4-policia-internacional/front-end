@@ -99,15 +99,13 @@
                 console.log(response.data);
                 $('#idCriminoso').text(`${data.nome} ${data.sobrenome}`);
 
-                const probabilidade = data.probabilidade; // Suponha que a probabilidade está em data.probabilidade
+                const probabilidade = data.probabilidade;
             
             if (probabilidade > 5) {
-                // Probabilidade maior que 5, redirecionar para "a.html"
                 setTimeout(function() {
                     window.location.href = "../capturamodelCapturado.html";
                 }, 2000);
             } else {
-                // Probabilidade menor ou igual a 5, redirecionar para "b.html"
                 setTimeout(function() {
                     window.location.href = "../capturamodelNaoCapturado.html";
                 }, 2000);

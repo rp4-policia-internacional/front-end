@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <title>Cadastro de Criminosos</title>
+    <title>Detalhes do Criminoso</title>
 </head>
-
 <body>
     <div class="container mt-5">
         <div class="row">
@@ -18,49 +16,106 @@
                 </a>
             </div>
             <div class="col-md-9 mt-5">
-                <h1>Adam Scott</h1>
-                <div class="d-flex">
-
+                <h1 id="detalhesCriminoso">Carregando...</h1>
+                <div class="d-flex align-items-start">
                     <div class="ml-2">
-                        <img src="/src/shared/images/procurado.svg" class="rounded float-start border"
-                            alt="Foto do criminoso">
+                        <img src="../../shared/images/procurado.svg"
+                            class="rounded float-start border" alt="Foto do criminoso">
                     </div>
-                    <div class="ml-4">
-                        <p><strong>Nome:</strong> Adam</p>
-                        <p><strong>Sobrenome:</strong> Scott</p>
-                        <p><strong>Nacionalidade:</strong> Estadunidense</p>
-                        <p><strong>Data de nascimento</strong> 01/09/1989</p>
-                        <p><strong>Altura:</strong> 1,70m</p>
-                        <p><strong>Gênero:</strong> Masculino</p>
-                        <p><strong>Idade:</strong> 30 anos</p>
-                        <p><strong>País Visto por Último:</strong> Estados Unidos</p>
-                        <p><strong>Apelido:</strong> Mestre do disfarce</p>
-                        <p><strong>Descrição do criminoso:</strong>Adam Scott possui uma tatuagem de um dragão nas
-                            costas, que se estende desde o pescoço até a cintura. Além disso, ele tem uma pequena
-                            tatuagem de uma caveira no antebraço direito.</p>
-                        <p><strong>Status:</strong> Foragido</p>
+                    <div class="ml-4" id="detalhesCriminoso">
                     </div>
                 </div>
             </div>
             <div class="col-md-3 ml-4 text-right">
-                <a href="editarCadastroCriminoso.html">
+                <a onclick="formEditarCriminoso()">
                     <button type="button" class="btn btn-secondary">Editar</button>
                 </a>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+    <style>
+        body {
+            font-size: 16px;
+        }
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+        h1,
+        p {
+            font-size: 14px;
+        }
+    </style>
+
+    <script>
+        function getURLParametro(nome) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nome);
+        }
+        function getIdURL() {
+            const url = window.location.href;
+            // Cria um objeto URL para analisar a URL
+            const urlObj = new URL(url);
+             // Obtém o valor do parâmetro 'id' da URL
+            return idC = urlObj.searchParams.get("id");
+        }
+
+        // Detalhes do criminoso pelo ID
+        async function buscarDetalhesCriminoso(id) {
+            try {
+            const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+            const criminoso = response.data;
+            const detalhesCriminoso = document.getElementById('detalhesCriminoso');
+            const nomeOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
+
+                detalhesCriminoso.innerHTML = `
+                    <h1>${criminoso.nomeCompleto}</h1>
+                    <div class="mt-3">
+                        <p><strong>Nome Completo:</strong> ${criminoso.nomeCompleto}</p>
+                        <p><strong>Altura:</strong> ${criminoso.altura}</p>
+                        <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
+                        <p><strong>Data de Nascimento:</strong> ${criminoso.dataNascimento}</p>
+                        <p><strong>Nacionalidade:</strong> ${criminoso.id_paisOrigem}</p>
+                        <p><strong>Gênero:</strong> ${criminoso.genero}</p>
+                        <p><strong>País Visto por Último:</strong> ${criminoso.id_paisVistoPorUltimo}</p>
+                        <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
+                        <p><strong>Descrição do criminoso:</strong> ${criminoso.caracteristicas}</p>
+                        <p><strong>Status:</strong> ${criminoso.status}</p>
+                        <p><strong>Organização:</strong> ${nomeOrganizacao}</p>
+                        </div>
+                `;console.log(nomeOrganizacao);
+            }catch {
+                console.error('Erro ao buscar detalhes do criminoso:', error)
+            }             
+        }
+
+        async function buscarOrganizacao(id) {
+            try {
+                const response = await axios.get(`http://localhost:3338/api/organizacao/${id}`);
+                return response.data.nome;
+            } catch (error) {
+                alert('Erro ao buscar organização:', error);
+                throw error; // Rejeita a Promise em caso de erro, se necessário.
+            }
+        }
+
+       
+        // Buscar detalhes do criminoso pelo ID 
+        window.addEventListener('load', function () {
+            const idCriminoso = getURLParametro('id');
+            buscarDetalhesCriminoso(idCriminoso);
+        });
+
+        function formEditarCriminoso() {
+            // Pega a URL atual
+            const idC = getIdURL();
+            // Após obter os dados do criminoso, redirecione para a página de edição com o id na query string
+            location.href = `../criminoso/editarCadastroCriminoso.html?id=${idC}`;
+            
+            
+        }
+    </script>
 </body>
 
+>>>>>>> milena
 </html>

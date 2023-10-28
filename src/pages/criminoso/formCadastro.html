@@ -28,60 +28,73 @@
             </div>
             
             <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="nomeCompleto">Nome Completo:</label>
+                        <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" placeholder="Nome">
+                        <label for="altura">Altura:</label>
+                        <input type="double" class="form-control" id="altura" placeholder="1.67">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="sobrenome">Sobrenome</label>
-                        <input type="text" class="form-control" id="sobrenome" placeholder="Sobrenome">
+                        <label for="idade">Idade:</label>
+                        <input type="number" class="form-control" id="idade">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="nacionalidade">Nacionalidade</label>
-                        <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="dataNascimento">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="dataNascimento">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="altura">Altura</label>
-                        <input type="double" class="form-control" id="altura" placeholder="167">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="genero">Gênero</label>
+                        <label for="genero">Gênero:</label>
                         <select id="genero" class="form-control">
                             <option selected>Feminino</option>
                             <option>Masculino</option>
                         </select>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nacionalidade">Nacionalidade:</label>
+                        <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil">
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="idade">Idade</label>
-                        <input type="number" class="form-control" id="idade">
+                        <label for="dataNascimento">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="dataNascimento">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="paisVistoPorUltimo">País em que foi visto pela última vez</label>
+                        <label for="apelido">Apelido:</label>
+                        <input type="text" class="form-control" id="apelido" placeholder="Rubinho">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" class="form-control">
+                            <option selected>Foragido</option>
+                            <option>Capturado</option>
+                            <option>Extraditado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="paisVistoPorUltimo">País em que foi visto pela última vez:</label>
                         <input type="text" class="form-control" id="paisVistoPorUltimo" placeholder="Brasil">
                     </div>
                 </div>
@@ -89,17 +102,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="apelido">Apelido</label>
-                        <input type="text" class="form-control" id="apelido" placeholder="Rubinho">
+                        <label for="caracteristica">Caracteristicas:</label>
+                        <input type="text" class="form-control" id="caracteristica" rows="4" cols="50" placeholder="Adicione caracteristica do criminoso">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="status">Status</label>
-                        <select id="status" class="form-control">
-                            <option selected>Foragido</option>
-                            <option>Capturado</option>
-                            <option>Extraditado</option>
+                        <label for="id_organizacao">Organização:</label>
+                        <select id="id_organizacao" class="form-control">
+                            <option value="0">Nenhum Grupo</option>
                         </select>
                     </div>
                 </div>
@@ -116,77 +127,106 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-        const imageUploadInput = document.getElementById('imagem');
-        const imagePreview = document.getElementById('imagemPreview');
+            const imageUploadInput = document.getElementById('imagem');
+            const imagePreview = document.getElementById('imagemPreview');
 
-        imageUploadInput.addEventListener('change', function () {
-            if (imageUploadInput.files.length > 0) {
-                const file = imageUploadInput.files[0];
-                const reader = new FileReader();
+            imageUploadInput.addEventListener('change', function () {
+                if (imageUploadInput.files.length > 0) {
+                    const file = imageUploadInput.files[0];
+                    const reader = new FileReader();
 
-                reader.onload = function (e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
+                    reader.onload = function (e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    // Se nenhum arquivo foi selecionado, esconda a prévia
+                    imagePreview.src = '';
+                    imagePreview.style.display = 'none';
+                }
+            });
+        
+
+            // Quando o formulário for enviado
+            document.getElementById("formCadastroCriminoso").addEventListener("submit", function (event) {
+            event.preventDefault();
+             // Evita o comportamento padrão de envio do formulário
+                
+                const nomeCompleto= document.getElementById("nomeCompleto").value;
+                const altura = parseFloat(document.getElementById("altura").value);
+                const idade = parseInt(document.getElementById("idade").value);
+                const dataNascimento = document.getElementById("dataNascimento").value;
+                const status= document.getElementById("status").value;
+                const apelido = document.getElementById("apelido").value;
+                const caracteristicas = document.getElementById("caracteristica").value;
+                const foto =  document.getElementById("imagem").value;
+                const genero = document.getElementById("genero").value;
+                const id_paisOrigem = document.getElementById("nacionalidade").value;
+                const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+                const id_organizacao =  document.getElementById("id_organizacao").value;
+                const formData = new FormData();
+                formData.append('imagem', imageUploadInput.files[0]);
+                
+                const data = {
+
+                    nomeCompleto: nomeCompleto,
+                    altura: altura,
+                    idade: idade, 
+                    dataNascimento: dataNascimento,
+                    status:status,
+                    apelido: apelido,
+                    caracteristicas: caracteristicas,
+                    foto: foto,
+                    genero:genero,
+                    id_paisVistoPorUltimo: id_paisVistoPorUltimo,
+                    id_paisOrigem:id_paisOrigem,
+                    id_organizacao:id_organizacao
                 };
 
-                reader.readAsDataURL(file);
-            } else {
-                // Se nenhum arquivo foi selecionado, esconda a prévia
-                imagePreview.src = '';
-                imagePreview.style.display = 'none';
-            }
-        });
-
-        // Quando o formulário for enviado
-        document.getElementById("formCadastroCriminoso").addEventListener("submit", function (event) {
-          event.preventDefault(); ; // Evita o comportamento padrão de envio do formulário
-            
-            const nome= document.getElementById("nome").value;
-            const sobrenome= document.getElementById("sobrenome").value;
-            const nacionalidade = document.getElementById("nacionalidade").value;
-            const dataNascimento = document.getElementById("dataNascimento").value;
-            const apelido = document.getElementById("apelido").value;
-            const altura = document.getElementById("altura").value;
-            const genero = document.getElementById("genero").value;
-            const idade = document.getElementById("idade").value;
-            const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
-            const status= document.getElementById("status").value;
-            const foto =  document.getElementById("imagem").value;
-            const formData = new FormData();
-            formData.append('imagem', imageUploadInput.files[0]);
-            
-            const data = {
-
-                nome: nome,
-                sobrenome: sobrenome,
-                nacionalidade: nacionalidade,
-                dataNascimento:dataNascimento,
-                apelido: apelido,
-                altura: altura,
-                genero: genero,
-                idade: idade,
-                id_paisVistoPorUltimo: id_paisVistoPorUltimo,
-                status:status,
-                foto: foto // foto uploaded
-            };
-
-            // Envia os dados como JSON em uma solicitação POST
-            axios.post("http://localhost:3338/api/criminoso/", data)
-            .then(function (response) {
-            // Trate a resposta do back-end, se necessário
-            console.log("Cadastro de criminoso bem-sucedido!", response.data);
-            //  modal de feedback
-            $("#cadastroCriminosoModal").modal("show");
-            })
-            .catch(function (error) {
-            console.error("Erro ao cadastrar criminoso:", error);
+                // Envia os dados como JSON em uma solicitação POST
+                axios.post("http://localhost:3338/api/criminoso/", data)
+                .then(function (response) {
+                // Trate a resposta do back-end, se necessário
+                console.log("Cadastro de criminoso bem-sucedido!", response.data);
+                //  modal de feedback
+                $("#cadastroCriminosoModal").modal("show");
+                })
+                .catch(function (error) {
+                console.error("Erro ao cadastrar criminoso:", error);
+                });
             });
-
-            //axios.post('http://localhost:8080/api/criminoso/upload', formData).then((response) => {
-            //    console.log(response.data);
-            //});
         });
-    });
+
+        //Coloca as organizações do banco no select
+        axios.get("http://localhost:3338/api/organizacao/")
+        .then(function (response) {
+            const select = document.getElementById("id_organizacao");
+
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#id_organizacao').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        })
+        .finally(function () {
+            // sempre será executado
+        });
 
     </script>
 </body>
