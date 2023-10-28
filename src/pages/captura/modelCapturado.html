@@ -20,7 +20,7 @@
                 <div class="modal-body d-flex justify-content-center align-items-center">
                     <img src="../../shared/images/procurado.svg"></img>
                     <p class="text-center">Criminoso <span id="nomeCriminoso"></span> 
-                        foi capturado pelos policiais. O país <span id="idPaisCapturado"></span> 
+                        foi capturado pelos policiais. O país <span id="nomePaisEncontrado"></span> 
                         está aguardando o pedido de extradição.
                     </p>
                 </div>
@@ -42,12 +42,35 @@
     </script>
 
     <script>
-        axios.get('http://localhost:3338/api/criminoso/').then((response) => {
-            console.log(response.data);
-            var criminoso_data = response.data;
+        const queryString = window.location.search;
+        
+        //remover o ? do início da string
+        const queryParams = new URLSearchParams(queryString.substring(1));
+        const dataParam = queryParams.get("data");
 
-            $('#nomeCriminoso').text(`${criminoso_data[0].nome} ${criminoso_data[0].sobrenome}`);
-        });
+        if (dataParam) {
+            //decodificar a string JSON e converter novamente para JSON
+            dataObject = JSON.parse(decodeURIComponent(dataParam));
+            console.log(dataObject);
+        
+            getCriminoso(dataObject);
+        } else {
+            console.error("Parâmetro 'data' não encontrado na URL");
+        }
+
+        function getCriminoso(criminoso) {
+            axios.get(`http://localhost:3338/api/criminoso/${criminoso.id_criminoso}`)
+            .then(function (response) {
+                const data = response.data;
+                console.log(response.data);
+                $('#nomeCriminoso').text(`${data.nomeCompleto}`);
+                $('#nomePaisEncontrado').text(`${data.id_paisVistoPorUltimo}`);
+            
+            })
+            .catch(function (error) {
+                console.error('Erro ao buscar criminoso: ', error);
+            });
+        }
 
         function enviarPedidoExtradicao() {
             // Redirecionar para a página dentro da pasta "extradicao"
