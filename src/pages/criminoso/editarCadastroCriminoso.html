@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Editar Cadastro de Vítima</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
     <div class="container-fluid col-md-8 mt-5 pt-5">
@@ -13,7 +16,38 @@
 
         <div class="container-fluid col-md-8 mt-5 pt-5"></div>
             <form id="formEditarCriminoso" action="/api/criminoso/update" method="post">
-                <div class="form-group">
+
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+
+    <script>
+
+        function getURLParametro(nome) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nome);
+        }
+        function getIdURL() {
+            const url = window.location.href;
+            // Cria um objeto URL para analisar a URL
+            const urlObj = new URL(url);
+             // Obtém o valor do parâmetro 'id' da URL
+            return idC = urlObj.searchParams.get("id");
+        }
+
+        // Detalhes do criminoso pelo ID
+        async function buscarDetalhesCriminoso(id) {
+            try {
+            var id = getIdURL();
+            const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+            const criminoso = response.data;
+            const detalhesCriminoso = document.getElementById('formEditarCriminoso');
+            const nomeOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);          
+            const formattedDate = convertDateFormat(criminoso.dataNascimento);
+            console.log(formattedDate);
+
+            formEditarCriminoso.innerHTML = `
+            <div class="form-group">
                     <label for="imagem">Inserir imagem</label>
                     <input type="file" class="form-control-file" id="imagem" accept="image/*">
                 </div>
@@ -28,7 +62,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="nomeCompleto">Nome Completo:</label>
-                            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
+                            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo" value="${criminoso.nomeCompleto}">
                         </div>
                     </div>
                 </div>
@@ -37,13 +71,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="altura">Altura:</label>
-                            <input type="double" class="form-control" id="altura" placeholder="1.67">
+                            <input type="double" class="form-control" id="altura" placeholder="1.67" value="${criminoso.altura}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="idade">Idade:</label>
-                            <input type="number" class="form-control" id="idade">
+                            <input type="number" class="form-control" id="idade" value="${criminoso.idade}">
                         </div>
                     </div>
                 </div>
@@ -52,7 +86,8 @@
                         <div class="form-group">
                             <label for="genero">Gênero:</label>
                             <select id="genero" class="form-control">
-                                <option selected>Feminino</option>
+                                <option>${criminoso.genero} - Gênero atual </option>
+                                <option>Feminino</option>
                                 <option>Masculino</option>
                             </select>
                         </div>
@@ -60,7 +95,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="nacionalidade">Nacionalidade:</label>
-                            <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil">
+                            <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil" value="${criminoso.id_paisOrigem}">
                         </div>
                     </div>
                 </div>
@@ -68,13 +103,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="dataNascimento">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="dataNascimento">
+                            <input type="date" class="form-control" id="dataNascimento" value="${formattedDate}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="apelido">Apelido:</label>
-                            <input type="text" class="form-control" id="apelido" placeholder="Rubinho">
+                            <input type="text" class="form-control" id="apelido" value="${criminoso.apelido}">
                         </div>
                     </div>
                 </div>
@@ -83,7 +118,8 @@
                         <div class="form-group">
                             <label for="status">Status:</label>
                             <select id="status" class="form-control">
-                                <option selected>Foragido</option>
+                                <option>${criminoso.status} - Estado atual </option>
+                                <option>Foragido</option>
                                 <option>Capturado</option>
                                 <option>Extraditado</option>
                             </select>
@@ -92,7 +128,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="paisVistoPorUltimo">País em que foi visto pela última vez:</label>
-                            <input type="text" class="form-control" id="paisVistoPorUltimo" placeholder="Brasil">
+                            <input type="text" class="form-control" id="paisVistoPorUltimo" value="${criminoso.id_paisVistoPorUltimo}">
                         </div>
                     </div>
                 </div>
@@ -100,57 +136,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="caracteristica">Caracteristicas:</label>
-                            <input type="text" class="form-control" id="caracteristica" rows="4" cols="50" placeholder="Adicione caracteristica do criminoso">
+                            <input type="text" class="form-control" id="caracteristica" rows="4" cols="50" value="${criminoso.caracteristicas}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_organizacao">Organização:</label>
                             <select id="id_organizacao" class="form-control">
-                                <option value="0">Nenhum Grupo</option>
+                                <option> ${criminoso.nomeOrganizacao} - Atual organização </option>
+                                <option>Nenhum Grupo</option>
                             </select>
                         </div>
                     </div>
                 </div>
-        
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
-        </div>
-
-    <script>
-
-        function getIdURL() {
-            const url = window.location.href;
-            // Cria um objeto URL para analisar a URL
-            const urlObj = new URL(url);
-             // Obtém o valor do parâmetro 'id' da URL
-            return idC = urlObj.searchParams.get("id");
-        }
-        const teste = getIdURL();
-
-        async function buscarDetalhesCriminoso(teste) {
-            try {
-            const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
-            const criminoso = response.data;
-            const detalhesCriminoso = document.getElementById('detalhesCriminoso');
-            const nomeOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
-
-                detalhesCriminoso.innerHTML = `
-                    <h1>${criminoso.nomeCompleto}</h1>
-                    <div class="mt-3">
-                        <p><strong>Nome Completo:</strong> ${criminoso.nomeCompleto}</p>
-                        <p><strong>Altura:</strong> ${criminoso.altura}</p>
-                        <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
-                        <p><strong>Data de Nascimento:</strong> ${criminoso.dataNascimento}</p>
-                        <p><strong>Nacionalidade:</strong> ${criminoso.id_paisOrigem}</p>
-                        <p><strong>Gênero:</strong> ${criminoso.genero}</p>
-                        <p><strong>País Visto por Último:</strong> ${criminoso.id_paisVistoPorUltimo}</p>
-                        <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
-                        <p><strong>Descrição do criminoso:</strong> ${criminoso.caracteristicas}</p>
-                        <p><strong>Status:</strong> ${criminoso.status}</p>
-                        <p><strong>Organização:</strong> ${nomeOrganizacao}</p>
-                        </div>
-                `;console.log(nomeOrganizacao);
+                `;
             }catch {
                 console.error('Erro ao buscar detalhes do criminoso:', error)
             }             
@@ -161,13 +160,21 @@
                 const response = await axios.get(`http://localhost:3338/api/organizacao/${id}`);
                 return response.data.nome;
             } catch (error) {
-                console.error('Erro ao buscar organização:', error);
+                alert('Erro ao buscar organização:', error);
                 throw error; // Rejeita a Promise em caso de erro, se necessário.
             }
         }
+        async function convertDateFormat(inputDate) {
+                    //dataNascimento: "2023-10-26T00:00:00.000Z"
+                
+                    return `${inputDate}T00:00:00.000Z`;
+                
+                // Retorne null se o formato de entrada estiver incorreto.
+        }
 
-         // Buscar detalhes do criminoso pelo ID 
-         window.addEventListener('load', function () {
+       
+        // Buscar detalhes do criminoso pelo ID 
+        window.addEventListener('load', function () {
             const idCriminoso = getURLParametro('id');
             buscarDetalhesCriminoso(idCriminoso);
         });
@@ -176,7 +183,7 @@
         document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
             event.preventDefault(); 
 
-            const idVitima = getURLParametro('id');
+            const idVitima = getIdURL('id');
             const nomeCompleto = document.getElementById("nomeCompleto").value;
             const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
             const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;

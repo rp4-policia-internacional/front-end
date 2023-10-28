@@ -35,22 +35,11 @@
             background-color: rgba(0, 0, 0, 0.5);
         }
     </style>
-    <script async >
-
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbarContainer').innerHTML = data;
-            })
-            .catch(error => console.error(error));
-        </script>
 </head>
 
 <body>
-    <div id="navbarContainer"></div>
     
 
-    <iframe src="../../shared/components/header.html"></iframe>
     <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
@@ -117,8 +106,6 @@
 
     <script>
 
-      
-
         let criminosoSelecionadoId;
 
         axios.get('http://localhost:3338/api/criminoso/')
@@ -172,7 +159,7 @@
                 });
             })
             .catch(function (error) {
-                console.error('Erro ao buscar criminosos:', error);
+                //console.error('Erro ao buscar criminosos:', error);
             });
 
         function emitirPedidoDeBuscaECaptura(criminosoID) {
