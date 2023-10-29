@@ -22,7 +22,7 @@
         </div>
 
     <script>
-
+        
         function getURLParametro(nome) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(nome);
@@ -43,7 +43,7 @@
             const criminoso = response.data;
             const detalhesCriminoso = document.getElementById('formEditarCriminoso');
             const nomeOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);          
-            const formattedDate = convertDateFormat(criminoso.dataNascimento);
+            const formattedDate = criminoso.dataNascimento;
             console.log(formattedDate);
 
             formEditarCriminoso.innerHTML = `
@@ -149,6 +149,7 @@
                         </div>
                     </div>
                 </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
                 `;
             }catch {
                 console.error('Erro ao buscar detalhes do criminoso:', error)
@@ -164,7 +165,7 @@
                 throw error; // Rejeita a Promise em caso de erro, se necessário.
             }
         }
-        async function convertDateFormat(inputDate) {
+        async function convertDateFormat(inputDate) {//arrumar
                     //dataNascimento: "2023-10-26T00:00:00.000Z"
                 
                     return `${inputDate}T00:00:00.000Z`;
@@ -177,48 +178,84 @@
         window.addEventListener('load', function () {
             const idCriminoso = getURLParametro('id');
             buscarDetalhesCriminoso(idCriminoso);
-        });
+            });
 
 
-        document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
+        document.getElementById("formEditarCriminoso").addEventListener("submit", function (event) {
             event.preventDefault(); 
 
-            const idVitima = getIdURL('id');
-            const nomeCompleto = document.getElementById("nomeCompleto").value;
-            const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
-            const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
-            const nacionalidade = document.getElementById("nacionalidade").value;
-            const altura = document.getElementById("altura").value;
+            const idCriminoso= getIdURL('id');
+            const nomeCompleto= document.getElementById("nomeCompleto").value;
+            const altura = parseFloat(document.getElementById("altura").value);
+            const idade = parseInt(document.getElementById("idade").value);
+            const dataNascimento = document.getElementById("dataNascimento").value;
+            const status= document.getElementById("status").value;
+            const apelido = document.getElementById("apelido").value;
+            const caracteristicas = document.getElementById("caracteristica").value;
+            const foto =  document.getElementById("imagem").value;
             const genero = document.getElementById("genero").value;
-            const idade = document.getElementById("idade").value;
+            const id_paisOrigem = document.getElementById("nacionalidade").value;
             const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
-            const statusDaVitima = document.getElementById("status").value;
-            const foto =  document.getElementById("foto").value;
+            const id_organizacao =  document.getElementById("id_organizacao").value;
+            const formData = new FormData();
+            formData.append('imagem', imageUploadInput.files[0]);
             
             const data = {
-                id_paisDeOrigem: id_paisDeOrigem,
-                id_autorDoCrime: id_autorDoCrime,
+
                 nomeCompleto: nomeCompleto,
-                nacionalidade: nacionalidade,
                 altura: altura,
-                genero: genero,
-                idade: idade,
+                idade: idade, 
+                dataNascimento: dataNascimento,
+                status:status,
+                apelido: apelido,
+                caracteristicas: caracteristicas,
+                foto: foto,
+                genero:genero,
                 id_paisVistoPorUltimo: id_paisVistoPorUltimo,
-                statusDaVitima: statusDaVitima,
-                foto: foto // foto atualizada
+                id_paisOrigem:id_paisOrigem,
+                id_organizacao:id_organizacao
             };
 
+
             // Envia os dados como JSON em uma solicitação PUT ou PATCH
-            axios.put(`http://localhost:3337/api/vitima/`, data) 
+            axios.put(`http://localhost:3338/api/criminoso`, data) 
                 .then(function (response) {
                   
-                    console.log("Atualização de vítima bem-sucedida!", response.data);
+                    console.log("Atualização do criminoso bem-sucedida!", response.data);
                 
-                    window.location.href = `detalhesVitima.html?id=${idVitima}`;
+                    window.location.href = `detalhesCriminoso.html?id=${idCriminoso}`;
                 })
                 .catch(function (error) {
-                    console.error("Erro ao atualizar vítima:", error);
+                    console.error("Erro ao atualizar criminoso:", error);
                 });
+        });
+        //Coloca as organizações do banco no select
+        axios.get("http://localhost:3338/api/organizacao/")
+        .then(function (response) {
+            const select = document.getElementById("id_organizacao");
+
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#id_organizacao').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        })
+        .finally(function () {
+            // sempre será executado
         });
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -19,7 +19,7 @@
                 </div>
                 <div class="modal-body d-flex justify-content-center align-items-center">
                     <img src="../../shared/images/procurado.svg"></img>
-                    <p class="text-center">Criminoso <span id="idCriminoso"></span> 
+                    <p class="text-center">Criminoso <span id="nomeCriminoso"></span> 
                         foi capturado pelos policiais. O país <span id="idPaisCapturado"></span> 
                         está aguardando o pedido de extradição.
                     </p>
@@ -46,7 +46,7 @@
             console.log(response.data);
             var criminoso_data = response.data;
 
-            $('#idCriminoso').text(`${criminoso_data[0].nome} ${criminoso_data[0].sobrenome}`);
+            $('#nomeCriminoso').text(`${criminoso_data[0].nome} ${criminoso_data[0].sobrenome}`);
         });
 
         function enviarPedidoExtradicao() {

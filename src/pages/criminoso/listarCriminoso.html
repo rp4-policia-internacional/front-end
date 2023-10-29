@@ -195,6 +195,7 @@
                     // condicao para escolha de página
                     if (response.data.probabilidade > 5) {
                         const dataEncode = encodeURIComponent(JSON.stringify(data));
+                    
                         mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoEncontrado.html?data=${dataEncode}`);
                     } else {
                         const dataEncode = encodeURIComponent(JSON.stringify(data));

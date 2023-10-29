@@ -22,7 +22,7 @@
                         <div class="progress bg-transparent">
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
                         </div>
-                        <p class="text-white"  style="margin-top: 10px;">Comunicando a polícia local.</p>
+                        <p class="text-white"  style="margin-top: 10px;">Comunicando a polícia local</p>
                     </div>
                 </div>
             </div>
@@ -40,13 +40,13 @@
                     </div>
                     <div class="modal-body d-flex justify-content-center align-items-center">
                         <img src="../../shared/images/procurado.svg"></img>
-                        <p class="text-center">Criminoso <span id="idCriminoso"></span> 
+                        <p class="text-center">Criminoso <span id="nomeCriminoso"></span> 
                             foi encontrado no país <span id="idPaisCapturado"></span> 
                             por uma das câmeras de segurança! 
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button id="btnAcionarPolicia" type="button" class="btn btn-dark" data-dismiss="modal">
+                        <button id="btnAcionarPolicia" type="button" class="btn btn-dark" data-dismiss="modal" onclick="acionarPolicia()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                               </svg>
@@ -63,17 +63,19 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
+    let dataObject;
     $(document).ready(function() {
         $("#criminosoEncontradoModal").modal("show"); 
         
         $("#btnAcionarPolicia").click(function() {
+            
             // Exibir o modal de progresso
+           
             $("#loadingModal").modal("show");
+            setTimeout(function () {
+                    $("#loadingModal").modal('hide');
+                }, 3000); 
             
-            
-            setTimeout(function() {
-                window.location.href = "extradicao.html";
-            }, 2000);
         });
         
         const queryString = window.location.search;
@@ -81,10 +83,10 @@
         //remover o ? do início da string
         const queryParams = new URLSearchParams(queryString.substring(1));
         const dataParam = queryParams.get("data");
-        
+
         if (dataParam) {
-            // Decodificar a string JSON e converter novamente para JSON
-            const dataObject = JSON.parse(decodeURIComponent(dataParam));
+            //decodificar a string JSON e converter novamente para JSON
+            dataObject = JSON.parse(decodeURIComponent(dataParam));
             console.log(dataObject);
         
             getNomeCriminoso(dataObject.id_criminoso);
@@ -97,25 +99,40 @@
             .then(function (response) {
                 const data = response.data;
                 console.log(response.data);
-                $('#idCriminoso').text(`${data.nome} ${data.sobrenome}`);
-
-                const probabilidade = data.probabilidade;
+                $('#nomeCriminoso').text(`${data.nomeCompleto}`);
             
-            if (probabilidade > 5) {
-                setTimeout(function() {
-                    window.location.href = "../capturamodelCapturado.html";
-                }, 2000);
-            } else {
-                setTimeout(function() {
-                    window.location.href = "../capturamodelNaoCapturado.html";
-                }, 2000);
-            }
             })
             .catch(function (error) {
                 console.error('Erro ao buscar criminoso: ', error);
             });
         }
+
+
     });
+
+    function mostrarLoadingEAgendarRedirecionamento(url) {
+        const loadingModal = document.getElementById('loadingModal');
+        $(loadingModal).modal('show');
+
+        setTimeout(function () {
+            $(loadingModal).modal('hide');
+            window.location.href = url; 
+        }, 3000); 
+    }
+
+    function acionarPolicia() {
+        const probabilidade = dataObject.probabilidade;
+        
+        if (probabilidade > 2) {
+            const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                    
+            mostrarLoadingEAgendarRedirecionamento(`../captura/modelCapturado.html?data=${dataEncode}`);
+        } else {
+            const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+            mostrarLoadingEAgendarRedirecionamento(`../captura/modelNaoCapturado.html?data=${dataEncode}`);
+
+        }
+    }
 </script>
 
         
