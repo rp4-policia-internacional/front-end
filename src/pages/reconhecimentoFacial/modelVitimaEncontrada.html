@@ -6,9 +6,30 @@
         <title>Document</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+        <style>
+            #loadingModal {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        </style>
     </head>
     <body>
+
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
+                <div class="modal-content bg-transparent border-0">
+                    <div class="modal-body text-center bg-transparent">
+                        <div class="progress bg-transparent">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
+                        <p class="text-white"  style="margin-top: 10px;">Comunicando a polícia local</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true"></div>
+
 
         <div class="modal" data-backdrop="static" data-keyboard="false" id="vitimaEncontradaModal">
             <div class="modal-dialog">
@@ -19,13 +40,13 @@
                     </div>
                     <div class="modal-body d-flex justify-content-center align-items-center">
                         <img src="../../shared/images/procurado.svg"></img>
-                        <p class="text-center">A vítima <span id="idCriminoso"></span> 
-                            foi encontrada no país <span id="idPaisCapturado"></span> 
+                        <p class="text-center">A vítima <span id="nomeVitima"></span> 
+                            foi encontrada no país <span id="nomePaisEncontrada"></span> 
                             por uma das câmeras de segurança! 
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        <button id="btnAcionarResgate" type="button" class="btn btn-dark" data-dismiss="modal" onclick="acionarResgate()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                               </svg>
@@ -44,7 +65,72 @@
         <script>
             $(document).ready(function() {
                 $("#vitimaEncontradaModal").modal("show"); 
+
+                $("#btnAcionarResgate").click(function() {
+            
+            // Exibir o modal de progresso
+           
+            $("#loadingModal").modal("show");
+            setTimeout(function () {
+                    $("#loadingModal").modal('hide');
+                }, 3000); 
+            
             });
+                
+            const queryString = window.location.search;
+            
+            //remover o ? do início da string
+            const queryParams = new URLSearchParams(queryString.substring(1));
+            const dataParam = queryParams.get("data");
+
+            if (dataParam) {
+                //decodificar a string JSON e converter novamente para JSON
+                dataObject = JSON.parse(decodeURIComponent(dataParam));
+                console.log(dataObject);
+            
+                getVitima(dataObject);
+            } else {
+                console.error("Parâmetro 'data' não encontrado na URL");
+            }
+            
+            function getVitima(vitima) {
+                axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
+                .then(function (response) {
+                    const data = response.data;
+                    console.log(response.data);
+                    $('#nomeVitima').text(`${data.nomeCompleto}`);
+                    $('#nomePaisEncontrada').text(`${data.id_paisVistoPorUltimo}`);
+                
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar vítima: ', error);
+                });
+            }
+        });
+
+        function mostrarLoadingEAgendarRedirecionamento(url) {
+            const loadingModal = document.getElementById('loadingModal');
+            $(loadingModal).modal('show');
+
+            setTimeout(function () {
+                $(loadingModal).modal('hide');
+                window.location.href = url; 
+            }, 3000); 
+        }
+
+        function acionarResgate() {
+            const probabilidade = dataObject.probabilidade;
+            
+            if (probabilidade == 0) {
+                const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                        
+                mostrarLoadingEAgendarRedirecionamento(`../resgate/modelResgatada.html?data=${dataEncode}`);
+            } else {
+                const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                mostrarLoadingEAgendarRedirecionamento(`../resgate/modelNaoResgatada.html?data=${dataEncode}`);
+
+            }
+        }
         </script>
 
     </body>

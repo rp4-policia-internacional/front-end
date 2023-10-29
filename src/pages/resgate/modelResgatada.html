@@ -19,13 +19,13 @@
                     </div>
                     <div class="modal-body d-flex justify-content-center align-items-center">
                         <img src="../../shared/images/procurado.svg"></img>
-                        <p class="text-center">A vítima <span id="idVitima"></span> 
-                            foi resgatada pelos policiais. O país <span id="idPaisResgatada"></span> 
+                        <p class="text-center">A vítima <span id="nomeVitima"></span> 
+                            foi resgatada pelos policiais. O país <span id="nomePaisResgatada"></span> 
                             está aguardando o pedido de repatriação.
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">Enviar pedido de repatriação</button>
+                        <button type="button" class="btn btn-dark" onclick="enviarPedidoRepatriacao()" data-dismiss="modal">Enviar pedido de repatriação</button>
                     </div>
                 </div>
             </div>
@@ -40,6 +40,43 @@
             $(document).ready(function() {
                 $("#vitimaResgatadaModal").modal("show"); 
             });
+        </script>
+
+        <script>
+            const queryString = window.location.search;
+            
+            //remover o ? do início da string
+            const queryParams = new URLSearchParams(queryString.substring(1));
+            const dataParam = queryParams.get("data");
+
+            if (dataParam) {
+                //decodificar a string JSON e converter novamente para JSON
+                dataObject = JSON.parse(decodeURIComponent(dataParam));
+                console.log(dataObject);
+            
+                getVitima(dataObject);
+            } else {
+                console.error("Parâmetro 'data' não encontrado na URL");
+            }
+
+            function getVitima(vitima) {
+                axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
+                .then(function (response) {
+                    const data = response.data;
+                    console.log(response.data);
+                    $('#nomeVitima').text(`${data.nomeCompleto}`);
+                    $('#nomePaisResgatada').text(`${data.id_paisVistoPorUltimo}`);
+                
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar vítima: ', error);
+                });
+            }
+
+            function enviarPedidoRepatriacao() {
+                // Redirecionar para a página dentro da pasta "extradicao"
+                window.location.href = '../repatriacao/detalhesRepatriacao.html';
+            }
         </script>
 
     </body>
