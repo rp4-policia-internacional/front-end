@@ -87,7 +87,7 @@
       
           <div class="form-group">
               <div style="width: 500px;"class="col-md-6 offset-md-3">
-                <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" data-toggle="modal" data-target="#extradicaoLabel">
+                <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" data-toggle="modal" data-target="#extradicaoLabel" onclick="toDetailsExtradicao()">
                     Enviar                  
                 </button>
 
@@ -139,6 +139,10 @@
             console.error("Erro ao cadastrar extradicao:", error);
           });
       });
+
+      function toDetailsExtradicao(){
+        window.location.href = "../extradicao/detalhesDaExtradicao.html";
+      }
     </script>
   </body>
 </html>

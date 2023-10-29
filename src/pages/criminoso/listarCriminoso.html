@@ -176,7 +176,7 @@
                 axios.post('http://localhost:3333/api/captura/', data)
                     .then(function (response) {
                         // condicao para escolha de página
-                        if (response.data.probabilidade > 5) {
+                        if (response.data.probabilidade > 0) {
                             const dataEncode = encodeURIComponent(JSON.stringify(data));
             
                             mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoEncontrado.html?data=${dataEncode}`);
