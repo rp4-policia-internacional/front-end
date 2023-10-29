@@ -90,6 +90,15 @@ body {
     border: 1px solid #160341;
     color: #160341;
 }
+.organization-logo {
+    border-radius: 50%;
+    width: 150px; 
+    height: 150px; 
+    object-fit: cover; 
+    margin-bottom: 20px; 
+    padding: 5px; 
+    border: 2px solid #fff; 
+}
 .first-content {
     display: flex;
 }
