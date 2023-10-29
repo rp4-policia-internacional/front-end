@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
 
-</head>
-
-<body>
-
-    <div class="modal" data-backdrop="static" data-keyboard="false" id="vitimaResgatadaModal">
-        <div class="modal-dialog">
-            <div class="modal-content" style="border: 3px solid green;">
-                <!-- Conteúdo do modal -->
-                <div class="modal-header">
-                    <h4 class="modal-title text-center">A vítima foi resgatada</h4>
-                </div>
-                <div class="modal-body d-flex justify-content-center align-items-center">
-                    <img src="../../shared/images/procurado.svg"></img>
-                    <p class="text-center">A vítima <span id="idVitima"></span>
-                        foi resgatada pelos policiais. O país <span id="idPaisResgatada"></span>
-                        está aguardando o pedido de repatriação.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Enviar pedido de
-                        repatriação</button>
+        <div class="modal" data-backdrop="static" data-keyboard="false" id="vitimaResgatadaModal">
+            <div class="modal-dialog">
+                <div class="modal-content" style="border: 3px solid green;">
+                    <!-- Conteúdo do modal -->
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center">A vítima foi resgatada</h4>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center align-items-center">
+                        <img src="../../shared/images/procurado.svg"></img>
+                        <p class="text-center">A vítima <span id="nomeVitima"></span> 
+                            foi resgatada pelos policiais. O país <span id="nomePaisResgatada"></span> 
+                            está aguardando o pedido de repatriação.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" onclick="enviarPedidoRepatriacao()" data-dismiss="modal">Enviar pedido de repatriação</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,4 +45,55 @@
 
 </body>
 
+        <script>
+            const queryString = window.location.search;
+
+            //remover o ? do início da string
+            const queryParams = new URLSearchParams(queryString.substring(1));
+            const dataParam = queryParams.get("data");
+
+            if (dataParam) {
+                //decodificar a string JSON e converter novamente para JSON
+                dataObject = JSON.parse(decodeURIComponent(dataParam));
+                console.log(dataObject);
+
+                getVitima(dataObject);
+            } else {
+                console.error("Parâmetro 'data' não encontrado na URL");
+            }
+
+            function getVitima(vitima) {
+                axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
+                .then(async function (response) {
+                    const data = response.data;
+                    console.log(response.data);
+                    $('#nomeVitima').text(`${data.nomeCompleto}`);
+                    
+                    // buscar o nome do país com base no id
+                    const pais = await getPaisById(data.id_paisVistoPorUltimo);
+                    $('#nomePaisResgatada').text(pais);
+                
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar vítima: ', error);
+                });
+            }
+
+            function enviarPedidoRepatriacao() {
+                // Redirecionar para a página dentro da pasta "extradicao"
+                window.location.href = '../repatriacao/detalhesRepatriacao.html';
+            }
+
+            async function getPaisById(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                    return response.data.nome;
+                } catch (error) {
+                    console.error('Erro ao buscar país: ', error);
+                    throw error;
+                }
+            }
+        </script>
+
+    </body>
 </html>

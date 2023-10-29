@@ -72,118 +72,128 @@
             <tbody id="criminososTabela"></tbody>
         </table>
 
-
         <script>
-             $(document).ready(function () {
+            $(document).ready(function () {
                 $("#navbarContainer").load("../../components/header.html");
             });
-
-        let criminosoSelecionadoId;
-
-        axios.get('http://localhost:3338/api/criminoso/')
-            .then(function (response) {
-                const criminosos = response.data;
-                const criminososTabela = document.getElementById('criminososTabela');
-
-                criminosos.forEach(function (criminoso) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${criminoso.nomeCompleto}</td>
-                        <td>${criminoso.id_paisOrigem}</td>
-                        <td>${criminoso.genero}</td>
-                        <td>${criminoso.idade} anos</td>
-                        <td>${criminoso.status}</td>
-                    `;
-
-                    //botao ver detalhes
-                    const verDetalhesButton = document.createElement('button');
-                    verDetalhesButton.type = 'button';
-                    verDetalhesButton.className = 'btn btn-secondary';
-                    verDetalhesButton.textContent = 'Ver detalhes';
-                    verDetalhesButton.addEventListener('click', function () {
-                        //lidar com clique do ver detalhes
-                        criminosoSelecionadoId = criminoso.id;
-                        window.location.href = `detalhesCriminoso.html?id=${criminoso.id}`;
-                    });
-                    const verDetalhesCell = document.createElement('td');
-                    verDetalhesCell.appendChild(verDetalhesButton);
-
-                    // emitir epdido de busca e captura
-                    const emitirPedidoButton = document.createElement('button');
-                    emitirPedidoButton.type = 'button';
-                    emitirPedidoButton.className = 'btn btn-danger';
-                    emitirPedidoButton.textContent = 'Emitir pedido de busca e captura';
-                    emitirPedidoButton.addEventListener('click', function () {
-                        
-                        const criminosoId = criminoso.id;
-                        this.criminosoSelecionadoId = criminoso.id;
-                        emitirPedidoDeBuscaECaptura(criminosoId);
-                        
-                    });
-
-                    const emitirPedidoCell = document.createElement('td');
-                    emitirPedidoCell.appendChild(emitirPedidoButton);
-
-                    row.appendChild(verDetalhesCell);
-                    row.appendChild(emitirPedidoCell);
-
-                    criminososTabela.appendChild(row);
+            
+            let criminosoSelecionadoId;
+            
+            async function getPaisNome(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                    return response.data.nome;
+                } catch (error) {
+                    console.error('Erro ao buscar país: ', error);
+                    return 'País não encontrado';
+                }
+            }
+            
+            axios.get('http://localhost:3338/api/criminoso/')
+                .then(async function (response) {
+                    const criminosos = response.data;
+                    const criminososTabela = document.getElementById('criminososTabela');
+            
+                    for (const criminoso of criminosos) {
+                        const row = document.createElement('tr');
+                        const paisNome = await getPaisNome(criminoso.id_paisOrigem);
+                        row.innerHTML = `
+                            <td>${criminoso.nomeCompleto}</td>
+                            <td>${paisNome}</td>
+                            <td>${criminoso.genero}</td>
+                            <td>${criminoso.idade} anos</td>
+                            <td>${criminoso.status}</td>
+                        `;
+            
+                        //botao ver detalhes
+                        const verDetalhesButton = document.createElement('button');
+                        verDetalhesButton.type = 'button';
+                        verDetalhesButton.className = 'btn btn-secondary';
+                        verDetalhesButton.textContent = 'Ver detalhes';
+                        verDetalhesButton.addEventListener('click', function () {
+                           
+                            criminosoSelecionadoId = criminoso.id;
+                            window.location.href = `detalhesCriminoso.html?id=${criminoso.id}`;
+                        });
+                        const verDetalhesCell = document.createElement('td');
+                        verDetalhesCell.appendChild(verDetalhesButton);
+            
+                        // emitir pedido de busca e captura
+                        const emitirPedidoButton = document.createElement('button');
+                        emitirPedidoButton.type = 'button';
+                        emitirPedidoButton.className = 'btn btn-danger';
+                        emitirPedidoButton.textContent = 'Emitir pedido de busca e captura';
+                        emitirPedidoButton.addEventListener('click', function () {
+            
+                            const criminosoId = criminoso.id;
+                            this.criminosoSelecionadoId = criminoso.id;
+                            emitirPedidoDeBuscaECaptura(criminosoId);
+            
+                        });
+            
+                        const emitirPedidoCell = document.createElement('td');
+                        emitirPedidoCell.appendChild(emitirPedidoButton);
+            
+                        row.appendChild(verDetalhesCell);
+                        row.appendChild(emitirPedidoCell);
+            
+                        criminososTabela.appendChild(row);
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar criminosos:', error);
                 });
-            })
-            .catch(function (error) {
-                console.error('Erro ao buscar criminosos:', error);
-            });
             
             function emitirPedidoDeBuscaECaptura(criminosoID) {
                 axios.get(`http://localhost:3338/api/criminoso/${criminosoID}`)
-                .then(function (response) {
-                    decisaoCapturadoFugitivo(response.data);
-                })
-                .catch(function (error) {
-                    console.error('Erro ao buscar criminoso: ', error);
-                });
+                    .then(function (response) {
+                        decisaoCapturadoFugitivo(response.data);
+                    })
+                    .catch(function (error) {
+                        console.error('Erro ao buscar criminoso: ', error);
+                    });
             }
-
+            
             function mostrarLoadingEAgendarRedirecionamento(url) {
                 const loadingModal = document.getElementById('loadingModal');
                 $(loadingModal).modal('show');
-
+            
                 setTimeout(function () {
                     $(loadingModal).modal('hide');
-                    window.location.href = url; 
-                }, 3000); 
+                    window.location.href = url;
+                }, 3000);
             }
-
+            
             function decisaoCapturadoFugitivo(criminoso) {
-                
+            
                 const data = {
                     id_criminoso: criminoso.id,
                     id_pais_capturado: criminoso.id_paisVistoPorUltimo,
                     id_pais_origem: criminoso.id_paisOrigem,
                     data: new Date(),
-                    probabilidade:0
-                }
+                    probabilidade: 0
+                };
                 axios.post('http://localhost:3333/api/captura/', data)
-                .then(function (response) {
-                    // condicao para escolha de página
-                    if (response.data.probabilidade > 5) {
-                        const dataEncode = encodeURIComponent(JSON.stringify(data));
-                    
-                        mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoEncontrado.html?data=${dataEncode}`);
-                    } else {
-                        const dataEncode = encodeURIComponent(JSON.stringify(data));
-                        mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoNaoEncontrado.html?data=${dataEncode}`);
-                    }
-                })
-                .catch(function (error) {
-                    console.error('Erro ao buscar criminoso: ', error);
-                });
-            }
-
-            function direcionaNovoCriminosoPage() {
-                    window.location.href = "../criminoso/formCadastro.html";
+                    .then(function (response) {
+                        // condicao para escolha de página
+                        if (response.data.probabilidade > 5) {
+                            const dataEncode = encodeURIComponent(JSON.stringify(data));
+            
+                            mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoEncontrado.html?data=${dataEncode}`);
+                        } else {
+                            const dataEncode = encodeURIComponent(JSON.stringify(data));
+                            mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoNaoEncontrado.html?data=${dataEncode}`);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Erro ao buscar criminoso: ', error);
+                    });
             }
             
+            function direcionaNovoCriminosoPage() {
+                window.location.href = "../criminoso/formCadastro.html";
+            }
         </script>
+   
     </body>
 </html>
