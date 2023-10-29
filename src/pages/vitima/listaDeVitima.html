@@ -79,115 +79,125 @@
             </div>
 
         
-        <script>
-
-            let vitimaSelecionadaID;
-            // Fazer uma requisição Axios GET para obter a lista de vítimas
-            axios.get('http://localhost:3337/api/vitima/')
-                .then(function (response) {
-                    const vitimas = response.data;
-                    const vitimasTabela = document.getElementById('vitimasTabela');
-    
-                    // Preencher a tabela com os dados das vítimas
-                    vitimas.forEach(function (vitima) {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${vitima.nomeCompleto}</td>
-                            <td>${vitima.id_paisDeOrigem}</td>
-                            <td>${vitima.genero}</td>
-                            <td>${vitima.idade} anos</td>
-                            <td>${vitima.statusDaVitima}</td>
-                        `;
-
-                        //botao ver detalhes
-                        const verDetalhesButton = document.createElement('button');
-                        verDetalhesButton.type = 'button';
-                        verDetalhesButton.className = 'btn btn-secondary';
-                        verDetalhesButton.textContent = 'Ver detalhes';
-                        verDetalhesButton.addEventListener('click', function () {
-                            //lidar com clique do ver detalhes
-                            vitimaSelecionadaID = vitima.id;
-                            window.location.href = `detalhesVitima.html?id=${vitima.id}`;
-                        });
-                        const verDetalhesCell = document.createElement('td');
-                        verDetalhesCell.appendChild(verDetalhesButton);
-
-                        // emitir epdido de busca e captura
-                        const emitirPedidoButton = document.createElement('button');
-                        emitirPedidoButton.type = 'button';
-                        emitirPedidoButton.className = 'btn btn-danger';
-                        emitirPedidoButton.textContent = 'Emitir pedido de busca e resgate';
-                        emitirPedidoButton.addEventListener('click', function () {
-                            
-                            const vitimaId = vitima.id;
-                            this.vitimaSelecionadaID = vitima.id;
-                            emitirPedidoDeBuscaEResgate(vitimaId);
-                            
-                        });
-
-                        const emitirPedidoCell = document.createElement('td');
-                        emitirPedidoCell.appendChild(emitirPedidoButton);
-
-                        row.appendChild(verDetalhesCell);
-                        row.appendChild(emitirPedidoCell);
-
-                        vitimasTabela.appendChild(row);
-                    });
-                })
-                .catch(function (error) {
-                    console.error('Erro ao buscar vítimas:', error);
-                });
-
+            <script>
+                async function getPaisById(id) {
+                    try {
+                        const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                        return response.data.nome;
+                    } catch (error) {
+                        console.error('Erro ao buscar país: ', error);
+                        throw error;
+                    }
+                }
+        
+                async function preencherTabela() {
+                    try {
+                        const response = await axios.get('http://localhost:3337/api/vitima/');
+                        const vitimas = response.data;
+                        const vitimasTabela = document.getElementById('vitimasTabela');
+        
+                        for (const vitima of vitimas) {
+                            try {
+                                const pais = await getPaisById(vitima.id_paisDeOrigem);
+        
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${vitima.nomeCompleto}</td>
+                                    <td>${pais}</td>
+                                    <td>${vitima.genero}</td>
+                                    <td>${vitima.idade} anos</td>
+                                    <td>${vitima.statusDaVitima}</td>
+                                `;
+        
+                                // Botão Ver Detalhes
+                                const verDetalhesButton = document.createElement('button');
+                                verDetalhesButton.type = 'button';
+                                verDetalhesButton.className = 'btn btn-secondary';
+                                verDetalhesButton.textContent = 'Ver detalhes';
+                                verDetalhesButton.addEventListener('click', function () {
+                                    vitimaSelecionadaID = vitima.id;
+                                    window.location.href = `detalhesVitima.html?id=${vitima.id}`;
+                                });
+                                const verDetalhesCell = document.createElement('td');
+                                verDetalhesCell.appendChild(verDetalhesButton);
+        
+                                // Emitir Pedido de Busca e Resgate
+                                const emitirPedidoButton = document.createElement('button');
+                                emitirPedidoButton.type = 'button';
+                                emitirPedidoButton.className = 'btn btn-danger';
+                                emitirPedidoButton.textContent = 'Emitir pedido de busca e resgate';
+                                emitirPedidoButton.addEventListener('click', function () {
+                                    const vitimaId = vitima.id;
+                                    vitimaSelecionadaID = vitima.id;
+                                    emitirPedidoDeBuscaEResgate(vitimaId);
+                                });
+        
+                                const emitirPedidoCell = document.createElement('td');
+                                emitirPedidoCell.appendChild(emitirPedidoButton);
+        
+                                row.appendChild(verDetalhesCell);
+                                row.appendChild(emitirPedidoCell);
+        
+                                vitimasTabela.appendChild(row);
+                            } catch (error) {
+                                console.error('Erro ao buscar país de origem: ', error);
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Erro ao buscar vítimas:', error);
+                    }
+                }
+        
                 function emitirPedidoDeBuscaEResgate(vitimaId) {
                     axios.get(`http://localhost:3337/api/vitima/${vitimaId}`)
-                    .then(function (response) {
-                        decisaoResgatadaDesaparecida(response.data);
-                    })
-                    .catch(function (error) {
-                        console.error('Erro ao buscar vítima: ', error);
-                    });
+                        .then(function (response) {
+                            decisaoResgatadaDesaparecida(response.data);
+                        })
+                        .catch(function (error) {
+                            console.error('Erro ao buscar vítima: ', error);
+                        });
                 }
-
+        
                 function mostrarLoadingEAgendarRedirecionamento(url) {
                     const loadingModal = document.getElementById('loadingModal');
                     $(loadingModal).modal('show');
-
+        
                     setTimeout(function () {
                         $(loadingModal).modal('hide');
-                        window.location.href = url; 
-                    }, 3000); 
+                        window.location.href = url;
+                    }, 3000);
                 }
-
+        
                 function decisaoResgatadaDesaparecida(vitima) {
-                    
                     const data = {
                         id_vitima: vitima.id,
                         id_pais_resgatado: vitima.id_paisVistoPorUltimo,
                         id_pais_origem: vitima.id_paisDeOrigem,
                         data: new Date(),
-                        probabilidade:0
-                    }
+                        probabilidade: 0
+                    };
                     axios.post('http://localhost:3341/api/resgate/', data)
-                    .then(function (response) {
-                        // condicao para escolha de página
-                        if (response.data.probabilidade == 0) {
-                            const dataEncode = encodeURIComponent(JSON.stringify(data));
-                        
-                            mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelVitimaEncontrada.html?data=${dataEncode}`);
-                        } else {
-                            const dataEncode = encodeURIComponent(JSON.stringify(data));
-                            mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelVitimaNaoEncontrada.html?data=${dataEncode}`);
-                        }
-                    })
-                    .catch(function (error) {
-                        console.error('Erro ao buscar vítima: ', error);
-                    });
+                        .then(function (response) {
+                            if (response.data.probabilidade == 0) {
+                                const dataEncode = encodeURIComponent(JSON.stringify(data));
+                                mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelVitimaEncontrada.html?data=${dataEncode}`);
+                            } else {
+                                const dataEncode = encodeURIComponent(JSON.stringify(data));
+                                mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelVitimaNaoEncontrada.html?data=${dataEncode}`);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error('Erro ao buscar vítima: ', error);
+                        });
                 }
-
+        
                 function direcionaNovaVitimaPage() {
                     window.location.href = "../vitima/cadastroVitima.html";
                 }
-        </script>
+        
+                // chamando a funcao p preencher a atbela
+                preencherTabela();
+            </script>
     </body>
 
 </html>

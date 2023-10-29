@@ -63,74 +63,79 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script>
+            let dataObject;
+
+            async function getPaisById(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                    return response.data;
+                } catch (error) {
+                    console.error('Erro ao buscar país: ', error);
+                    throw error;
+                }
+            }
+
             $(document).ready(function() {
-                $("#vitimaEncontradaModal").modal("show"); 
+                const queryString = window.location.search;
+                const queryParams = new URLSearchParams(queryString.substring(1));
+                const dataParam = queryParams.get("data");
+
+                if (dataParam) {
+                    dataObject = JSON.parse(decodeURIComponent(dataParam));
+
+                    getVitima(dataObject);
+                } else {
+                    console.error("Parâmetro 'data' não encontrado na URL");
+                }
+
+                async function getVitima(vitima) {
+                    try {
+                        const response = await axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`);
+                        const data = response.data;
+                        console.log(response.data);
+                        $('#nomeVitima').text(`${data.nomeCompleto}`);
+                        
+                        //buscar o nome do país com base no id
+                        const pais = await getPaisById(data.id_paisVistoPorUltimo);
+                        $('#nomePaisEncontrada').text(pais.nome);
+                        
+                    
+                        $("#vitimaEncontradaModal").modal("show");
+                    } catch (error) {
+                        console.error('Erro ao buscar vítima: ', error);
+                    }
+                }
 
                 $("#btnAcionarResgate").click(function() {
-            
-            // Exibir o modal de progresso
-           
-            $("#loadingModal").modal("show");
-            setTimeout(function () {
-                    $("#loadingModal").modal('hide');
-                }, 3000); 
-            
-            });
-                
-            const queryString = window.location.search;
-            
-            //remover o ? do início da string
-            const queryParams = new URLSearchParams(queryString.substring(1));
-            const dataParam = queryParams.get("data");
-
-            if (dataParam) {
-                //decodificar a string JSON e converter novamente para JSON
-                dataObject = JSON.parse(decodeURIComponent(dataParam));
-                console.log(dataObject);
-            
-                getVitima(dataObject);
-            } else {
-                console.error("Parâmetro 'data' não encontrado na URL");
-            }
-            
-            function getVitima(vitima) {
-                axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
-                .then(function (response) {
-                    const data = response.data;
-                    console.log(response.data);
-                    $('#nomeVitima').text(`${data.nomeCompleto}`);
-                    $('#nomePaisEncontrada').text(`${data.id_paisVistoPorUltimo}`);
-                
-                })
-                .catch(function (error) {
-                    console.error('Erro ao buscar vítima: ', error);
+                    // Exibir o modal de progresso
+                    $("#loadingModal").modal("show");
+                    setTimeout(function () {
+                        $("#loadingModal").modal('hide');
+                    }, 3000);
                 });
+            });
+
+            function mostrarLoadingEAgendarRedirecionamento(url) {
+                const loadingModal = document.getElementById('loadingModal');
+                $(loadingModal).modal('show');
+
+                setTimeout(function () {
+                    $(loadingModal).modal('hide');
+                    window.location.href = url;
+                }, 3000);
             }
-        });
 
-        function mostrarLoadingEAgendarRedirecionamento(url) {
-            const loadingModal = document.getElementById('loadingModal');
-            $(loadingModal).modal('show');
+            function acionarResgate() {
+                const probabilidade = dataObject.probabilidade;
 
-            setTimeout(function () {
-                $(loadingModal).modal('hide');
-                window.location.href = url; 
-            }, 3000); 
-        }
-
-        function acionarResgate() {
-            const probabilidade = dataObject.probabilidade;
-            
-            if (probabilidade == 0) {
-                const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
-                        
-                mostrarLoadingEAgendarRedirecionamento(`../resgate/modelResgatada.html?data=${dataEncode}`);
-            } else {
-                const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
-                mostrarLoadingEAgendarRedirecionamento(`../resgate/modelNaoResgatada.html?data=${dataEncode}`);
-
+                if (probabilidade == 0) {
+                    const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                    mostrarLoadingEAgendarRedirecionamento(`../resgate/modelResgatada.html?data=${dataEncode}`);
+                } else {
+                    const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                    mostrarLoadingEAgendarRedirecionamento(`../resgate/modelNaoResgatada.html?data=${dataEncode}`);
+                }
             }
-        }
         </script>
 
     </body>
