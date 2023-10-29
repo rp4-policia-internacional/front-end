@@ -20,16 +20,21 @@
             <div class="col-md-9 mt-5">
                 <h1 id="detalhesVitima">Carregando...</h1>
                 <div class="d-flex align-items-start">
+              
+                    <input type="hidden" id="idVitima" name="idVitima">
                     <div class="ml-2">
-                        <img src="../../shared/images/vitima.png"
-                            class="rounded float-start border" alt="Foto da Vítima">
+                        <label for="imagem">Imagem da Vítima:</label>
+                        <img id="imagemPreview" src="" alt="Imagem da Vítima" class="img-thumbnail"
+                            style="max-width: 300px;">
                     </div>
+
+
                     <div class="ml-4" id="detalhesVitima">
                     </div>
                 </div>
             </div>
             <div class="col-md-3 ml-4 text-right">
-                <a href="editarCadastroVitima.html">
+                <a href="editarCadastroVitima.html?id=" id="editarLink">
                     <button type="button" class="btn btn-secondary">Editar</button>
                 </a>
                 <button type="button" class="btn btn-danger" id="removerVitima">Remover</button>
@@ -56,6 +61,20 @@
             return urlParams.get(nome);
         }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const idVitimaInput = document.getElementById('idVitima');
+            const idVitima = idVitimaInput.value; // Obtém o ID da vítima
+            const imagePreview = document.getElementById('imagemPreview');
+
+            // Restaurar a imagem da vítima ao carregar a página
+            const savedImage = localStorage.getItem(idVitima + '_imagemDaVitima');
+
+            if (savedImage) {
+                imagePreview.src = savedImage;
+                imagePreview.style.display = 'block';
+            }
+        });
+
         // detalhes da vítima pelo no ID
         function buscarDetalhesVitima(id) {
             axios.get(`http://localhost:3337/api/vitima/${id}`)
@@ -64,20 +83,18 @@
                     const detalhesVitima = document.getElementById('detalhesVitima');
 
                     detalhesVitima.innerHTML = `
-                        <div class="mt-3">
-                            <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
-                            <p><strong>País de Origem:</strong> ${vitima.id_paisDeOrigem}</p>
-                            <p><strong>Autor do Crime:</strong> ${vitima.id_autorDoCrime}</p>
-                            <p><strong>Nacionalidade:</strong> ${vitima.nacionalidade}</p>
-                            <p><strong>Altura:</strong> ${vitima.altura}</p>
-                            <p><strong>Gênero:</strong> ${vitima.genero}</p>
-                            <p><strong>Idade:</strong> ${vitima.idade} anos</p>
-                            <p><strong>País Visto por Último:</strong> ${vitima.id_paisVistoPorUltimo}</p>
-                            <p><strong>Status:</strong> ${vitima.statusDaVitima}</p>
-                        </div>
-                    `;
-
-                    
+                    <div class="mt-3">
+                        <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
+                        <p><strong>País de Origem:</strong> ${vitima.id_paisDeOrigem}</p>
+                        <p><strong>Autor do Crime:</strong> ${vitima.id_autorDoCrime}</p>
+                        <p><strong>Nacionalidade:</strong> ${vitima.nacionalidade}</p>
+                        <p><strong>Altura:</strong> ${vitima.altura}</p>
+                        <p><strong>Gênero:</strong> ${vitima.genero}</p>
+                        <p><strong>Idade:</strong> ${vitima.idade} anos</p>
+                        <p><strong>País Visto por Último:</strong> ${vitima.id_paisVistoPorUltimo}</p>
+                        <p><strong>Status:</strong> ${vitima.statusDaVitima}</p>
+                    </div>
+                `;
                     const removerVitimaBtn = document.getElementById('removerVitima');
                     removerVitimaBtn.addEventListener('click', function () {
                         // Confirmação para remover a vítima
@@ -103,13 +120,12 @@
                     console.error('Erro ao remover vítima:', error);
                 });
         }
-
-        // busca os detalhes da vítima pelo ID 
         window.addEventListener('load', function () {
             const idVitima = getURLParametro('id');
             buscarDetalhesVitima(idVitima);
+            const editarLink = document.getElementById('editarLink');
+            editarLink.href = `editarCadastroVitima.html?id=${idVitima}`;
         });
     </script>
 </body>
-
 </html>

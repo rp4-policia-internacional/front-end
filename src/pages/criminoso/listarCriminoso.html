@@ -165,7 +165,7 @@
         function emitirPedidoDeBuscaECaptura(criminosoID) {
             axios.get(`http://localhost:3338/api/criminoso/${criminosoID}`)
                 .then(function (response) {
-                    decisaoCapturadoFugitivo(criminosoID);
+                    decisaoCapturadoFugitivo(response.data);
                 })
                 .catch(function (error) {
                     console.error('Erro ao buscar criminoso: ', error);
@@ -182,15 +182,16 @@
             }, 3000);
         }
 
-        function decisaoCapturadoFugitivo(idCriminoso) {
-            const data = {
-                id_criminoso: idCriminoso,
-                id_pais_capturado: "Aleatorio",
-                id_pais_origem: "Aleatorio",
-                data: new Date(),
-                probabilidade: 0
-            }
-            axios.post('http://localhost:3333/api/captura/', data)
+            function decisaoCapturadoFugitivo(criminoso) {
+                
+                const data = {
+                    id_criminoso: criminoso.id,
+                    id_pais_capturado: criminoso.id_paisVistoPorUltimo,
+                    id_pais_origem: criminoso.id_paisOrigem,
+                    data: new Date(),
+                    probabilidade:0
+                }
+                axios.post('http://localhost:3333/api/captura/', data)
                 .then(function (response) {
                     // condicao para escolha de página
                     if (response.data.probabilidade > 5) {

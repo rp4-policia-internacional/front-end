@@ -1,74 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
-
-    <!-- Bootstrap CSS -->
-    <div class="container d-flex justify-content-center mt-5">
-      <form class="border rounded p-4" style="max-width: 400px;">
-        <h2 class="text-center mb-4">Login</h2>
-        <div class="form-group">
-          <label for="inputEmail">Email</label>
-          <input type="email" class="form-control" id="inputEmail" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-          <label for="inputPassword">Password</label>
-          <input type="password" class a="form-control" id="inputPassword" placeholder="Password">
-        </div>
-        <button type="button" class="btn btn-primary btn-block" onclick="login()">Entrar</button>
-        <button type="button" class="btn btn-success btn-block">Solicitar participação</button>
-      </form>
-    </div>
-      <!-- Bootstrap JS and jQuery -->
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../login/CSS/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
      
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <!-- ... outros scripts ... -->
-      
-     <script>
-        function login() {
-  const email = document.getElementById("inputEmail").value;
-  const password = document.getElementById("inputPassword").value;
+        <div class="content first-content">
+          
+            <div class="first-column">
+              <img src="../../shared/images/logo.png" alt="Logo da Organização" class="organization-logo">
+                <h2 class="title title-primary">Bem vindo!</h2>
+                <p class="description description-primary">Participe da Polícia Internacional</p>
+                <p class="description description-primary">Solicite sua participação na organização</p>
+                <button id="solicitacao" class="btn btn-primary">Solicitar Participação</button>
+            </div>    
+            <div class="second-column">
+                <h2 class="title title-second">Login</h2>
+                
+                <p class="description description-second">Use e-mail e senha:</p>
+                <form class="form">
+                    <div class="form-group">
+                    <label class="label-input" for="">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </label>
+                    <div class="form-group">
+                    <label class="label-input" for="">
+                        <i class="fas fa-lock icon-modify"></i>
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    </label>
+                    
+                    
+                    <button class="btn btn-second">Entrar</button>        
+                </form>
+            </div><!-- second column -->
+        </div><!-- first content -->
+        
+    </div>
 
-  axios.post('http://localhost:8080/api/login', {
-    email: email,
-    senha: password
-  })
-  .then(response => {
-    console.log(response.data);
-    const token = response.data.token; // Extrai o token da resposta
-    // Agora você tem o token JWT, você pode usá-lo para acessar rotas protegidas
+    
 
-    // Aqui, você pode armazenar o token em localStorage ou em um estado no seu aplicativo
-    // para usá-lo posteriormente em outras solicitações.
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-    // Exemplo de armazenamento em localStorage:
-    localStorage.setItem('jwtToken', token);
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    // Agora você pode usá-lo nas solicitações para o Kong ou outras rotas protegidas.
 
-    // Exemplo: enviar o token JWT no cabeçalho Authorization para acessar uma rota protegida
-    axios.get('http://localhost:8080/sua-rota-protegida', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then(response => {
-      // Processar a resposta da rota protegida
-      console.log(response.data);
-    })
-    .catch(error => {
-      // Lidar com erros de autenticação
-      console.error(error);
-    });
-  });
-  
-}
 
-      </script>
-  </body>
-  </html>
+  <script>
+
+
+
+document.getElementById("solicitacao").addEventListener("click", function() {
+            // Redirecionar para a página formSolicitacaoPais.html
+            window.location.href = "../pais/formSolicitacaoPais.html";
+        });
+
+    function login() {
+      const email = document.getElementById("inputEmail").value;
+      const password = document.getElementById("inputPassword").value;
+
+      axios.post('http://localhost:8080/api/login', {
+        email: email,
+        senha: password
+      })
+        .then(response => {
+          console.log(response.data);
+          const token = response.data.token;
+
+          localStorage.setItem('jwtToken', token);
+
+          axios.get('http://localhost:8080/sua-rota-protegida', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          })
+            .then(response => {
+
+              console.log(response.data);
+            })
+            .catch(error => {
+
+              console.error(error);
+            });
+        });
+
+    }
+
+  </script>
+
+</body>
+</html>

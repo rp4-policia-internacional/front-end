@@ -26,7 +26,7 @@
                     <div class="modal-body d-flex justify-content-center align-items-center">
                         <img src="../../shared/images/procurado.svg"></img>
                         <p class="text-center">O criminoso 
-                            <span id="idCriminoso"></span> não foi encontrado.</p>
+                            <span id="nomeCriminoso"></span> não foi encontrado.</p>
                     </div>
                 </div>
             </div>
@@ -41,6 +41,35 @@
         <script>
             $(document).ready(function() {
                 $("#criminosoNaoEncontradoModal").modal("show"); 
+
+                const queryString = window.location.search;
+        
+                //remover o ? do início da string
+                const queryParams = new URLSearchParams(queryString.substring(1));
+                const dataParam = queryParams.get("data");
+
+                if (dataParam) {
+                    //decodificar a string JSON e converter novamente para JSON
+                    dataObject = JSON.parse(decodeURIComponent(dataParam));
+                    console.log(dataObject);
+                
+                    getCriminoso(dataObject);
+                } else {
+                    console.error("Parâmetro 'data' não encontrado na URL");
+                }
+
+                function getCriminoso(criminoso) {
+                    axios.get(`http://localhost:3338/api/criminoso/${criminoso.id_criminoso}`)
+                    .then(function (response) {
+                        const data = response.data;
+                        console.log(response.data);
+                        $('#nomeCriminoso').text(`${data.nomeCompleto}`);
+                    
+                    })
+                    .catch(function (error) {
+                        console.error('Erro ao buscar criminoso: ', error);
+                    });
+                }
             });
 
             function redirectToHomePage() {

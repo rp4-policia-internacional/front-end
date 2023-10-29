@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
+
 <body>
     <div class="container mt-5">
         <div class="row">
@@ -23,6 +25,7 @@
                     <div class="ml-2">
                         <img src="../../shared/images/procurado.svg"
                             class="rounded float-start border" alt="Foto do criminoso">
+
                     </div>
                     <div class="ml-4" id="detalhesCriminoso">
                     </div>
@@ -31,6 +34,7 @@
             <div class="col-md-3 ml-4 text-right">
                 <a onclick="formEditarCriminoso()">
                     <button type="button" class="btn btn-secondary">Editar</button>
+
                 </a>
             </div>
         </div>
@@ -101,9 +105,8 @@
             }
         }
 
-       
-        // Buscar detalhes do criminoso pelo ID 
-        window.addEventListener('load', function () {
+       // Buscar detalhes do criminoso pelo ID 
+       window.addEventListener('load', function () {
             const idCriminoso = getURLParametro('id');
             buscarDetalhesCriminoso(idCriminoso);
         });

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Cadastro de Vítimas</title>
 </head>
-<body>
 
+<body>
     <div class="container mt-5 pt-5">
         <div class="row">
             <div class="col-md-6">
@@ -16,45 +18,56 @@
                 </a>
             </div>
         </div>
-        
-        
-          
+        <input type="hidden" id="idVitima" name="idVitima">
         <form id="cadastroVitimaForm" action="/api/vitima/create" method="post" style="margin-top: 20px;">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label for="imagem">Inserir imagem</label>
+                        <input type="file" class="form-control-file" id="imagem" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <div class="text-center">
+                            <img id="imagemPreview" src="" alt="Prévia da imagem"
+                                style="max-width: 300px; display: none; max-height: 100px">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="nomeCompleto">Nome Completo:*</label>
-                        <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control" placeholder="Informe o nome completo" required>
+                        <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control"
+                            placeholder="Informe o nome completo" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_paisDeOrigem">País de Origem:*</label>
-                        <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control" placeholder="Informe o país de origem" required>
+                        <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control"
+                            placeholder="Informe o país de origem" required>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_autorDoCrime">Autor do Crime:*</label>
-                        <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control" placeholder="Informe o autor do crime" required>
+                        <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control"
+                            placeholder="Informe o autor do crime" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="nacionalidade">Nacionalidade:*</label>
-                        <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" placeholder="Informe a nacionalidade" required>
+                        <input type="text" id="nacionalidade" name="nacionalidade" class="form-control"
+                            placeholder="Informe a nacionalidade" required>
                     </div>
                 </div>
             </div>
-                
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="altura">Altura:*</label>
-                        <input type="text" id="altura" name="altura" class="form-control" placeholder="Informe a altura" required>
+                        <input type="text" id="altura" name="altura" class="form-control" placeholder="Informe a altura"
+                            required>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -67,22 +80,24 @@
                     </div>
                 </div>
             </div>
-                
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="idade">Idade:*</label>
-                        <input type="number" id="idade" name="idade" class="form-control" placeholder="Informe a idade" required>
+                        <input type="number" id="idade" name="idade" class="form-control" placeholder="Informe a idade"
+                            required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_paisVistoPorUltimo">País Visto por Último:*</label>
-                        <input type="text" id="paisVistoPorUltimo" name="paisVistoPorUltimo" class="form-control" placeholder="Informe o país visto por último" required>
+                        <input type="text" id="paisVistoPorUltimo" name="paisVistoPorUltimo" class="form-control"
+                            placeholder="Informe o país visto por último" required>
                     </div>
                 </div>
             </div>
-                
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -95,67 +110,95 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6">        
-                    <div class="form-group">
-                        <label for="foto">Foto:</label>
-                        <input type="text" id="foto" name="foto" class="form-control" placeholder="Informe a URL da foto" required>
-                    </div>
-                </div>
             </div>
-                
-                
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
 
-                <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-          
-     
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        document.getElementById("cadastroVitimaForm").addEventListener("submit", function (event) {
-          event.preventDefault(); 
 
-       
-          const nomeCompleto = document.getElementById("nomeCompleto").value;
-          const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
-          const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
-          const nacionalidade = document.getElementById("nacionalidade").value;
-          const altura = document.getElementById("altura").value;
-          const genero = document.getElementById("genero").value;
-          const idade = document.getElementById("idade").value;
-          const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
-          const statusDaVitima = document.getElementById("status").value;
-          const foto =  document.getElementById("foto").value;
+     
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageUploadInput = document.getElementById('imagem'); 
+            const idVitimaInput = document.getElementById('idVitima');
+            const imagePreview = document.getElementById('imagemPreview');
+            const idVitima = idVitimaInput.value; // Obtém o ID da vítima
+            const savarImage = localStorage.getItem(idVitima + '_imagemDaVitima'); // tenta pegar a imagem salva localmente de acordo com o id da vitima
 
-        
-          const data = {
+            if (savarImage) {
+                imagePreview.src = savarImage;
+                imagePreview.style.display = 'block';
+            }
 
-            id_paisDeOrigem: id_paisDeOrigem,
-            id_autorDoCrime: id_autorDoCrime,
-            nomeCompleto: nomeCompleto,
-            nacionalidade: nacionalidade,
-            altura: parseFloat(altura),
-            genero: genero,
-            idade: parseInt(idade),
-            id_paisVistoPorUltimo: id_paisVistoPorUltimo,
-            statusDaVitima:statusDaVitima,
-            foto: foto // foto uploaded
-          };
+            imageUploadInput.addEventListener('change', function () {
+                if (imageUploadInput.files.length > 0) {
+                    const file = imageUploadInput.files[0];
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const imageDataURL = e.target.result;
+                        localStorage.setItem(idVitima + '_imagemDaVitima', imageDataURL); //salva a imagem localmente
+                        imagePreview.src = e.target.result;                               // att para exibir a nova imagem
+                        imagePreview.style.display = 'block';
+                    };
 
-          // Envia os dados como JSON em uma solicitação POST
-          axios.post("http://localhost:3337/api/vitima/", data)
-            .then(function (response) {
-              // Trate a resposta do back-end, se necessário
-              console.log("Cadastro de vítima bem-sucedido!", response.data);
-              //  modal de feedback
-              $("#cadastroVitimaModal").modal("show");
-            })
-            .catch(function (error) {
-              console.error("Erro ao cadastrar vítima:", error);
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.src = '';
+                    imagePreview.style.display = 'none';
+                }
+            });
+
+
+            /*
+            * Envio do formulário
+            */
+            document.getElementById("cadastroVitimaForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+                const nomeCompleto = document.getElementById("nomeCompleto").value;
+                const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
+                const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
+                const nacionalidade = document.getElementById("nacionalidade").value;
+                const altura = document.getElementById("altura").value;
+                const genero = document.getElementById("genero").value;
+                const idade = document.getElementById("idade").value;
+                const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+                const statusDaVitima = document.getElementById("status").value;
+                const imageUploadInput = document.getElementById('imagem');
+                const imagemFile = imageUploadInput.files[0]; 
+
+                //verificando se a imagem foi selecionada
+                if (imagemFile) {
+                    const nomeDaImagem = imagemFile.name; //nome da imagem
+
+                    const data = {
+                        id_paisDeOrigem: id_paisDeOrigem,
+                        id_autorDoCrime: id_autorDoCrime,
+                        nomeCompleto: nomeCompleto,
+                        nacionalidade: nacionalidade,
+                        altura: parseFloat(altura),
+                        genero: genero,
+                        idade: parseInt(idade),
+                        id_paisVistoPorUltimo: id_paisVistoPorUltimo,
+                        statusDaVitima: statusDaVitima,
+                        foto: nomeDaImagem
+                    };
+
+                    axios.post("http://localhost:3337/api/vitima/", data)
+                        .then(function (response) {
+                            console.log("Cadastro de vítima bem-sucedido!", response.data);
+                            const vitimaId = response.data.id; // Obtém o ID da vítima recém-criada
+                            document.getElementById("idVitima").value = vitimaId; 
+                            window.location.href = `detalhesVitima.html?id=${response.data.id}`;
+                        })
+                        .catch(function (error) {
+                            console.error("Erro ao cadastrar vítima:", error);
+                        });
+                }
             });
         });
     </script>
