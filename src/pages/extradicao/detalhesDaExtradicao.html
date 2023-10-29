@@ -4,77 +4,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <title>Detalhes da extradição</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="row">
-           
-            <div class="col-md-9 mt-5">
-                <h1 id="detalhesExtradicao">Carregando...</h1>
-                <div class="d-flex align-items-start">
-                    <div class="ml-4" id="detalhesExtradicao">
-                    </div>
-                    <div class="col-md-3 ml-4 text-right">
-                        <a href="../extradicao/extradicaoFinalizada.html">
-                            <button type="button" class="btn btn-primary">Confirmar visualização</button>
-                        </a>
+
+    <div class="modal" data-backdrop="static" data-keyboard="false" id="DetalhesExtradicaoModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 3px solid green;">
+                <!-- Conteúdo do modal -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Resumo da extradição</h4>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+
+                    <p class="text-center"> 
+                        O criminoso <span id ="nomeCriminoso"></span> esta prestes a ser extraditado pelo agente <span id="nomeAgente"></span>
+                        por meio de trasnporte <span id="transporte"></span> 
+
+                        está aguardando o pedido de extradição.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" onclick="confirmarVisualizacao()">Confirmar visualização
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <style>
-        body {
-            font-size: 16px;
-        }
-
-        h1,
-        p {
-            font-size: 14px;
-        }
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        function getURLParametro(nome) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(nome);
-        }
-
-        // detalhes da vítima pelo no ID
-        function buscarDetalhesVitima(id) {
-            axios.get(`http://localhost:3336/api/extradicao/${id}`)
-                .then(function (response) {
-                    const extradicao = response.data;
-                    const detalhesExtradicao = document.getElementById('detalhesExtradicao');
-
-                    detalhesVitima.innerHTML = `
-                        <div class="mt-3">
-                            <p><strong>Agente responsável:</strong> ${extradicao.agente_id}</p>
-                            <p><strong>Data de inicio:</strong> ${extradicao.data_inicio}</p>
-                            <p><strong>Tipo de transporte:</strong> ${extradicao.transporte}</p>
-                        </div>
-                    `;
-
-                    
-                    
-                })
-                .catch(function (error) {
-                    console.error('Erro ao buscar detalhes da vítima:', error);
-                });
-        }
-
-        // busca os detalhes da vítima pelo ID 
-        window.addEventListener('load', function () {
-            const idVitima = getURLParametro('id');
-            buscarDetalhesVitima(idVitima);
+        $(document).ready(function () {
+            $("#DetalhesExtradicaoModal").modal("show");
         });
     </script>
-</body>
 
+    <script>
+        const queryString = window.location.search;
+        
+        //remover o ? do início da string
+        const queryParams = new URLSearchParams(queryString.substring(1));
+        const dataParam = queryParams.get("data");
+
+        if (dataParam) {
+            //decodificar a string JSON e converter novamente para JSON
+            dataObject = JSON.parse(decodeURIComponent(dataParam));
+            console.log(dataObject);
+        
+            getExtradicao(dataObject);
+        } else {
+            console.error("Parâmetro 'data' não encontrado na URL");
+        }
+
+        function getExtradicao(extradicao) {
+            axios.get(`http://localhost:3336/api/extradicao/${extradicao.id_extradicao}`)
+            .then(function (response) {
+                const data = response.data;
+                console.log(response.data);
+                $('#nomeCriminoso').text(`${data.id_criminoso}`);
+                $('#nomeAgente').text(`${data.agente_id}`);
+                $('#transporte').text(`${data.transporte}`);
+            
+            })
+            .catch(function (error) {
+                console.error('Erro ao carregar extradicao: ', error);
+            });
+        }
+
+        function confirmarVisualizacao() {
+            window.location.href = '../extradicao/extradicaoFinalizada.html';
+        }
+    </script>
+</body>
 </html>
