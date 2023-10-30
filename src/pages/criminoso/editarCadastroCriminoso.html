@@ -69,7 +69,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_paisOrigem">Nacionalidade:</label>
-                            <input type="text" class="form-control" id="id_paisOrigem">
+                            <select id="id_paisOrigem" class="form-control">
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -116,7 +117,7 @@
                         <div class="form-group">
                             <label for="id_organizacao">Organização:</label>
                             <select id="id_organizacao" class="form-control">
-                                <option>Nenhum Grupo</option>
+                                
                             </select>
                         </div>
                     </div>
@@ -140,7 +141,8 @@
             
             const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
             const criminoso = response.data;
-            const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);          
+            const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao); 
+            const DataPais = await buscarPais(criminoso.id_paisOrigem);          
             const formattedDate = await dataNascimentoFormatada(criminoso.dataNascimento);
             console.log(DataOrganizacao.nome);
             console.log(criminoso.id_paisOrigem);
@@ -154,11 +156,9 @@
             document.getElementById("apelido").value = criminoso.apelido;
             document.getElementById("caracteristica").value = criminoso.caracteristicas;
             document.getElementById("genero").value = criminoso.genero;
-            document.getElementById("id_paisOrigem").value = criminoso.id_paisOrigem;
+            document.getElementById("id_paisOrigem").value = DataPais.nome;
             document.getElementById("paisVistoPorUltimo").value = criminoso.id_paisVistoPorUltimo;
-            document.getElementById("id_organizacao").value  = DataOrganizacao.id;
-            //document.getElementById("imagem").value = criminoso.imagem;
-           
+            document.getElementById("id_organizacao").value  = DataOrganizacao.id;          
             
             }catch (error){
                 console.error('Erro ao buscar detalhes do criminoso:', error)
@@ -183,6 +183,16 @@
 
             return dataDate
             console.log(dataDate);
+        }
+
+        async function buscarPais(id) {
+            try {
+                const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                return response.data;
+            } catch (error) {
+                alert('Erro ao buscar psia:', error);
+                throw error; // Rejeita a Promise em caso de erro, se necessário.
+            }
         }
        
 
@@ -258,7 +268,32 @@
         .catch(function (error) {
             // manipula erros da requisição
             console.error(error);
+        });
+        //Coloca as pais do banco no select
+        axios.get("http://localhost:3340/api/pais/")
+        .then(function (response) {
+            const select = document.getElementById("id_paisOrigem");
+
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#id_paisOrigem').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
         })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        });
 
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
