@@ -53,13 +53,16 @@
             </div>
             <div class="form-group">
                 <label for="agenteResponsavel">Agente responsável:*</label>
-                <input type="text" class="form-control" id="agenteResponsavel" name="agenteResponsavel">
-            </div>
+                <select class="form-control" id="agenteResponsavel" name="agenteResponsavel" required>
+                    <option>Pedro</option>
+                    <option >Alice</option>
+                    <option>João</option>
+                </select>            </div>
             <div class="form-group">
                 <label for="nomeCompleto">Nome Completo da vitima:*</label>
                 <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control" placeholder="Informe o nome completo" required>
             </div>  
-            <button type="submit" class="btn btn-secondary">Enviar</button>
+            <button onclick="enviarRepatriacao()" type="submit" class="btn btn-secondary">Enviar</button>
         </form>
     </div>
     <script>
@@ -102,6 +105,9 @@
               console.error("Erro ao realizar a repatriação:", error);
             });
         });
+        function enviarRepatriacao() {
+            window.location.href = '../repatriacao/detalhesRepatriacao.html';
+        }
       </script>
     </body>
   </html>
