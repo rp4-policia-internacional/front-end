@@ -49,14 +49,14 @@
                         </label>
                     </div>
                     <div class="modal" data-backdrop="static" data-keyboard="false" id="modalCadastroRealizado">
-                        <!-- Conteúdo da modal aqui -->
+                
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </form>
                 
-            </div><!-- second column -->
-        </div><!-- first content -->
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -84,7 +84,7 @@
             axios.post("http://localhost:8080/api/login/", data)
                 .then(function (response) {
                     console.log("Cadastro de usuário bem-sucedido!", response.data);
-                    //  modal de feedback
+                  
                     window.location.href = "modelCadastroRealizadoComSucesso.html";
                 })
                 .catch(function (error) {

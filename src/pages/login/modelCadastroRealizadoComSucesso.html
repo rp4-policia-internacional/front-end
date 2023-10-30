@@ -10,10 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <div class="modal" data-backdrop="static" data-keyboard="false" id="criminosoCapturadoModal">
+    <div class="modal" data-backdrop="static" data-keyboard="false" id="cadastroModal">
         <div class="modal-dialog">
             <div class="modal-content" style="border: 3px solid green;">
-                <!-- Conteúdo do modal -->
+            
                 <div class="modal-header">
                     <h4 class="modal-title text-center">Cadastro Realizado com Sucesso</h4>
                 </div>
@@ -34,11 +34,11 @@
 
     <script>
         $(document).ready(function () {
-            $("#criminosoCapturadoModal").modal("show");
+            $("#cadastroModal").modal("show");
         });
 
         function fecharModal() {
-            $("#criminosoCapturadoModal").modal("hide");
+            $("#cadastroModal").modal("hide");
         }
     </script>
 </body>
