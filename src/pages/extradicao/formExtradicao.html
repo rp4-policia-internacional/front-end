@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Repatriação</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -20,7 +20,6 @@
       integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
       crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        
 </head>
 
 
@@ -46,30 +45,20 @@
           <label for="paisOrigem">País de origem:*</label>
           <select id="paisOrigem" name="paisOrigem" class="form-control">
               <option selected>Selecionar</option>
-              <option>Brasil</option>
-              <option>Japão</option>
-              <option>EUA</option>
           </select>
       </div>
       </div>
       <div class="form-group">
         <div class="col-md-6 offset-md-3">
         <label for="agente">Agente:*</label>
-        <select id="agente" name="agente" class="form-control">
-            <option selected>Selecionar</option>
-            <option>Mitsuro Kirijo</option>
-            <option> Aigis</option>
-            <option>Junpei Iori</option>
-        </select>
+        <input id="agente" name="agente" class="form-control">
+
     </div>
     </div>
     <div class="form-group">
       <div class="col-md-6 offset-md-3">
       <label for="nomeCriminoso">Nome do criminoso</label>
       <select id="nomeCriminoso" name="nomeCriminoso" class="form-control">
-          <option selected>Selecionar</option>
-          <option>Monika</option>
-          <option>Goro Akechi</option>
       </select>
   </div>
   </div>
@@ -87,7 +76,8 @@
       
           <div class="form-group">
               <div style="width: 500px;"class="col-md-6 offset-md-3">
-                <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" data-toggle="modal" data-target="#extradicaoLabel" onclick="toDetailsExtradicao()">
+                <a href="detalhesDaExtradicao.html"></a>
+                <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" onclick="enviarExtradicao()" data-toggle="modal" data-target="#extradicaoLabel">
                     Enviar                  
                 </button>
 
@@ -139,10 +129,43 @@
             console.error("Erro ao cadastrar extradicao:", error);
           });
       });
+      function enviarExtradicao() {
+            window.location.href = '../extradicao/detalhesDaExtradicao.html';
+        }
+    </script>
+    <script>
+        const queryString = window.location.search;
+        
+        //remover o ? do início da string
+        const queryParams = new URLSearchParams(queryString.substring(1));
+        const dataParam = queryParams.get("data");
 
-      function toDetailsExtradicao(){
-        window.location.href = "../extradicao/detalhesDaExtradicao.html";
-      }
+        if (dataParam) {
+            //decodificar a string JSON e converter novamente para JSON
+            dataObject = JSON.parse(decodeURIComponent(dataParam));
+            console.log(dataObject);
+        
+            getExtradicao(dataObject);
+        } else {
+            console.error("Parâmetro 'data' não encontrado na URL");
+        }
+
+        function getExtradicao(extradicao) {
+            axios.get(`http://localhost:3336/api/extradicao/${extradicao.id_extradicao}`)
+            .then(function (response) {
+                const data = response.data;
+                console.log(response.data);
+                $('#paisOrigem').text(`${data.id_pais_origem}`);
+                $('#nomeCriminoso').text(`${data.id_criminoso}`);
+
+               
+            
+            })
+            .catch(function (error) {
+                console.error('Erro ao carregar extradicao: ', error);
+            });
+        }
+
     </script>
   </body>
 </html>
