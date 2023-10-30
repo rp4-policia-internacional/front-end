@@ -133,7 +133,7 @@
             function acionarPolicia() {
                 const probabilidade = dataObject.probabilidade;
     
-                if (probabilidade > 2) {
+                if (probabilidade > 1) {
                     const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
     
                     mostrarLoadingEAgendarRedirecionamento(`../captura/modelCapturado.html?data=${dataEncode}`);

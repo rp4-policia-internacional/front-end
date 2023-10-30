@@ -58,13 +58,26 @@
                 console.error("Parâmetro 'data' não encontrado na URL");
             }
 
+            async function getPaisById(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                    return response.data;
+                } catch (error) {
+                    console.error('Erro ao buscar país: ', error);
+                    throw error;
+                }
+            }
+
             function getVitima(vitima) {
                 axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
-                .then(function (response) {
+                .then(async function (response) {
                     const data = response.data;
                     console.log(response.data);
                     $('#nomeVitima').text(`${data.nomeCompleto}`);
-                    $('#nomePaisNaoEncontrada').text(`${data.id_paisVistoPorUltimo}`);
+                    
+                    //buscar o nome do país com base no id
+                    const pais = await getPaisById(data.id_paisVistoPorUltimo);
+                    $('#nomePaisNaoEncontrada').text(pais.nome);
                 
                 })
                 .catch(function (error) {
