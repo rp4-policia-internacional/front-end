@@ -117,23 +117,38 @@
                         <td>${organizacao.descricao}</td>
                     `;
 
-                    //botao ver detalhes
+                    //botao ver editar
+                    const editarButton = document.createElement('button');
+                    editarButton.type = 'button';
+                    editarButton.className = 'btn btn-warning'; // Use uma classe que represente um botão de edição, se disponível
+                    editarButton.textContent = 'Editar';
+                    editarButton.addEventListener('click', function () {
+                        // Lidar com a ação de edição aqui
+                        // Você pode usar o organizacaoSelecionadoId para identificar o item a ser editado
+                        // Por exemplo, redirecione para uma página de edição com o ID da organização:
+                        window.location.href = `editarOrganizacao.html?id=${organizacao.id}`;
+                    });
                     
-                   const excluirButton = document.createElement('button');
+                    //botao ver excluir
+                    const excluirButton = document.createElement('button');
                     excluirButton.type = 'button';
                     excluirButton.className = 'btn btn-danger'; // Use uma classe que represente um botão de exclusão, se disponível
                     excluirButton.textContent = 'Excluir';
                     excluirButton.addEventListener('click', function () {
-                        // Lidar com a exclusão do item aqui
+                        
                         // Você pode usar o organizacaoSelecionadoId para identificar o item a ser excluído
                         if (confirm('Tem certeza de que deseja excluir este item?')) {
                             removerOrganizacao(organizacao.id);
                         }
                     });
 
+                    
+                    const editarCell = document.createElement('td');
                     const excluirCell = document.createElement('td');
+                    editarCell.appendChild(editarButton);
                     excluirCell.appendChild(excluirButton);
 
+                    row.appendChild(editarCell);
                     row.appendChild(excluirCell);
 
                     organizacaoTabela.appendChild(row);
