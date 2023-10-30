@@ -71,7 +71,7 @@
                     
                     // buscar o nome do país com base no id
                     const pais = await getPaisById(data.id_paisVistoPorUltimo);
-                    $('#nomePaisResgatada').text(pais);
+                    $('#nomePaisResgatada').text(pais.nome);
                 
                 })
                 .catch(function (error) {
@@ -87,7 +87,7 @@
             async function getPaisById(id) {
                 try {
                     const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
-                    return response.data.nome;
+                    return response.data;
                 } catch (error) {
                     console.error('Erro ao buscar país: ', error);
                     throw error;

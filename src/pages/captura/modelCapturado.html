@@ -64,11 +64,12 @@
 
         function getCriminoso(criminoso) {
             axios.get(`http://localhost:3338/api/criminoso/${criminoso.id_criminoso}`)
-            .then(function (response) {
+            .then(async function (response) {
                 const data = response.data;
-                console.log(response.data);
                 $('#nomeCriminoso').text(`${data.nomeCompleto}`);
-                $('#nomePaisEncontrado').text(`${data.id_paisVistoPorUltimo}`);
+
+                const pais = await getPaisById(data.id_paisVistoPorUltimo);
+                $('#nomePaisEncontrado').text(`${pais.nome}`);
             
             })
             .catch(function (error) {
@@ -79,6 +80,16 @@
         function enviarPedidoExtradicao() {
             window.location.href = '../extradicao/formExtradicao.html';
         }
+
+        async function getPaisById(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                    return response.data;
+                } catch (error) {
+                    console.error('Erro ao buscar país: ', error);
+                    throw error;
+                }
+            }
     </script>
 </body>
 </html>
