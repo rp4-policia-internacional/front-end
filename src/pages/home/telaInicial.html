@@ -1,63 +1,101 @@
+<!DOCTYPE html>
 <html>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="css/bootstrap.css">
-
-  <link rel="stylesheet" type="text/css" href="estilo.css">
-
-  <head>
+    <link rel="stylesheet" type="text/css" href="../home/CSS/style.css">
     <title>Home</title>
+</head>
+<body>
+  <header class="navbar navbar-expand-lg " id="my-navbar">
 
-    <div >
-        <img src="/src/shared/images/logo.png" width="100px" alt="logo"class="img"  >
-    </div class="container">
-    <div >
-      <img style="position: absolute; top: 50px; left: 1300px; bottom: 50px;" src="/src/shared/images/user.png" width="56" height="64" alt="user" class="img"  >
-    </div>
-      <a href="notificacao.html"><img  style="position: absolute; top: 50px; left: 1200px; bottom: 50px;" src="/src/shared/images/notification.png" width="56" height="64" alt="user" class="img"  ></a>
-    </div>
-  </head>
+        <div class="container">
+          <a class="navbar-brand my-custom-brand " href="#">
+            <img src="../../shared/images/logo.png" width="35" height="35" class="d-inline-block align-top" alt="">
+            Polícia Internacional
+        </a>
+        
+            <button class="btn btn-link" data-toggle="modal" data-target="#notificationModal">
+                <i class="fas fa-bell" style="color: rgb(255, 255, 255); font-size: 20px;"></i>
+                <span class="badge badge-danger">5</span>
+            </button>
+            <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="notificationModalLabel">Notificações</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ul>
+                                <li>Notificação 1</li>
+                                <li>Notificação 2</li>
+                                <li>Notificação 3</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-user user-icon" style="color: #fff; font-size: 20px;"></i>
 
-  <body>
+              </a>
+              
+              
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">Perfil</a>
+                      <a class="dropdown-item" href="#">Configurações</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Sair</a>
+                  </div>
+              </li>
+          </ul>
+          
+        </div>
+    </header>
 
     <div class="container mt-5">
-      <div class="row">
-          <div class="col-md-4 mb-4">
-              <a href="#solicitacao" class="btn btn-primary btn-block">Solicitação</a>
-          </div>
-          <div class="col-md-4 mb-4">
-              <a href="../extradicao/pedidoExtradicao.html" class="btn btn-primary btn-block">Pedido de Extradição</a>
-          </div>
-          <div class="col-md-4 mb-4">
-              <a href="../pais/paisesMembros.html" class="btn btn-primary btn-block">Países Integrantes</a>
-          </div>
-          <div class="col-md-4 mb-4">
-              <a href="#dashboard" class="btn btn-primary btn-block">Dashboard</a>
-          </div>
-          <div class="col-md-4 mb-4">
-              <a href="../criminoso/listarCriminoso.html" class="btn btn-primary btn-block">Listar Criminosos</a>
-          </div>
-          <div class="col-md-4 mb-4">
-              <a href="../criminoso/formCadastroOrg.html" class="btn btn-primary btn-block">Listar Grupo Criminoso</a>
-          </div>
-          <div class="col-md-4 mb-4">
-              <a href="../vitima/listaDeVitima.html" class="btn btn-primary btn-block">Listar Vítima</a>
-          </div>
-          <div class="col-md-4 mb-4">
-              <a href="#listar-agentes" class="btn btn-primary btn-block">Listar Agentes</a>
-          </div>
-      </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <a href="#solicitacao" class="btn btn-secondary">Solicitação</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="../extradicao/pedidoExtradicao.html" class="btn btn-secondary">Pedido de Extradição</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="../pais/paisesMembros.html" class="btn btn-secondary">Países Integrantes</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="#dashboard" class="btn btn-secondary">Dashboard</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="../criminoso/listarCriminoso.html" class="btn btn-secondary">Listar Criminosos</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="../criminoso/formCadastroOrg.html" class="btn btn-secondary">Listar Grupo Criminoso</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="../vitima/listaDeVitima.html" class="btn btn-secondary">Listar Vítima</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="#listar-agentes" class="btn btn-secondary">Listar Agentes</a>
+            </div>
+        </div>
     </div>
-  
-  </body>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
 </html>
