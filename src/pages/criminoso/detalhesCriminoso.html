@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Detalhes do Criminoso</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 
 <body>
@@ -20,6 +22,8 @@
             <div class="col-md-9 mt-5">
                 <h1 id="detalhesCriminoso">Carregando...</h1>
                 <div class="d-flex align-items-start">
+
+                    <input type="hidden" id="idCriminoso" name="idCriminoso">
                     <div class="ml-2">
                         <input type="hidden" id="idCriminoso" name="idCriminoso">
                         <label for="imagem">Imagem do criminoso:</label>
@@ -52,7 +56,7 @@
     </style>
 
     <script>
-        function getURLParametro(nome) {
+       function getURLParametro(nome) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(nome);
         }
@@ -81,7 +85,7 @@
                 const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
                 console.log(criminoso);
                 const dataFormat = await dataNascimentoFormatada(criminoso.dataNascimento);
-                console.log(dataFormat);
+                console.log(DataOrganizacao);
 
 
                 detalhesCriminoso.innerHTML = `
@@ -130,15 +134,15 @@
 
             const ano = data.getFullYear(); // Obtém o ano (por exemplo, 2023)
             const mes = data.getMonth() + 1; // Obtém o mês (0-11, então adicionamos 1 para obter o mês real)
-            const dia = data.getDate(); // Obtém o dia do mês
+            const dia = data.getDate() + 1; // Obtém o dia do mês
 
             // Agora você pode formatar a data como desejar, por exemplo, "03/10/2023"
             const dataFormatada = `${dia}/${mes}/${ano}`;
             return dataFormatada
             console.log(dataFormatada);
         }
-    
-
+        
+        
         function removerCriminoso(id) {
             axios.delete(`http://localhost:3338/api/criminoso/${id}`)
                 .then(function (response) {
@@ -158,7 +162,8 @@
             const editarLink = document.getElementById('editarLink');
             editarLink.href = `editarCadastroCriminoso.html?id=${idCriminoso}`;
         });
-
+    
+        
     </script>
 </body>
 
