@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="modal" data-backdrop="static" data-keyboard="false" id="criminosoCapturadoModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 3px solid green;">
+                <!-- Conteúdo do modal -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Cadastro Realizado com Sucesso</h4>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <i class="fas fa-check-circle fa-5x" style="color: green;"></i>
+                    <p class="text-center">Seu cadastro foi realizado com sucesso.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="../adm/telaInicalAdm.html" class="btn btn-dark">Fechar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#criminosoCapturadoModal").modal("show");
+        });
+
+        function fecharModal() {
+            $("#criminosoCapturadoModal").modal("hide");
+        }
+    </script>
+</body>
+</html>

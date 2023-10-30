@@ -19,25 +19,25 @@
             <div class="second-column">
                 <h2 class="title title-second">Cadastro</h2>
                 <p class="description description-second">cadastre-se:</p>
-                <form id="userForm" class="form"> <!-- Adicionei o ID "userForm" aqui -->
+                <form id="userForm" class="form">
                     <div class="form-group">
-                        <label class="label-input" for="inputNome">
+                        <label class="label-input" for="nome">
                             <i class="far fa-user icon-modify"></i>
-                            <input type="text" class="form-control" id="inputNome" placeholder="Nome">
+                            <input type="text" class="form-control" id="nome" placeholder="Nome" required>
                         </label>
                     </div>
-                <form class="form">
                     <div class="form-group">
-                    <label class="label-input" for="">
-                        <i class="far fa-envelope icon-modify"></i>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                    </label>
+                        <label class="label-input" for="email">
+                            <i class="far fa-envelope icon-modify"></i>
+                            <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        </label>
+                    </div>
                     <div class="form-group">
-                    <label class="label-input" for="">
-                        <i class="fas fa-lock icon-modify"></i>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                    </label>
-                    
+                        <label class="label-input" for="senha">
+                            <i class="fas fa-lock icon-modify"></i>
+                            <input type="password" class="form-control" id="senha" placeholder="Password" required>
+                        </label>
+                    </div>
                     <div class="form-group">
                         <label class="label-input" for="tipoUsuario">
                             <i class="fas fa-users icon-modify"></i>
@@ -47,57 +47,52 @@
                                 <option value="POLICIAL">Policial</option>
                             </select>
                         </label>
-                        
-                      
-                   <button type="submit" class="btn btn-primary">Cadastrar</button>    
+                    </div>
+                    <div class="modal" data-backdrop="static" data-keyboard="false" id="modalCadastroRealizado">
+                        <!-- Conteúdo da modal aqui -->
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </form>
+                
             </div><!-- second column -->
         </div><!-- first content -->
-        
     </div>
-   
 
-
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
     
     <script>
+
+
+
+
         document.getElementById("userForm").addEventListener("submit", function (event) {
             event.preventDefault();
-
             const nome = document.getElementById("nome").value;
             const email = document.getElementById("email").value;
             const senha = document.getElementById("senha").value;
             const tipoUsuario = document.getElementById("tipoUsuario").value;
-
             const data = {
                 nome: nome,
                 email: email,
                 senha: senha,
                 tipoUsuario: tipoUsuario
             };
-
             axios.post("http://localhost:8080/api/login/", data)
                 .then(function (response) {
                     console.log("Cadastro de usuário bem-sucedido!", response.data);
-
-
+                    //  modal de feedback
+                    window.location.href = "modelCadastroRealizadoComSucesso.html";
                 })
                 .catch(function (error) {
                     console.error("Erro ao cadastrar usuário:", error);
                 });
         });
+
+       
     </script>
 </body>
-
 </html>
