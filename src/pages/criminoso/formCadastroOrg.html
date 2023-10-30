@@ -14,6 +14,7 @@
 
     <div class="container-fluid col-md-8 mt-5 pt-5">
 
+        <input type="hidden" id="idOrganizacao" name="idOrganizacao">
         <form id="formCadastroOrg" action="/api/organizacao/create" method="post">
 
             <div class="form-group">
@@ -54,8 +55,12 @@
         .then(function (response) {
         // Trate a resposta do back-end, se necessário
         console.log("Cadastro da organização bem-sucedido!", response.data);
+        
+        const organizacaoID = response.data.id; 
+        document.getElementById("idOrganizacao").value = organizacaoID; 
+        window.location.href = `listaOrg.html`;
         //  modal de feedback
-        $("#cadastroCriminosoModal").modal("show");
+        
         })
         .catch(function (error) {
         console.error("Erro ao cadastrar organização:", error);

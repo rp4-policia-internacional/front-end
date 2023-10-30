@@ -28,7 +28,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    <title> Criminosos foragidos </title>
+    <title> Lista das Organizações Criminosas </title>
 
     <style>
         #loadingModal {
@@ -66,7 +66,7 @@
     </div>
 
     <div class="d-flex justify-content-end align-items-center mb-5" style="margin-right: 80px;"
-        onclick="direcionaNovoCriminosoPage()">
+        onclick="cadastroOrg()">
         <i class="fas fa-user-plus fa-lg"></i>
     </div>
 
@@ -75,14 +75,11 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>País de origem</th>
-                <th>Gênero</th>
-                <th>Idade</th>
-                <th>Status</th>
+                <th>Descrição</th>
             </tr>
         </thead>
         <!-- Corpo da tabela (mantido como antes) -->
-        <tbody id="criminososTabela"></tbody>
+        <tbody id="organizacaoTabela"></tbody>
     </table>
 
 
@@ -106,69 +103,70 @@
 
     <script>
 
-        let criminosoSelecionadoId;
+        let organizacaoSelecionadoId;
 
-        axios.get('http://localhost:3338/api/criminoso/')
+        axios.get('http://localhost:3338/api/organizacao/')
             .then(function (response) {
-                const criminosos = response.data;
-                const criminososTabela = document.getElementById('criminososTabela');
+                const organizacoes = response.data;
+                const organizacaoTabela = document.getElementById('organizacaoTabela');
 
-                criminosos.forEach(function (criminoso) {
+                organizacoes.forEach(function (organizacao) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${criminoso.nomeCompleto}</td>
-                        <td>${criminoso.id_paisOrigem}</td>
-                        <td>${criminoso.genero}</td>
-                        <td>${criminoso.idade} anos</td>
-                        <td>${criminoso.status}</td>
+                        <td>${organizacao.nome}</td>
+                        <td>${organizacao.descricao}</td>
                     `;
 
-                    //botao ver detalhes
-                    const verDetalhesButton = document.createElement('button');
-                    verDetalhesButton.type = 'button';
-                    verDetalhesButton.className = 'btn btn-secondary';
-                    verDetalhesButton.textContent = 'Ver detalhes';
-                    verDetalhesButton.addEventListener('click', function () {
-                        //lidar com clique do ver detalhes
-                        criminosoSelecionadoId = criminoso.id;
-                        window.location.href = `detalhesCriminoso.html?id=${criminoso.id}`;
+                    //botao ver editar
+                    const editarButton = document.createElement('button');
+                    editarButton.type = 'button';
+                    editarButton.className = 'btn btn-warning'; // Use uma classe que represente um botão de edição, se disponível
+                    editarButton.textContent = 'Editar';
+                    editarButton.addEventListener('click', function () {
+                        // Lidar com a ação de edição aqui
+                        // Você pode usar o organizacaoSelecionadoId para identificar o item a ser editado
+                        // Por exemplo, redirecione para uma página de edição com o ID da organização:
+                        window.location.href = `editarOrganizacao.html?id=${organizacao.id}`;
                     });
-                    const verDetalhesCell = document.createElement('td');
-                    verDetalhesCell.appendChild(verDetalhesButton);
-
-                    // emitir epdido de busca e captura
-                    const emitirPedidoButton = document.createElement('button');
-                    emitirPedidoButton.type = 'button';
-                    emitirPedidoButton.className = 'btn btn-danger';
-                    emitirPedidoButton.textContent = 'Emitir pedido de busca e captura';
-                    emitirPedidoButton.addEventListener('click', function () {
-
-                        const criminosoId = criminoso.id;
-                        this.criminosoSelecionadoId = criminoso.id;
-                        emitirPedidoDeBuscaECaptura(criminosoId);
-
+                    
+                    //botao ver excluir
+                    const excluirButton = document.createElement('button');
+                    excluirButton.type = 'button';
+                    excluirButton.className = 'btn btn-danger'; // Use uma classe que represente um botão de exclusão, se disponível
+                    excluirButton.textContent = 'Excluir';
+                    excluirButton.addEventListener('click', function () {
+                        
+                        // Você pode usar o organizacaoSelecionadoId para identificar o item a ser excluído
+                        if (confirm('Tem certeza de que deseja excluir este item?')) {
+                            removerOrganizacao(organizacao.id);
+                        }
                     });
 
-                    const emitirPedidoCell = document.createElement('td');
-                    emitirPedidoCell.appendChild(emitirPedidoButton);
+                    
+                    const editarCell = document.createElement('td');
+                    const excluirCell = document.createElement('td');
+                    editarCell.appendChild(editarButton);
+                    excluirCell.appendChild(excluirButton);
 
-                    row.appendChild(verDetalhesCell);
-                    row.appendChild(emitirPedidoCell);
+                    row.appendChild(editarCell);
+                    row.appendChild(excluirCell);
 
-                    criminososTabela.appendChild(row);
+                    organizacaoTabela.appendChild(row);
                 });
             })
             .catch(function (error) {
-                //console.error('Erro ao buscar criminosos:', error);
+                //console.error('Erro ao buscar organizacao:', error);
             });
 
-        function emitirPedidoDeBuscaECaptura(criminosoID) {
-            axios.get(`http://localhost:3338/api/criminoso/${criminosoID}`)
+        function removerOrganizacao(id) {
+            axios.delete(`http://localhost:3338/api/organizacao/${id}`)
                 .then(function (response) {
-                    decisaoCapturadoFugitivo(response.data);
+                    alert('Organização removida com sucesso!');
+                    // Redireciona para a página de lista de vítimas
+                    window.location.href = 'listarOrg.html';
                 })
                 .catch(function (error) {
-                    console.error('Erro ao buscar criminoso: ', error);
+                    console.error('Erro ao remover organização:', error);
                 });
         }
 
@@ -182,36 +180,12 @@
             }, 3000);
         }
 
-            function decisaoCapturadoFugitivo(criminoso) {
-            
-                const data = {
-                    id_criminoso: criminoso.id,
-                    id_pais_capturado: criminoso.id_paisVistoPorUltimo,
-                    id_pais_origem: criminoso.id_paisOrigem,
-                    data: new Date(),
-                    probabilidade: 0
-                };
-                axios.post('http://localhost:3333/api/captura/', data)
-                    .then(function (response) {
-                        // condicao para escolha de página
-                        if (response.data.probabilidade > 0) {
-                            const dataEncode = encodeURIComponent(JSON.stringify(data));
-            
-                            mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoEncontrado.html?data=${dataEncode}`);
-                        } else {
-                            const dataEncode = encodeURIComponent(JSON.stringify(data));
-                            mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelCriminosoNaoEncontrado.html?data=${dataEncode}`);
-                        }
-                    })
-                    .catch(function (error) {
-                        console.error('Erro ao buscar criminoso: ', error);
-                    });
-            }
-            
-            function direcionaNovoCriminosoPage() {
-                window.location.href = "../criminoso/formCadastro.html";
-            }
-        </script>
-   
-    </body>
+
+        function cadastroOrg() {
+            window.location.href = "../organizacao/formCadastroOrg.html";
+        }
+
+    </script>
+</body>
+
 </html>
