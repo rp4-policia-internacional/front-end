@@ -15,11 +15,8 @@
         
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
-        <link rel="stylesheet" href="css/bootstrap.css">
-        
-        <link rel="stylesheet" type="text/css" href="estilo.css">
-        
+
+        <link rel="stylesheet" type="text/css" href="../home/CSS/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
         <title> Vítimas desaparecidas </title>
@@ -60,12 +57,7 @@
 
 
 <body>
-    <div class="container" style="margin-top: 100px;">
-        <div class="col-md-3">
-            <a href="../home/telaInicial.html">
-                <button type="button" class="btn btn-secondary">Voltar</button>
-            </a>
-        </div>
+   
 
         <div class="d-flex justify-content-end align-items-center mb-5" style="margin-right: 80px;"
             onclick="direcionaNovaVitimaPage()">
@@ -100,6 +92,7 @@
                         return response.data.nome;
                     } catch (error) {
                         console.error('Erro ao buscar país: ', error);
+                        return 'País não encontrado';
                         throw error;
                     }
                 }

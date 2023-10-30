@@ -1,0 +1,56 @@
+/* Navbar styles */
+#my-navbar {
+    background-color:  #160341; /* Cor roxa, você pode ajustar a cor conforme desejado */
+    padding: 10px 0;
+}
+
+/* Botão cinza */
+.btn-secondary {
+    background-color: #808080; /* Cor cinza, você pode ajustar a cor conforme desejado */
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    border: none;
+}
+/* Remova o hover e o sublinhado do título */
+.my-custom-brand:hover {
+    color: #ffffff; /* Define a cor do texto ao passar o mouse */
+    text-decoration: none; /* Remove o sublinhado ao passar o mouse */
+}
+
+
+.my-custom-brand {
+    font-family: 'Open Sans', sans-serif; /* Use a mesma fonte do primeiro HTML */
+    color: #ffffff; /* Use a mesma cor do primeiro HTML */
+    font-size: 28px; /* Ajuste o tamanho da fonte conforme desejado */
+    font-weight: bold; /* Ajuste o peso da fonte conforme desejado */
+    text-transform: capitalize;
+}
+/* Estilos para o botão "Emitir Pedido de Busca e Captura" */
+/* Estilos para o botão "Emitir Pedido de Busca e Resgate" */
+.btn.btn-danger {
+    background-color: #d42a3b; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto no botão */
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    border: none;
+    font-family: 'Open Sans', sans-serif; /* Define a mesma fonte do botão "Sudary" */
+}
+
+.btn.btn-danger:hover {
+    background-color: #c82333; /* Cor de fundo mais escura ao passar o mouse */
+}
