@@ -1,53 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-    <link rel="stylesheet" href="../login/CSS/style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+  <link rel="stylesheet" href="../login/CSS/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
+
 <body>
-    <div class="container">
-     
-        <div class="content first-content">
-          
-            <div class="first-column">
-              <img src="../../shared/images/logo.png" alt="Logo da Organização" class="organization-logo">
-                <h2 class="title title-primary">Bem vindo!</h2>
-                <p class="description description-primary">Participe da Polícia Internacional</p>
-                <p class="description description-primary">Solicite sua participação na organização</p>
-                <button id="solicitacao" class="btn btn-primary">Solicitar Participação</button>
-            </div>    
-            <div class="second-column">
-                <h2 class="title title-second">Login</h2>
-                
-                <p class="description description-second">Use e-mail e senha:</p>
-                <form class="form">
-                    <div class="form-group">
-                    <label class="label-input" for="">
-                        <i class="far fa-envelope icon-modify"></i>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                    </label>
-                    <div class="form-group">
-                    <label class="label-input" for="">
-                        <i class="fas fa-lock icon-modify"></i>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                    </label>
-                    
-                    
-                    <button class="btn btn-second">Entrar</button>        
-                </form>
-            </div><!-- second column -->
-        </div><!-- first content -->
-        
-    </div>
+  <div class="container">
 
-    
+    <div class="content first-content">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      <div class="first-column">
+        <img src="../../shared/images/logo.png" alt="Logo da Organização" class="organization-logo">
+        <h2 class="title title-primary">Bem vindo!</h2>
+        <p class="description description-primary">Participe da Polícia Internacional</p>
+        <p class="description description-primary">Solicite sua participação na organização</p>
+        <button id="solicitacao" class="btn btn-primary">Solicitar Participação</button>
+      </div>
+      <div class="second-column">
+        <h2 class="title title-second">Login</h2>
+
+        <p class="description description-second">Use e-mail e senha:</p>
+        <form class="form">
+          <!-- Para o campo de e-mail -->
+<div class="form-group">
+  <label class="label-input" for="inputEmail"> <!-- Use "for" com "id" do campo de e-mail -->
+    <i class="far fa-envelope icon-modify"></i>
+    <input type="email" class="form-control" id="email" placeholder="Email">
+  </label>
+</div>
+
+<!-- Para o campo de senha -->
+<div class="form-group">
+  <label class="label-input" for="inputPassword"> <!-- Use "for" com "id" do campo de senha -->
+    <i class="fas fa-lock icon-modify"></i>
+    <input type="senha" class="form-control" id="senha" placeholder="Senha">
+  </label>
+</div>
+
+
+<button id="loginButton" class="btn btn-second">Entrar</button>
+
+              <p class="description description-second">Ainda não tem um cadastro? <a href="cadastroUsuario.html"
+                  style="color: blue;">Cadastre-se</a></p>
+
+        </form>
+      </div><!-- second column -->
+    </div><!-- first content -->
+
+  </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -65,26 +76,75 @@
 
 
 
-document.getElementById("solicitacao").addEventListener("click", function() {
-            // Redirecionar para a página formSolicitacaoPais.html
-            window.location.href = "../pais/formSolicitacaoPais.html";
-        });
+document.getElementById("loginButton").addEventListener("click", function () {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
 
-    function login() {
-      const email = document.getElementById("inputEmail").value;
-      const password = document.getElementById("inputPassword").value;
+  // Verificar se o email e a senha foram preenchidos
+  if (email && senha) {
+    // Enviar as credenciais para autenticação
+    axios.post('http://localhost:8080/api/login', {
+      email: email,
+      senha: senha
+    })
+    .then(response => {
+      const token = response.data.token;
+      // Armazene o token localmente
+      localStorage.setItem('jwtToken', token);
 
-      axios.post('http://localhost:8080/api/login', {
-        email: email,
-        senha: password
-      })
-        .then(response => {
-          console.log(response.data);
-          const token = response.data.token;
+      // Verificar o tipo de usuário com base na resposta do servidor
+      if (response.data.tipoUsuario === 'ADMINISTRADOR') {
+        // Redirecione para a página de administrador
+        window.location.href = 'telaInicialAdm.html';
+      } else {
+        // Redirecione para a página do usuário normal
+        window.location.href = 'paginaPrincipalUsuario.html';
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert("Erro ao fazer login. Verifique suas credenciais.");
+    });
 
-          localStorage.setItem('jwtToken', token);
+    
+    console.log("Botão de Entrar clicado!"); 
+  } else {
+    alert("Preencha o email e a senha para fazer login.");
+  }
+});
+    /*function login() {
+  const email = document.getElementById("inputEmail").value;
+  const senha = document.getElementById("inputPassword").value;
 
-          axios.get('http://localhost:8080/sua-rota-protegida', {
+  axios.post('http://localhost:8080/api/login', {
+    email: email,
+    senha: senha
+    
+  })
+    .then(response => {
+      console.log("login sucesso");
+      console.log(response.data); // Mensagem de sucesso
+      console.log("login sucesso");
+      console.log("login sucesso");
+      const token = response.data.token;
+      // Armazene o token localmente
+      localStorage.setItem('jwtToken', token);
+
+      if (response.data.tipoUsuario === 'ADMINISTRADOR') {
+        console.log("login sucesso");
+        console.log("Usuário autenticado como administrador");
+        window.location.href = 'file:///C:/Users/milena/Documents/FrontEnd/front-end/src/pages/adm/telaInicalAdm.html';
+      } else {
+        console.log("Usuário autenticado como usuário normal");
+        window.location.href = 'paginaPrincipalUsuario.html';
+      }
+    })
+    .catch(error => {
+      console.error(error); // Mensagem de erro
+      alert("Erro ao fazer login. Verifique suas credenciais.");*/
+
+
+/*  axios.get('http://localhost:8080/sua-rota-protegida', {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -96,12 +156,10 @@ document.getElementById("solicitacao").addEventListener("click", function() {
             .catch(error => {
 
               console.error(error);
-            });
-        });
-
-    }
-
+            });*/
+  
   </script>
 
 </body>
+
 </html>
