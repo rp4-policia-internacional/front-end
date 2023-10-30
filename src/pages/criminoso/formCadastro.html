@@ -15,6 +15,7 @@
     </div>
 
     <div class="container mt-5">
+        <input type="hidden" id="idCriminoso" name="idCriminoso">
         <form id="formCadastroCriminoso" action="/api/criminoso/create" method="post">
             <div class="form-group">
                 <label for="imagem">Inserir imagem</label>
@@ -128,7 +129,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const imageUploadInput = document.getElementById('imagem');
+            const idCriminosoInput = document.getElementById('idCriminoso');
             const imagePreview = document.getElementById('imagemPreview');
+            const idCriminoso = idCriminosoInput.value; // Obtém o ID da vítima
+            const savarImage = localStorage.getItem(idCriminoso + '_imagemDoCriminoso'); 
 
             imageUploadInput.addEventListener('change', function () {
                 if (imageUploadInput.files.length > 0) {
@@ -136,8 +140,14 @@
                     const reader = new FileReader();
 
                     reader.onload = function (e) {
+
+
+                        const imageDataURL = e.target.result;
+                        localStorage.setItem(idCriminoso + '_imagemDoCriminoso', imageDataURL); //salva a imagem localmente
                         imagePreview.src = e.target.result;
                         imagePreview.style.display = 'block';
+
+
                     };
 
                     reader.readAsDataURL(file);
@@ -166,9 +176,15 @@
                 const id_paisOrigem = document.getElementById("nacionalidade").value;
                 const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
                 const id_organizacao =  document.getElementById("id_organizacao").value;
-                const formData = new FormData();
-                formData.append('imagem', imageUploadInput.files[0]);
-                
+               //// const formData = new FormData();
+               // formData.append('imagem', imageUploadInput.files[0]);
+               const imageUploadInput = document.getElementById('imagem');
+                const imagemFile = imageUploadInput.files[0]; 
+
+
+
+                if (imagemFile) {
+                    const nomeDaImagem = imagemFile.name;
                 const data = {
 
                     nomeCompleto: nomeCompleto,
@@ -184,18 +200,29 @@
                     id_paisOrigem:id_paisOrigem,
                     id_organizacao:id_organizacao
                 };
-
+            
                 // Envia os dados como JSON em uma solicitação POST
                 axios.post("http://localhost:3338/api/criminoso/", data)
                 .then(function (response) {
                 // Trate a resposta do back-end, se necessário
                 console.log("Cadastro de criminoso bem-sucedido!", response.data);
                 //  modal de feedback
-                $("#cadastroCriminosoModal").modal("show");
+                //$("#cadastroCriminosoModal").modal("show");
+
+
+                const criminosoId = response.data.id; // Obtém o ID da vítima recém-criada
+                            document.getElementById("idCriminoso").value = criminosoId; 
+                            window.location.href = `detalhesCriminoso.html?id=${response.data.id}`;
+
                 })
+
+
+
+                
                 .catch(function (error) {
                 console.error("Erro ao cadastrar criminoso:", error);
                 });
+            }
             });
         });
 

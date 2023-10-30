@@ -21,9 +21,10 @@
                 <h1 id="detalhesCriminoso">Carregando...</h1>
                 <div class="d-flex align-items-start">
                     <div class="ml-2">
-                        <img src="../../shared/images/procurado.svg"
-                            class="rounded float-start border" alt="Foto do criminoso">
-
+                        <input type="hidden" id="idCriminoso" name="idCriminoso">
+                        <label for="imagem">Imagem do criminoso:</label>
+                        <img id="imagemPreview" src="" alt="Imagem do Criminoso" class="img-thumbnail"
+                            style="max-width: 300px;">
                     </div>
                     <div class="ml-4" id="detalhesCriminoso">
                     </div>
@@ -64,6 +65,21 @@
             return idC = urlObj.searchParams.get("id");
         }
 
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const idCriminosoInput = document.getElementById('idCriminoso');
+            const idCriminoso= idCriminosoInput.value; // Obtém o ID da vítima
+            const imagePreview = document.getElementById('imagemPreview');
+
+            // Restaurar a imagem da vítima ao carregar a página
+            const savedImage = localStorage.getItem(idCriminoso + '_imagemDoCriminoso');
+
+            if (savedImage) {
+                imagePreview.src = savedImage;
+                imagePreview.style.display = 'block';
+            }
+        });
+
         // Detalhes do criminoso pelo ID
         async function buscarDetalhesCriminoso(id) {
             try {
@@ -88,7 +104,7 @@
                         <p><strong>Organização:</strong> ${nomeOrganizacao}</p>
                         </div>
                 `;console.log(nomeOrganizacao);
-            }catch {
+            }catch (error){
                 console.error('Erro ao buscar detalhes do criminoso:', error)
             }             
         }
