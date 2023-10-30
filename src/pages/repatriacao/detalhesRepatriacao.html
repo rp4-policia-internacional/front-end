@@ -1,48 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes Repatriação</title>
+    <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 </head>
 
 <body>
 
-    <div class="modal" data-backdrop="static" data-keyboard="false" id="detalhesRepatriacao">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-               
+    <div class="modal" data-backdrop="static" data-keyboard="false" id="DetalhesRepatriacaoModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 3px solid green;">
+                <!-- Conteúdo do modal -->
                 <div class="modal-header">
-                    <h4 class="modal-title text-center">Detalhes da Repatriação enviada pelo EUA</h4>
+                    <h4 class="modal-title text-center">Resumo da extradição</h4>
                 </div>
-                <div class="modal-body ">
-                    <p>Policiais responsáveis:</p>
-                    <ul>
-                        <li>Tenente Santos</li>
-                        <li>Tenente Rodrigues</li>
-                    </ul>
+                <div class="modal-body d-flex justify-content-center align-items-center">
 
-                    <p>Data que ocorerá:</p>
-                    <ul>
-                        <li>28/09/2023</li>
-                    </ul>
-                    <p>Meio de locomoção:</p>
-                    <ul>
-                        <li>Avião</li>
-                    </ul>
-
+                    <p class="text-center"> 
+                        A vitima <span id ="nomeVitima"></span> será repatriada para o seu país de origem <span id="paisDeOrigem"></span>
+                        pelo agente <span id="nomeAgente"></span> por meio de trasnporte <span id="transporte"></span> 
+                    </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">
-                        Confirmar visualização
+                    <button type="button" class="btn btn-dark" onclick="confirmarVisualizacao()">Confirmar visualização
                     </button>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -53,10 +39,47 @@
 
     <script>
         $(document).ready(function () {
-            $("#detalhesRepatriacao").modal("show");
+            $("#DetalhesRepatriacaoModal").modal("show");
         });
     </script>
 
-</body>
+    <script>
+        const queryString = window.location.search;
+        
+        //remover o ? do início da string
+        const queryParams = new URLSearchParams(queryString.substring(1));
+        const dataParam = queryParams.get("data");
 
+        if (dataParam) {
+            //decodificar a string JSON e converter novamente para JSON
+            dataObject = JSON.parse(decodeURIComponent(dataParam));
+            console.log(dataObject);
+        
+            getRepatriacao(dataObject);
+        } else {
+            console.error("Parâmetro 'data' não encontrado na URL");
+        }
+
+        function getRepatriacao(extradicao) {
+            axios.get(`http://localhost:3342/api/repatriacao/${repatriacao.id_repatriacao}`)
+            .then(function (response) {
+                const data = response.data;
+                console.log(response.data);
+                $('#nomeVitima').text(`${data.id_vitima}`);
+                $('#nomeAgente').text(`${data.agente_id}`);
+                $('#transporte').text(`${data.transporte}`);
+                $('#paisDeOrigem').text(`${data.id_pais_origem}`);
+
+            
+            })
+            .catch(function (error) {
+                console.error('Erro ao carregar extradicao: ', error);
+            });
+        }
+
+        function confirmarVisualizacao() {
+            window.location.href = '../repatriacao/vitimaRepatriada.html';
+        }
+    </script>
+</body>
 </html>
