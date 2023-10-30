@@ -4,11 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
+        
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open listarCriminoso.html",
-            "file": "c:\\wamp64\\www\\front-end\\src\\pages\\criminoso\\listarCriminoso.html"
+            "name": "Open listarOrg.html",
+            "file": "c:\\wamp64\\www\\front-end\\src\\pages\\criminoso\\listarOrg.html"
         }
     ]
 }

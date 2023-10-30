@@ -7,47 +7,22 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Editar Cadastro de Vítima</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 </head>
 <body>
     <div class="container-fluid col-md-8 mt-5 pt-5">
+        <div class="col-md-3">
+            <a href="listarCriminoso.html">
+                <button type="button" class="btn btn-secondary">Voltar</button>
+            </a>
+        </div>
         <h1>Editar Cadastro de Criminoso</h1>
         <p>Preencha os campos obrigatórios (*) antes de salvar.</p>
 
         <div class="container-fluid col-md-8 mt-5 pt-5"></div>
-            <form id="formEditarCriminoso" action="/api/criminoso/update" method="post">
-
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
-        </div>
-
-    <script>
-        
-        function getURLParametro(nome) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(nome);
-        }
-        function getIdURL() {
-            const url = window.location.href;
-            // Cria um objeto URL para analisar a URL
-            const urlObj = new URL(url);
-             // Obtém o valor do parâmetro 'id' da URL
-            return idC = urlObj.searchParams.get("id");
-        }
-
-        // Detalhes do criminoso pelo ID
-        async function buscarDetalhesCriminoso(id) {
-            try {
-            var id = getIdURL();
-            const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
-            const criminoso = response.data;
-            const detalhesCriminoso = document.getElementById('formEditarCriminoso');
-            const nomeOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);          
-            const formattedDate = criminoso.dataNascimento;
-            console.log(formattedDate);
-
-            formEditarCriminoso.innerHTML = `
-            <div class="form-group">
+            <form id="formEditarCriminoso" method="post">
+                <div class="form-group">
                     <label for="imagem">Inserir imagem</label>
                     <input type="file" class="form-control-file" id="imagem" accept="image/*">
                 </div>
@@ -62,7 +37,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="nomeCompleto">Nome Completo:</label>
-                            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo" value="${criminoso.nomeCompleto}">
+                            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
                         </div>
                     </div>
                 </div>
@@ -71,13 +46,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="altura">Altura:</label>
-                            <input type="double" class="form-control" id="altura" placeholder="1.67" value="${criminoso.altura}">
+                            <input type="double" class="form-control" id="altura" placeholder="167" >
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="idade">Idade:</label>
-                            <input type="number" class="form-control" id="idade" value="${criminoso.idade}">
+                            <input type="number" class="form-control" id="idade" >
                         </div>
                     </div>
                 </div>
@@ -86,7 +61,6 @@
                         <div class="form-group">
                             <label for="genero">Gênero:</label>
                             <select id="genero" class="form-control">
-                                <option>${criminoso.genero} - Gênero atual </option>
                                 <option>Feminino</option>
                                 <option>Masculino</option>
                             </select>
@@ -94,8 +68,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="nacionalidade">Nacionalidade:</label>
-                            <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil" value="${criminoso.id_paisOrigem}">
+                            <label for="id_paisOrigem">Nacionalidade:</label>
+                            <input type="text" class="form-control" id="id_paisOrigem">
                         </div>
                     </div>
                 </div>
@@ -103,13 +77,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="dataNascimento">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="dataNascimento" value="${formattedDate}">
+                            <input type="date" class="form-control" id="dataNascimento">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="apelido">Apelido:</label>
-                            <input type="text" class="form-control" id="apelido" value="${criminoso.apelido}">
+                            <input type="text" class="form-control" id="apelido">
                         </div>
                     </div>
                 </div>
@@ -118,7 +92,6 @@
                         <div class="form-group">
                             <label for="status">Status:</label>
                             <select id="status" class="form-control">
-                                <option>${criminoso.status} - Estado atual </option>
                                 <option>Foragido</option>
                                 <option>Capturado</option>
                                 <option>Extraditado</option>
@@ -128,7 +101,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="paisVistoPorUltimo">País em que foi visto pela última vez:</label>
-                            <input type="text" class="form-control" id="paisVistoPorUltimo" value="${criminoso.id_paisVistoPorUltimo}">
+                            <input type="text" class="form-control" id="paisVistoPorUltimo">
                         </div>
                     </div>
                 </div>
@@ -136,55 +109,87 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="caracteristica">Caracteristicas:</label>
-                            <input type="text" class="form-control" id="caracteristica" rows="4" cols="50" value="${criminoso.caracteristicas}">
+                            <input type="text" class="form-control" id="caracteristica" rows="4" cols="50" >
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="id_organizacao">Organização:</label>
                             <select id="id_organizacao" class="form-control">
-                                <option> ${criminoso.nomeOrganizacao} - Atual organização </option>
                                 <option>Nenhum Grupo</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
-                `;
-            }catch {
+            </form>
+        </div>
+
+    <script>
+        
+        function getIdURL() {
+            const url = window.location.href;
+            const urlObj = new URL(url);
+            return urlObj.searchParams.get("id");
+        }
+
+        // Detalhes do criminoso pelo ID
+        async function buscarDetalhesCriminoso() {
+            var id = getIdURL();
+            try {
+            
+            const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+            const criminoso = response.data;
+            const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);          
+            const formattedDate = await dataNascimentoFormatada(criminoso.dataNascimento);
+            console.log(DataOrganizacao.nome);
+            console.log(criminoso.id_paisOrigem);
+
+            
+            document.getElementById("nomeCompleto").value = criminoso.nomeCompleto;
+            document.getElementById("altura").value = criminoso.altura;
+            document.getElementById("idade").value = criminoso.idade;
+            document.getElementById("dataNascimento").value = formattedDate;
+            document.getElementById("status").value = criminoso.status;
+            document.getElementById("apelido").value = criminoso.apelido;
+            document.getElementById("caracteristica").value = criminoso.caracteristicas;
+            document.getElementById("genero").value = criminoso.genero;
+            document.getElementById("id_paisOrigem").value = criminoso.id_paisOrigem;
+            document.getElementById("paisVistoPorUltimo").value = criminoso.id_paisVistoPorUltimo;
+            document.getElementById("id_organizacao").value  = DataOrganizacao.id;
+            //document.getElementById("imagem").value = criminoso.imagem;
+           
+            
+            }catch (error){
                 console.error('Erro ao buscar detalhes do criminoso:', error)
             }             
         }
 
+        buscarDetalhesCriminoso();
+
         async function buscarOrganizacao(id) {
             try {
                 const response = await axios.get(`http://localhost:3338/api/organizacao/${id}`);
-                return response.data.nome;
+                return response.data;
             } catch (error) {
                 alert('Erro ao buscar organização:', error);
                 throw error; // Rejeita a Promise em caso de erro, se necessário.
             }
         }
-        async function convertDateFormat(inputDate) {//arrumar
-                    //dataNascimento: "2023-10-26T00:00:00.000Z"
-                
-                    return `${inputDate}T00:00:00.000Z`;
-                
-                // Retorne null se o formato de entrada estiver incorreto.
+
+        async function dataNascimentoFormatada(dataString){
+            const dataParteDaData = dataString.split('T')[0];
+            const dataDate = moment(dataParteDaData).format("YYYY-MM-DD");
+
+            return dataDate
+            console.log(dataDate);
         }
-
        
-        // Buscar detalhes do criminoso pelo ID 
-        window.addEventListener('load', function () {
-            const idCriminoso = getURLParametro('id');
-            buscarDetalhesCriminoso(idCriminoso);
-            });
-
 
         document.getElementById("formEditarCriminoso").addEventListener("submit", function (event) {
             event.preventDefault(); 
 
-            const idCriminoso= getIdURL('id');
+            const id= getIdURL('id');
             const nomeCompleto= document.getElementById("nomeCompleto").value;
             const altura = parseFloat(document.getElementById("altura").value);
             const idade = parseInt(document.getElementById("idade").value);
@@ -194,11 +199,10 @@
             const caracteristicas = document.getElementById("caracteristica").value;
             const foto =  document.getElementById("imagem").value;
             const genero = document.getElementById("genero").value;
-            const id_paisOrigem = document.getElementById("nacionalidade").value;
+            const id_paisOrigem = document.getElementById("id_paisOrigem").value;
             const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
             const id_organizacao =  document.getElementById("id_organizacao").value;
-            const formData = new FormData();
-            formData.append('imagem', imageUploadInput.files[0]);
+           
             
             const data = {
 
@@ -215,22 +219,23 @@
                 id_paisOrigem:id_paisOrigem,
                 id_organizacao:id_organizacao
             };
+            console.log("Dados a serem enviados:", data);
 
 
             // Envia os dados como JSON em uma solicitação PUT ou PATCH
-            axios.put(`http://localhost:3338/api/criminoso`, data) 
+            axios.put(`http://localhost:3338/api/criminoso`, { id, ...data }) 
                 .then(function (response) {
                   
                     console.log("Atualização do criminoso bem-sucedida!", response.data);
                 
-                    window.location.href = `detalhesCriminoso.html?id=${idCriminoso}`;
+                    window.location.href = `detalhesCriminoso.html?id=${id}`;
                 })
                 .catch(function (error) {
                     console.error("Erro ao atualizar criminoso:", error);
                 });
         });
-        //Coloca as organizações do banco no select
-        axios.get("http://localhost:3338/api/organizacao/")
+       
+        axios.get(`http://localhost:3338/api/organizacao/`)
         .then(function (response) {
             const select = document.getElementById("id_organizacao");
 
@@ -254,9 +259,7 @@
             // manipula erros da requisição
             console.error(error);
         })
-        .finally(function () {
-            // sempre será executado
-        });
+
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
