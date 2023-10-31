@@ -112,52 +112,7 @@ document.getElementById("loginButton").addEventListener("click", function () {
     alert("Preencha o email e a senha para fazer login.");
   }
 });
-    /*function login() {
-  const email = document.getElementById("inputEmail").value;
-  const senha = document.getElementById("inputPassword").value;
-
-  axios.post('http://localhost:8080/api/login', {
-    email: email,
-    senha: senha
     
-  })
-    .then(response => {
-      console.log("login sucesso");
-      console.log(response.data); // Mensagem de sucesso
-      console.log("login sucesso");
-      console.log("login sucesso");
-      const token = response.data.token;
-      // Armazene o token localmente
-      localStorage.setItem('jwtToken', token);
-
-      if (response.data.tipoUsuario === 'ADMINISTRADOR') {
-        console.log("login sucesso");
-        console.log("Usuário autenticado como administrador");
-        window.location.href = 'file:///C:/Users/milena/Documents/FrontEnd/front-end/src/pages/adm/telaInicalAdm.html';
-      } else {
-        console.log("Usuário autenticado como usuário normal");
-        window.location.href = 'paginaPrincipalUsuario.html';
-      }
-    })
-    .catch(error => {
-      console.error(error); // Mensagem de erro
-      alert("Erro ao fazer login. Verifique suas credenciais.");*/
-
-
-/*  axios.get('http://localhost:8080/sua-rota-protegida', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-            .then(response => {
-
-              console.log(response.data);
-            })
-            .catch(error => {
-
-              console.error(error);
-            });*/
-  
   </script>
 
 </body>

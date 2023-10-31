@@ -52,7 +52,7 @@
                 
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary" style="color:white; background-color: black; border: 1px solid;" onclick="confirmacaoCadastro()">Cadastrar</button>
                 </form>
                 
             </div>
@@ -67,7 +67,9 @@
     <script>
 
 
-
+        function confirmacaoCadastro() {
+            window.location.href = "../login/modelCadastroRealizadoComSucesso.html";
+        }
 
         document.getElementById("userForm").addEventListener("submit", function (event) {
             event.preventDefault();
@@ -81,11 +83,10 @@
                 senha: senha,
                 tipoUsuario: tipoUsuario
             };
-            axios.post("http://localhost:8080/api/login/", data)
+            axios.post("http://localhost:3343/api/cadastro/", data)
                 .then(function (response) {
                     console.log("Cadastro de usuário bem-sucedido!", response.data);
                   
-                    window.location.href = "modelCadastroRealizadoComSucesso.html";
                 })
                 .catch(function (error) {
                     console.error("Erro ao cadastrar usuário:", error);
