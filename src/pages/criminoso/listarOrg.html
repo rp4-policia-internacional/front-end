@@ -1,0 +1,152 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="css/bootstrap.css">
+    
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <title> Lista das Organizações Criminosas </title>
+
+    <style>
+        #loadingModal {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
+    </nav>
+
+    <div class="col-md-3" style="margin-top: 10px">
+        <a href="../home/telaInicial.html">
+            <button type="button" class="btn btn-secondary">Voltar</button>
+        </a>
+    </div>
+     <div class="container-fluid">
+        <div class="d-flex justify-content-end align-items-center mb-5" style="margin-right: 80px;"
+            onclick="cadastroOrg()">
+            <i class="fas fa-user-plus fa-lg"></i>
+        </div>
+
+
+        <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 20px;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <!-- Corpo da tabela (mantido como antes) -->
+            <tbody id="organizacaoTabela"></tbody>
+        </table>
+     </div>
+
+
+
+    <script>
+
+        let organizacaoSelecionadoId;
+
+        axios.get('http://localhost:3338/api/organizacao/')
+            .then(function (response) {
+                const organizacoes = response.data;
+                const organizacaoTabela = document.getElementById('organizacaoTabela');
+
+                organizacoes.forEach(function (organizacao) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${organizacao.nome}</td>
+                        <td>${organizacao.descricao}</td>
+                    `;
+
+                    //botao ver editar
+                    const editarButton = document.createElement('button');
+                    editarButton.type = 'button';
+                    editarButton.className = 'btn btn-warning'; // Use uma classe que represente um botão de edição, se disponível
+                    editarButton.textContent = 'Editar';
+                    editarButton.addEventListener('click', function () {
+                        // Lidar com a ação de edição aqui
+                        // Você pode usar o organizacaoSelecionadoId para identificar o item a ser editado
+                        // Por exemplo, redirecione para uma página de edição com o ID da organização:
+                        window.location.href = `editarOrganizacao.html?id=${organizacao.id}`;
+                    });
+                    
+                    //botao ver excluir
+                    const excluirButton = document.createElement('button');
+                    excluirButton.type = 'button';
+                    excluirButton.className = 'btn btn-danger'; // Use uma classe que represente um botão de exclusão, se disponível
+                    excluirButton.textContent = 'Excluir';
+                    excluirButton.addEventListener('click', function () {
+                        
+                        // Você pode usar o organizacaoSelecionadoId para identificar o item a ser excluído
+                        if (confirm('Tem certeza de que deseja excluir este item?')) {
+                            removerOrganizacao(organizacao.id);
+                        }
+                    });
+
+                    
+                    const editarCell = document.createElement('td');
+                    const excluirCell = document.createElement('td');
+                    editarCell.appendChild(editarButton);
+                    excluirCell.appendChild(excluirButton);
+
+                    row.appendChild(editarCell);
+                    row.appendChild(excluirCell);
+
+                    organizacaoTabela.appendChild(row);
+                });
+            })
+            .catch(function (error) {
+                //console.error('Erro ao buscar organizacao:', error);
+            });
+
+        function removerOrganizacao(id) {
+            axios.delete(`http://localhost:3338/api/organizacao/${id}`)
+                .then(function (response) {
+                    alert('Organização removida com sucesso!');
+                    // Redireciona para a página de lista de vítimas
+                    window.location.href = 'listarOrg.html';
+                })
+                .catch(function (error) {
+                    console.error('Erro ao remover organização:', error);
+                });
+        }
+
+        function mostrarLoadingEAgendarRedirecionamento(url) {
+            const loadingModal = document.getElementById('loadingModal');
+            $(loadingModal).modal('show');
+
+            setTimeout(function () {
+                $(loadingModal).modal('hide');
+                window.location.href = url;
+            }, 3000);
+        }
+
+
+        function cadastroOrg() {
+            window.location.href = "../criminoso/formCadastroOrg.html";
+        }
+
+    </script>
+</body>
+
+</html>
