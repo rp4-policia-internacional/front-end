@@ -21,7 +21,7 @@
         <h2 class="title title-primary">Bem vindo!</h2>
         <p class="description description-primary">Participe da Polícia Internacional</p>
         <p class="description description-primary">Solicite sua participação na organização</p>
-        <button id="solicitacao" class="btn btn-primary">Solicitar Participação</button>
+        <button id="solicitacao" class="btn btn-primary" onclick="redirectToHomePage()" >Solicitar Participação</button>
       </div>
       <div class="second-column">
         <h2 class="title title-second">Login</h2>
@@ -74,7 +74,9 @@
 
   <script>
 
-
+function redirectToHomePage() {
+                window.location.href = "../pais/formSolicitacaoPais.html";
+        }
 
 document.getElementById("loginButton").addEventListener("click", function () {
   const email = document.getElementById("email").value;

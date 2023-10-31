@@ -6,11 +6,11 @@
     //"configurations": [
 
         
-      //  {
-        //    "type": "chrome",
-          //  "request": "launch",
-            //"name": "Open listarOrg.html",
-            //"file": "c:\\wamp64\\www\\front-end\\src\\pages\\criminoso\\listarOrg.html"
-        //}
-    //]
-//}
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open listarOrg.html",
+            "file": "c:\\wamp64\\www\\front-end\\src\\pages\\criminoso\\listarOrg.html"
+        }
+    ]*/
+}
