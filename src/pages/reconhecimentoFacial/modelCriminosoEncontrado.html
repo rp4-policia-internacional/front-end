@@ -95,12 +95,12 @@
                 }
     
                 function getCriminoso(criminoso) {
-                    axios.get(`http://localhost:3338/api/criminoso/${criminoso.id_criminoso}`)
+                    axios.get(`http://localhost:8000/api/criminoso/${criminoso.id_criminoso}`)
                         .then(function (response) {
                             const data = response.data;
                             console.log(response.data);
                             $('#nomeCriminoso').text(`${data.nomeCompleto}`);
-                            getCountryName(data.id_paisVistoPorUltimo); // Obtenha o nome do país
+                            getCountryName(data.id_paisVistoPorUltimo);
                         })
                         .catch(function (error) {
                             console.error('Erro ao buscar criminoso: ', error);
@@ -108,8 +108,8 @@
                 }
     
                 function getCountryName(countryId) {
-                    // Função para obter o nome do país com base no ID do país
-                    axios.get(`http://localhost:3340/api/pais/${countryId}`)
+                    
+                    axios.get(`http://localhost:8000/api/pais/${countryId}`)
                         .then(function (response) {
                             const countryName = response.data.nome;
                             $('#nomePaisEncontrado').text(countryName);
@@ -133,7 +133,7 @@
             function acionarPolicia() {
                 const probabilidade = dataObject.probabilidade;
     
-                if (probabilidade > 1) {
+                if (probabilidade >= 1) {
                     const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
     
                     mostrarLoadingEAgendarRedirecionamento(`../captura/modelCapturado.html?data=${dataEncode}`);

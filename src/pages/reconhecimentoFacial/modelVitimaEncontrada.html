@@ -146,7 +146,7 @@
             function acionarResgate() {
                 const probabilidade = dataObject.probabilidade;
 
-                if (probabilidade == 1) {
+                if (probabilidade >= 1) {
                     const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
                     mostrarLoadingEAgendarRedirecionamento(`../resgate/modelResgatada.html?data=${dataEncode}`);
                 } else {

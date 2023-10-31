@@ -181,11 +181,11 @@
                         id_pais_resgatado: vitima.id_paisVistoPorUltimo,
                         id_pais_origem: vitima.id_paisDeOrigem,
                         data: new Date(),
-                        probabilidade: 0
+                        probabilidade: 1
                     };
                     axios.post('http://localhost:3341/api/resgate/', data)
                         .then(function (response) {
-                            if (response.data.probabilidade == 0) {
+                            if (response.data.probabilidade >=1) {
                                 const dataEncode = encodeURIComponent(JSON.stringify(data));
                                 mostrarLoadingEAgendarRedirecionamento(`../reconhecimentoFacial/modelVitimaEncontrada.html?data=${dataEncode}`);
                             } else {
