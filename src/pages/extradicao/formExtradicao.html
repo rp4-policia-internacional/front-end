@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Repatriação</title>
+  <title>Extradição</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <img src="/src/shared/images/logo.png" width="100px" alt="logo">
   <meta charset="UTF-8">
@@ -44,7 +44,7 @@
           <div class="col-md-6 offset-md-3">
           <label for="paisOrigem">País de origem:*</label>
           <select id="paisOrigem" name="paisOrigem" class="form-control">
-              <option selected>Selecionar</option>
+              <option value="0">Selecionar</option>
           </select>
       </div>
       </div>
@@ -76,7 +76,6 @@
       
           <div class="form-group">
               <div style="width: 500px;"class="col-md-6 offset-md-3">
-                <a href="detalhesDaExtradicao.html"></a>
                 <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" onclick="enviarExtradicao()" data-toggle="modal" data-target="#extradicaoLabel">
                     Enviar                  
                 </button>
@@ -87,85 +86,101 @@
       </form> 
     </div>
 
-    <script>
-      document.getElementById("formExtradicao").addEventListener("submit", function (event) {
-        event.preventDefault(); // Impede o envio padrão do formulário
+   <script>
+    const FormMediator ={
+      sendData: function(formData){
+        axios.post("http://localhost:3336/api/extradicao/",formData)
+        .then(function(response){
+          console.log("Cadastro de extradição bem-sucedido!",response.data);
+        })
+        .catch(function(error){
+          console.error("Erro ao cadastrar a extradição:", error);
+        });
+      }
+    };
+    document.getElementById("formExtradicao").addEventListener("submit", function(event){
+      event.preventDefault();
+      const dateE = document.getElementById("dataE").value;
+      const dateF = document.getElementById("dataF").value;
+      const id_pais_origem = document.getElementById("paisOrigem").value;
+      const agente = document.getElementById("agente").value;
+      const nomeCriminoso = document.getElementById("nomeCriminoso").value;
+      const transporte = document.getElementById("transporte").value;
+      const dataEObj = new Date(dateE);
+      const dataFObj = new Date(dateF);
+     console.log(dataEObj);
+     console.log(dataFObj);
+     console.log(id_pais_origem);
+     console.log(agente);
+     console.log(nomeCriminoso);
+     console.log(transporte);
 
-        // Coleta os valores dos campos
-        const dataE = document.getElementById("dataE").value;
-        const dataF = document.getElementById("dataF").value;
+      const formData = {
+         data_inicio: dataEObj,
+         data_fim: dataFObj,
+         id_pais_origem: id_pais_origem,
+         agente_id:agente,
+         id_criminoso: nomeCriminoso,
+         transporte: transporte,
+      };
 
-        const id_paisDeOrigem = document.getElementById("paisOrigem").value;
-        const agente = document.getElementById("agente").value;
-        const nomeCriminoso = document.getElementById("nomeCriminoso").value;
-        const transporte = document.getElementById("transporte").value;
+      FormMediator.sendData(formData);
 
-        const dataEObj = new Date(dataE);
-        const dataFObj = new Date(dataF);
-        console.log(dataFObj);
-           console.log(id_paisDeOrigem);
-           console.log(agente);
-           console.log(nomeCriminoso);
-           console.log(transporte);
+    });
+   //Coloca as pais do banco no select
+   axios.get("http://localhost:3340/api/pais/")
+        .then(function (response) {
+            const select = document.getElementById("paisOrigem");
+
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#paisOrigem').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
            
-        const data = {
-          data_inicio: dataEObj,
-          data_fim: dataEObj,
-          id_pais_origem: id_paisDeOrigem,
-          agente_id: agente,
-          id_criminoso: nomeCriminoso,
-          transporte: transporte,
-        };
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        });
 
-        // Envia os dados como JSON em uma solicitação POST
-        axios.post("http://localhost:3336/api/extradicao/", data)
-          .then(function (response) {
-            // Trate a resposta do back-end, se necessário
-            console.log("Cadastro de extradicao bem-sucedido!", response.data);
-          })
-          .catch(function (error) {
-      
-              
-            console.error("Erro ao cadastrar extradicao:", error);
-          });
-      });
-      function enviarExtradicao() {
+         //Coloca os criminosos do banco no select
+   axios.get("http://localhost:3338/api/criminoso/")
+        .then(function (response) {
+            const select = document.getElementById("nomeCriminoso");
+
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#nomeCriminoso').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        });
+    function enviarExtradicao() {
             window.location.href = '../extradicao/detalhesDaExtradicao.html';
         }
-    </script>
-    <script>
-        const queryString = window.location.search;
-        
-        //remover o ? do início da string
-        const queryParams = new URLSearchParams(queryString.substring(1));
-        const dataParam = queryParams.get("data");
-
-        if (dataParam) {
-            //decodificar a string JSON e converter novamente para JSON
-            dataObject = JSON.parse(decodeURIComponent(dataParam));
-            console.log(dataObject);
-        
-            getExtradicao(dataObject);
-        } else {
-            console.error("Parâmetro 'data' não encontrado na URL");
-        }
-
-        function getExtradicao(extradicao) {
-            axios.get(`http://localhost:3336/api/extradicao/${extradicao.id_extradicao}`)
-            .then(function (response) {
-                const data = response.data;
-                console.log(response.data);
-                $('#paisOrigem').text(`${data.id_pais_origem}`);
-                $('#nomeCriminoso').text(`${data.id_criminoso}`);
-
-               
-            
-            })
-            .catch(function (error) {
-                console.error('Erro ao carregar extradicao: ', error);
-            });
-        }
-
-    </script>
+   </script>
   </body>
 </html>
