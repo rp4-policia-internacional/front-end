@@ -9,6 +9,16 @@
   <link rel="stylesheet" href="../login/CSS/style.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
     integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <style>
+      .error-message {
+    display: none;
+    background-color: #ff0000;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+    </style>
 </head>
 
 <body>
@@ -40,10 +50,11 @@
 <div class="form-group">
   <label class="label-input" for="inputPassword"> <!-- Use "for" com "id" do campo de senha -->
     <i class="fas fa-lock icon-modify"></i>
-    <input type="senha" class="form-control" id="senha" placeholder="Senha">
+    <input type="password" class="form-control" id="senha" placeholder="Senha">
   </label>
 </div>
 
+<div id="error-message" class="error-message">Dados inválidos</div>
 
 <button id="loginButton" class="btn btn-second">Entrar</button>
 
@@ -56,6 +67,7 @@
 
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jwt-decode/3.0.0/jwt-decode.min.js"></script>
 
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -72,92 +84,58 @@
 
 
 
+
   <script>
+    const errorMessage = document.getElementById("error-message");
 
-
-
-document.getElementById("loginButton").addEventListener("click", function () {
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
-
-  // Verificar se o email e a senha foram preenchidos
-  if (email && senha) {
-    // Enviar as credenciais para autenticação
-    axios.post('http://localhost:8080/api/login', {
-      email: email,
-      senha: senha
-    })
-    .then(response => {
-      const token = response.data.token;
-      // Armazene o token localmente
-      localStorage.setItem('jwtToken', token);
-
-      // Verificar o tipo de usuário com base na resposta do servidor
-      if (response.data.tipoUsuario === 'ADMINISTRADOR') {
-        // Redirecione para a página de administrador
-        window.location.href = 'telaInicialAdm.html';
-      } else {
-        // Redirecione para a página do usuário normal
-        window.location.href = 'paginaPrincipalUsuario.html';
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      alert("Erro ao fazer login. Verifique suas credenciais.");
-    });
-
-    
-    console.log("Botão de Entrar clicado!"); 
-  } else {
-    alert("Preencha o email e a senha para fazer login.");
-  }
-});
-    /*function login() {
-  const email = document.getElementById("inputEmail").value;
-  const senha = document.getElementById("inputPassword").value;
-
-  axios.post('http://localhost:8080/api/login', {
-    email: email,
-    senha: senha
-    
-  })
-    .then(response => {
-      console.log("login sucesso");
-      console.log(response.data); // Mensagem de sucesso
-      console.log("login sucesso");
-      console.log("login sucesso");
-      const token = response.data.token;
-      // Armazene o token localmente
-      localStorage.setItem('jwtToken', token);
-
-      if (response.data.tipoUsuario === 'ADMINISTRADOR') {
-        console.log("login sucesso");
-        console.log("Usuário autenticado como administrador");
-        window.location.href = 'file:///C:/Users/milena/Documents/FrontEnd/front-end/src/pages/adm/telaInicalAdm.html';
-      } else {
-        console.log("Usuário autenticado como usuário normal");
-        window.location.href = 'paginaPrincipalUsuario.html';
-      }
-    })
-    .catch(error => {
-      console.error(error); // Mensagem de erro
-      alert("Erro ao fazer login. Verifique suas credenciais.");*/
-
-
-/*  axios.get('http://localhost:8080/sua-rota-protegida', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-            .then(response => {
-
-              console.log(response.data);
-            })
-            .catch(error => {
-
-              console.error(error);
-            });*/
+    async function getToken() {
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
   
+      try {
+        const response = await axios.post('http://localhost:3343/api/login/', {
+          email: email,
+          senha: senha
+        });
+  
+        return response.data.acessToken;
+      } catch (error) {
+        errorMessage.style.display = "block";
+        return null;
+      }
+    }
+  
+    function decodeToken(token) {
+      try {
+        const tokenParts = token.split('.');
+        const payload = JSON.parse(atob(tokenParts[1]));
+        this.getTypeUser(payload);
+      } catch (error) {
+        console.error("Erro ao decodificar o token: " + error);
+      }
+    }
+  
+    async function validateToken(event) {
+      event.preventDefault();
+  
+      try {
+        const token = await getToken();
+        if (token) {
+          errorMessage.style.display = "none";
+
+          decodeToken(token);
+        }
+      } catch (error) {
+        console.error("Algo deu errado: " + error);
+      }
+    }
+
+    function getTypeUser(decodeTokenObject) {
+      console.log(decodeTokenObject.tipoUsuario);
+      return decodeTokenObject.tipoUsuario;
+    }
+  
+    document.getElementById("loginButton").addEventListener("click", validateToken);
   </script>
 
 </body>
