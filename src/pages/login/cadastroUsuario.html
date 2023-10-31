@@ -52,7 +52,7 @@
                 
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" style="color:white; background-color: black; border: 1px solid;" onclick="confirmacaoCadastro()">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary" style="color:white; background-color: black; border: 1px solid;" onclick="cadastrarUsuario()">Cadastrar</button>
                 </form>
                 
             </div>
@@ -67,32 +67,32 @@
     <script>
 
 
-        function confirmacaoCadastro() {
+
+        function cadastrarUsuario() {
+            document.getElementById("userForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+                const nome = document.getElementById("nome").value;
+                const email = document.getElementById("email").value;
+                const senha = document.getElementById("senha").value;
+                const tipoUsuario = document.getElementById("tipoUsuario").value;
+                const data = {
+                    nome: nome,
+                    email: email,
+                    senha: senha,
+                    tipoUsuario: tipoUsuario
+                };
+
+                axios.post("http://localhost:3343/api/cadastro/", data)
+                    .then(function (response) {
+                        this.redirectPage();
+                    });
+            });
+
+        }
+        
+        function redirectPage() {
             window.location.href = "../login/modelCadastroRealizadoComSucesso.html";
         }
-
-        document.getElementById("userForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            const nome = document.getElementById("nome").value;
-            const email = document.getElementById("email").value;
-            const senha = document.getElementById("senha").value;
-            const tipoUsuario = document.getElementById("tipoUsuario").value;
-            const data = {
-                nome: nome,
-                email: email,
-                senha: senha,
-                tipoUsuario: tipoUsuario
-            };
-            axios.post("http://localhost:3343/api/cadastro/", data)
-                .then(function (response) {
-                    console.log("Cadastro de usuário bem-sucedido!", response.data);
-                  
-                })
-                .catch(function (error) {
-                    console.error("Erro ao cadastrar usuário:", error);
-                });
-        });
-
        
     </script>
 </body>
