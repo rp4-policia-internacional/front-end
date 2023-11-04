@@ -24,7 +24,7 @@
                         O criminoso <span id ="nomeCriminoso"></span> esta prestes a ser extraditado pelo agente <span id="nomeAgente"></span>
                         por meio de trasnporte <span id="transporte"></span> 
 
-                        está aguardando o pedido de extradição.
+                        para o <span id="nomePaisDeOrigem"></span>.
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -38,48 +38,64 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <script>
         $(document).ready(function () {
             $("#DetalhesExtradicaoModal").modal("show");
         });
     </script>
 
-    <script>
-        const queryString = window.location.search;
-        
-        //remover o ? do início da string
-        const queryParams = new URLSearchParams(queryString.substring(1));
-        const dataParam = queryParams.get("data");
+</body>
 
-        if (dataParam) {
-            //decodificar a string JSON e converter novamente para JSON
-            dataObject = JSON.parse(decodeURIComponent(dataParam));
-            console.log(dataObject);
-        
-            getExtradicao(dataObject);
-        } else {
-            console.error("Parâmetro 'data' não encontrado na URL");
-        }
+        <script>
+            const queryString = window.location.search;
 
-        function getExtradicao(extradicao) {
-            axios.get(`http://localhost:3336/api/extradicao/${extradicao.id_extradicao}`)
-            .then(function (response) {
-                const data = response.data;
-                console.log(response.data);
-                $('#nomeCriminoso').text(`${data.id_criminoso}`);
-                $('#nomeAgente').text(`${data.agente_id}`);
-                $('#transporte').text(`${data.transporte}`);
-            
-            })
-            .catch(function (error) {
-                console.error('Erro ao carregar extradicao: ', error);
-            });
-        }
+            //remover o ? do início da string
+            const queryParams = new URLSearchParams(queryString.substring(1));
+            const dataParam = queryParams.get("data");
 
-        function confirmarVisualizacao() {
-            window.location.href = '../extradicao/extradicaoFinalizada.html';
-        }
+            if (dataParam) {
+                //decodificar a string JSON e converter novamente para JSON
+                dataObject = JSON.parse(decodeURIComponent(dataParam));
+                console.log(dataObject);
+
+                getExtradicao(dataObject);
+            } else {
+                console.error("Parâmetro 'data' não encontrado na URL");
+            }
+
+            function getExtradicao(extradicao) {
+                axios.get(`http://localhost:3336/api/extradicao/${extradicao.id_extradicao}`)
+                .then(async function (response) {
+                    const data = response.data;
+                    console.log(response.data);
+                    $('#nomeCriminoso').text(`${data.nomeCriminoso}`);
+                    $('#nomeAgente').text(`${data.agente}`);
+                    $('#transporte').text(`${data.transporte}`);
+
+                    // buscar o nome do país com base no id
+                    const pais = await getPaisById(data.id_pais_origem);
+                    $('#nomePaisDeOrigem').text(pais.nome);
+                
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar extradicao: ', error);
+                });
+            }
+
+            function confirmarVisualizacao() {
+                // Redirecionar para a página dentro da pasta "extradicao"
+                window.location.href = '../extradicao/extradicaoFinalizada.html';
+            }
+
+            async function getPaisById(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                    return response.data;
+                } catch (error) {
+                    console.error('Erro ao buscar país: ', error);
+                    throw error;
+                }
+            }
     </script>
 </body>
 </html>
