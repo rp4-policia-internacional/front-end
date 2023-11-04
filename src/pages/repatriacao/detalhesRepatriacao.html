@@ -21,7 +21,7 @@
                 <div class="modal-body d-flex justify-content-center align-items-center">
 
                     <p class="text-center"> 
-                        A vitima <span id ="nomeVitima"></span> será repatriada para o seu país de origem <span id="paisDeOrigem"></span>
+                        A vitima <span id ="nomeVitima"></span> será repatriada para <span id="paisDeOrigem"></span>
                         pelo agente <span id="nomeAgente"></span> por meio de trasnporte <span id="transporte"></span> 
                     </p>
                 </div>
@@ -42,13 +42,9 @@
             $("#DetalhesRepatriacaoModal").modal("show");
         });
     </script>
-
-    <script>
-       </script>
-
-<script>
+  <script>
     const queryString = window.location.search;
-    
+
     //remover o ? do início da string
     const queryParams = new URLSearchParams(queryString.substring(1));
     const dataParam = queryParams.get("data");
@@ -57,42 +53,45 @@
         //decodificar a string JSON e converter novamente para JSON
         dataObject = JSON.parse(decodeURIComponent(dataParam));
         console.log(dataObject);
-    
-        getVitima(dataObject);
+
+        getRepatriacao(dataObject);
     } else {
         console.error("Parâmetro 'data' não encontrado na URL");
     }
 
-    function getVitima(vitima) {
-        axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
+    function getVitima(repatriacao) {
+        axios.get(`http://localhost:3336/api/repatriacao/${repatriacao.id_repatriacao}`)
         .then(async function (response) {
             const data = response.data;
+            console.log(response.data);
             $('#nomeVitima').text(`${data.nomeCompleto}`);
             $('#nomeAgente').text(`${data.agente}`);
             $('#transporte').text(`${data.transporte}`);
-
+            
+            // buscar o nome do país com base no id
             const pais = await getPaisById(data.id_pais_origem);
-            $('#paisDeOrigem').text(`${pais.nome}`);
+            $('#paisDeOrigem').text(pais.nome);
         
         })
         .catch(function (error) {
-            console.error('Erro ao buscar vitima: ', error);
+            console.error('Erro ao buscar repatriação: ', error);
         });
     }
 
+    function confirmarVisualizacao() {
+        // Redirecionar para a página dentro da pasta "extradicao"
+        window.location.href = '../home/telaInicial.html';
+    }
 
     async function getPaisById(id) {
-            try {
-                const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
-                return response.data;
-            } catch (error) {
-                console.error('Erro ao buscar país: ', error);
-                throw error;
-            }
+        try {
+            const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao buscar país: ', error);
+            throw error;
         }
-        function confirmarVisualizacao() {
-            window.location.href = '../repatriacao/vitimaRepatriada.html';
-        }
+    }
 </script>
 </body>
 </html>
