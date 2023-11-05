@@ -50,7 +50,7 @@
         async function preencherTabela() {
             try {
                 // Fazer uma requisição GET para obter os países
-                const response = await axios.get("http://localhost:8080/api/pais/");
+                const response = await axios.get("http://localhost:3340/api/pais/");
                 const paises = response.data; // Supondo que a resposta seja uma lista de países
 
                 // Selecionar o corpo da tabela
