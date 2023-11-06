@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitações Pendentes</title>
-
-    <!-- Remova o atributo 'integrity' abaixo -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -43,27 +41,27 @@
                     </tr>
                 </thead>
                 <tbody id="table-body">
-                    <!-- Os dados da tabela serão preenchidos aqui -->
+                 
                 </tbody>
             </table>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-            // Função para preencher a tabela com os dados dos países
+          
             async function preencherTabela() {
                 try {
 
                     const response = await axios.get("http://localhost:3340/api/pais/");
-                    const paises = response.data; // Supondo que a resposta seja uma lista de países
+                    const paises = response.data; 
 
 
                     const tableBody = document.getElementById("table-body");
 
-                    // Limpar a tabela
+                    
                     tableBody.innerHTML = '';
 
-                    // Preencher a tabela com os dados dos países
+                   
                     paises.forEach((pais) => {
                         const row = document.createElement("tr");
                         row.innerHTML = `
