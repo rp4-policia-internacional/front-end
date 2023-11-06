@@ -1,10 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap');
+* 
+
 body{
     background-color: rgb(12, 0, 15);
     color: white;
-    font-family: poppinsregular;
+    
     max-width: 1200px;
     margin: 0 auto;
     padding: 15px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 
@@ -19,20 +23,77 @@ ul {
 }
 
 
+header {
+    background-color: white; 
+    padding: 15px 0;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+}
+
+
+.navbar {
+    background-color: #f8f9fa;
+    padding: 10px 0; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; 
+    width: 100%; 
+    top: 0; 
+    left: 0; 
+    z-index: 100; 
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.navbar img {
+    width: 50px;
+    height: auto; 
+    margin-right: 10px; 
+}
+
+
+.navbar .navbar-brand {
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #333; 
+}
+
+.navbar-brand {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000; 
+    padding: 10px 20px;
+}
+
+.navbar-toggler {
+    display: none; 
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #000; 
+}
 article img {
     width: 450px; 
     height: 400px; 
     padding: 5px;
     border-radius: 50%;
     border: 2px solid rgb(255, 255, 255); 
+    margin-top: 100px; 
 }
 
 header{
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    background-color: white;
+    width: 100%;
+    height: 100px;
+    position:static ;
+  
 }
 
 #title{
@@ -64,31 +125,52 @@ a:hover{
     background-color: rgb(132, 14, 201);
     color: white;
 }
+.nav-item-btn-login{
+
+    background-color: rgb(238, 230, 230); 
+    color: white; 
+    padding: 10px 20px; 
+    border-radius: 15px; 
+    text-align: center;
+    font-weight: bold;
+}
+.nav-item-btn-cadastro{
+    background-color: white; 
+    color: black; 
+    padding: 10px 20px; 
+    border-radius: 15px; 
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid black; 
+}
 
 h1{
     font-weight: 200;
+    margin-top: 100px;
 }
 
 main{
     display: flex;
     flex-direction: row;
-    margin-top: 50px;
+    margin-top: 100px;
 }
 
 h2{
     font-size: 56px;
-    line-height: 10px;
-    font-family: poppinsmedium;
+    line-height: 56px; 
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 100px;
 }
 
 span{
-    color: rgb(132, 14, 201);
+    color: rgb(255, 255, 255);
 }
 
 p{
     line-height: 20px;
     max-width: 500px;
-    font-family: poppinslight;
+    font-family: 'Open Sans', sans-serif;
+  
 }
 
 img{
