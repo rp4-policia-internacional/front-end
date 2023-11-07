@@ -20,7 +20,7 @@
             <div class="col-md-9 mt-5">
                 <h1 id="detalhesVitima">Carregando...</h1>
                 <div class="d-flex align-items-start">
-              
+
                     <input type="hidden" id="idVitima" name="idVitima">
                     <div class="ml-2">
                         <label for="imagem">Imagem da Vítima:</label>
@@ -65,8 +65,6 @@
             const idVitimaInput = document.getElementById('idVitima');
             const idVitima = idVitimaInput.value; // Obtém o ID da vítima
             const imagePreview = document.getElementById('imagemPreview');
-
-            // Restaurar a imagem da vítima ao carregar a página
             const savedImage = localStorage.getItem(idVitima + '_imagemDaVitima');
 
             if (savedImage) {
@@ -75,38 +73,80 @@
             }
         });
 
-        // detalhes da vítima pelo no ID
-        function buscarDetalhesVitima(id) {
-            axios.get(`http://localhost:3337/api/vitima/${id}`)
-                .then(function (response) {
-                    const vitima = response.data;
-                    const detalhesVitima = document.getElementById('detalhesVitima');
-
-                    detalhesVitima.innerHTML = `
-                    <div class="mt-3">
-                        <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
-                        <p><strong>País de Origem:</strong> ${vitima.id_paisDeOrigem}</p>
-                        <p><strong>Autor do Crime:</strong> ${vitima.id_autorDoCrime}</p>
-                        <p><strong>Nacionalidade:</strong> ${vitima.nacionalidade}</p>
-                        <p><strong>Altura:</strong> ${vitima.altura}</p>
-                        <p><strong>Gênero:</strong> ${vitima.genero}</p>
-                        <p><strong>Idade:</strong> ${vitima.idade} anos</p>
-                        <p><strong>País Visto por Último:</strong> ${vitima.id_paisVistoPorUltimo}</p>
-                        <p><strong>Status:</strong> ${vitima.statusDaVitima}</p>
-                    </div>
-                `;
-                    const removerVitimaBtn = document.getElementById('removerVitima');
-                    removerVitimaBtn.addEventListener('click', function () {
-                        // Confirmação para remover a vítima
-                        if (confirm('Tem certeza de que deseja remover esta vítima?')) {
-                            removerVitima(id);
-                        }
-                    });
-                })
-                .catch(function (error) {
-                    console.error('Erro ao buscar detalhes da vítima:', error);
-                });
+        async function getPaisById(id) {
+            try {
+                const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                return response.data.nome;
+            } catch (error) {
+                console.error('Erro ao buscar país: ', error);
+                return 'País não encontrado';
+                throw error;
+            }
         }
+        async function getNacionalidadeById(id) {
+            try {
+                const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                return response.data.gentilico;
+            } catch (error) {
+                console.error('Erro ao buscar nacionalidade: ', error);
+                return 'Nacionalidade não encontrada';
+            }
+        }
+        async function getCriminosoById(id) {
+            try {
+                const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+                return response.data.nomeCompleto;
+            } catch (error) {
+                console.error('Erro ao buscar criminoso: ', error);
+                return 'Criminoso não encontrada';
+            }
+        }
+        async function getPaisVitoPorUltimoById(id) {
+            try {
+                const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                return response.data.nome;
+            } catch (error) {
+                console.error('Erro ao buscar país visto por ultimo: ', error);
+                return 'País não encontrado';
+                throw error;
+            }
+        }
+
+        async function buscarDetalhesVitima(id) {
+            try {
+                const response = await axios.get(`http://localhost:3337/api/vitima/${id}`);
+                const vitima = response.data;
+                const detalhesVitima = document.getElementById('detalhesVitima');
+
+                const paisVitoPorUltimo = await getPaisVitoPorUltimoById(vitima.id_paisVistoPorUltimo);
+                const paisDeOrigem = await getPaisById(vitima.id_paisDeOrigem);
+                const nacionalidade = await getNacionalidadeById(vitima.nacionalidade);
+
+                detalhesVitima.innerHTML = `
+            <div class="mt-3">
+                <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
+                <p><strong>País de Origem:</strong> ${paisDeOrigem}</p>
+                <p><strong>Autor do Crime:</strong> ${vitima.id_autorDoCrime}</p>
+                <p><strong>Nacionalidade:</strong> ${nacionalidade}</p>
+                <p><strong>Altura:</strong> ${vitima.altura}</p>
+                <p><strong>Gênero:</strong> ${vitima.genero}</p>
+                <p><strong>Idade:</strong> ${vitima.idade} anos</p>
+                <p><strong>País Visto por Último:</strong> ${paisVitoPorUltimo}
+            </div>
+        `;
+
+                const removerVitimaBtn = document.getElementById('removerVitima');
+                removerVitimaBtn.addEventListener('click', async function () {
+                    // Confirmação para remover a vítima
+                    if (confirm('Tem certeza de que deseja remover esta vítima?')) {
+                        await removerVitima(id);
+                    }
+                });
+            } catch (error) {
+                console.error('Erro ao buscar detalhes da vítima:', error);
+            }
+        }
+
 
         //  remover uma vítima pelo ID
         function removerVitima(id) {
@@ -128,4 +168,5 @@
         });
     </script>
 </body>
+
 </html>
