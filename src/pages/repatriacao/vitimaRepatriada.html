@@ -20,7 +20,7 @@
                                 <div class="col-md-auto">
                                     <p>A vítima <strong> <span id="nomeVitima"></span> </strong> foi repatriada!</p>  
 
-                                    <h1 style="color: brown;">DEPORTED</h1>
+                                    <h1 style="color: brown;">Repatriada</h1>
 
                                 </div>   
                             </div>    
@@ -48,38 +48,41 @@
         </script>
          <script>
             const queryString = window.location.search;
-            
+
             //remover o ? do início da string
             const queryParams = new URLSearchParams(queryString.substring(1));
             const dataParam = queryParams.get("data");
-    
+
             if (dataParam) {
                 //decodificar a string JSON e converter novamente para JSON
                 dataObject = JSON.parse(decodeURIComponent(dataParam));
                 console.log(dataObject);
-            
-                getRepatriacao(dataObject);
+
+                getVitima(dataObject);
             } else {
                 console.error("Parâmetro 'data' não encontrado na URL");
             }
-    
-            function getRepatriacao(extradicao) {
-                axios.get(`http://localhost:3342/api/repatriacao/${repatriacao.id_repatriacao}`)
-                .then(function (response) {
+
+            function getVitima(vitima) {
+                axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
+                .then(async function (response) {
                     const data = response.data;
                     console.log(response.data);
-                    $('#nomeVitima').text(`${data.id_vitima}`);
-    
+                    $('#nomeVitima').text(`${data.nomeCompleto}`);
+                    
                 
                 })
                 .catch(function (error) {
-                    console.error('Erro ao carregar repatriação: ', error);
+                    console.error('Erro ao buscar vítima: ', error);
                 });
             }
+
             function vitimaRepatriada() {
-            window.location.href = '../home/telaInicial.html';
-        }
-           </script>
+                // Redirecionar para a página dentro da pasta "extradicao"
+                window.location.href = '../home/telaInicial.html';
+            }
+
+        </script>
 
     </body>
 </html>
