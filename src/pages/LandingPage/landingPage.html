@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../LandingPage/styles/style.css" rel="stylesheet">
+
+    <link href="../home/styles/media.css" rel="stylesheet">
+    <title>Organização de Polícia Internacional</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">
+            <img src="../../shared/images/logo.png" alt="carro">
+
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span </span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sobre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Notícias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contato</a>
+                </li>
+                <li class="nav-item-btn-login">
+                    <a class="nav-link" href="#">Login</a>
+                <li class="nav-item-btn-cadastro">
+                    <a class="nav-link" href="#">Cadastre-se</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <aside>
+            <h2><span>Organização de Polícia</span> Internacional</h2>
+            <p>
+                Ajude a construir um mundo mais seguro e conectado com o Sistema de Polícia Internacional.
+                Seu país pode fazer a diferença, colaborando na captura de criminosos e na prevenção de crimes, unindo
+                esforços com nações de todo o mundo. Solicite sua participação e junte-se a essa rede global de segurança hoje.
+            </p>
+            <form id="solicitarForm">
+                <input type="submit" value="Solicitar Participação > ">
+            </form>
+        </aside>
+        <article>
+            <img src="../../shared/images/carroPolicia.png" alt="carro">
+        </article>
+    </main>
+    <div class="card-container">
+        <div class="card">
+            <div class="image-container">
+                <img src="../../shared/images/listaCriminal.png" alt="Descrição da imagem">
+            </div>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <h5 class="card-title">Compartilhe seus regristros de criminosos e vítimas</h5>
+            <p class="card-text"> Compartilhe seu registros de criminosos e vítimas para os países que pertencem a Organização.</p>
+            </p>
+        </div>
+
+        <div class="card">
+
+            <div class="image-container">
+                <img src="../../shared/images/pedidoDeCaptura.png" alt="Descrição da imagem">
+            </div>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <h5 class="card-title"> Captura e Resgate</h5>
+            <p class="card-text">Emita um pedido de busca e captura e resgate.</p>
+        </div>
+
+        <div class="card">
+
+            <div class="image-container">
+                <img src="../../shared/images/capturaCrime.png" alt="Descrição da imagem">
+            </div>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <h5 class="card-title">Capture um criminoso</h5>
+            <p class="card-text">Capture um criminoso e ajude ao combate a criminalidade.</p>
+        </div>
+
+        <div class="card">
+
+            <div class="image-container">
+                <img src="../../shared/images/people.png" alt="Descrição da imagem">
+            </div>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <h5 class="card-title">Resgate vítimas</h5>
+            <p class="card-text">Resgate vítimas e faça a repatriação para os seus países de origem </p>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    document.getElementById('solicitarForm').addEventListener('submit', function (event) {
+        event.preventDefault(); 
+        window.location.href = '../pais/formSolicitacaoPais.html'; 
+    });
+</script>

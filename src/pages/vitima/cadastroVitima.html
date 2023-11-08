@@ -40,9 +40,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="id_paisDeOrigem">País de Origem:*</label>
-                        <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control"
-                            placeholder="Informe o país de origem" required>
+                        <label for="id_paisDeOrigem">Pais de origem:</label>
+                        <select id="id_paisDeOrigem" class="form-control"></select>
                     </div>
                 </div>
             </div>
@@ -50,157 +49,178 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_autorDoCrime">Autor do Crime:*</label>
-                        <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control"
-                            placeholder="Informe o autor do crime" required>
+
+                        <select id="id_autorDoCrime" class="form-control"> </select>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nacionalidade">Nacionalidade:*</label>
+                            <select id="nacionalidade" class="form-control"> </select>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="nacionalidade">Nacionalidade:*</label>
-                        <input type="text" id="nacionalidade" name="nacionalidade" class="form-control"
-                            placeholder="Informe a nacionalidade" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="altura">Altura:*</label>
+                            <input type="text" id="altura" name="altura" class="form-control"
+                                placeholder="Informe a altura" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="genero">Gênero:*</label>
+                            <select id="genero" name="genero" class="form-control" required>
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="idade">Idade:*</label>
+                            <input type="number" id="idade" name="idade" class="form-control"
+                                placeholder="Informe a idade" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_paisVistoPorUltimo">País Visto por Último:*</label>
+                            <select id="id_paisVistoPorUltimo" class=form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="status">Status:*</label>
+                            <select id="status" name="status" class="form-control">
+                                <option selected>Selecionar</option>
+                                <option>Sequestrado(a)</option>
+                                <option>Desaparecido(a)</option>
+                                <option>Repatriado(a)</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="altura">Altura:*</label>
-                        <input type="text" id="altura" name="altura" class="form-control" placeholder="Informe a altura"
-                            required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="genero">Gênero:*</label>
-                        <select id="genero" name="genero" class="form-control" required>
-                            <option value="masculino">Masculino</option>
-                            <option value="feminino">Feminino</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="idade">Idade:*</label>
-                        <input type="number" id="idade" name="idade" class="form-control" placeholder="Informe a idade"
-                            required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="id_paisVistoPorUltimo">País Visto por Último:*</label>
-                        <input type="text" id="paisVistoPorUltimo" name="paisVistoPorUltimo" class="form-control"
-                            placeholder="Informe o país visto por último" required>
-                    </div>
-                </div>
-            </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="status">Status:*</label>
-                        <select id="status" name="status" class="form-control">
-                            <option selected>Selecionar</option>
-                            <option>Sequestrado(a)</option>
-                            <option>Desaparecido(a)</option>
-                            <option>Repatriado(a)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <script>
-
-     
-        document.addEventListener('DOMContentLoaded', function () {
-            const imageUploadInput = document.getElementById('imagem'); 
-            const idVitimaInput = document.getElementById('idVitima');
-            const imagePreview = document.getElementById('imagemPreview');
-            const idVitima = idVitimaInput.value; // Obtém o ID da vítima
-            const savarImage = localStorage.getItem(idVitima + '_imagemDaVitima'); // tenta pegar a imagem salva localmente de acordo com o id da vitima
-
-            if (savarImage) {
-                imagePreview.src = savarImage;
-                imagePreview.style.display = 'block';
-            }
-
-            imageUploadInput.addEventListener('change', function () {
-                if (imageUploadInput.files.length > 0) {
-                    const file = imageUploadInput.files[0];
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const imageDataURL = e.target.result;
-                        localStorage.setItem(idVitima + '_imagemDaVitima', imageDataURL); //salva a imagem localmente
-                        imagePreview.src = e.target.result;                               // att para exibir a nova imagem
-                        imagePreview.style.display = 'block';
-                    };
-
-                    reader.readAsDataURL(file);
-                } else {
-                    imagePreview.src = '';
-                    imagePreview.style.display = 'none';
-                }
-            });
-
-
-            /*
-            * Envio do formulário
-            */
-            document.getElementById("cadastroVitimaForm").addEventListener("submit", function (event) {
-                event.preventDefault();
-                const nomeCompleto = document.getElementById("nomeCompleto").value;
-                const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
-                const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
-                const nacionalidade = document.getElementById("nacionalidade").value;
-                const altura = document.getElementById("altura").value;
-                const genero = document.getElementById("genero").value;
-                const idade = document.getElementById("idade").value;
-                const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
-                const statusDaVitima = document.getElementById("status").value;
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
                 const imageUploadInput = document.getElementById('imagem');
-                const imagemFile = imageUploadInput.files[0]; 
+                const idVitimaInput = document.getElementById('idVitima');
+                const imagePreview = document.getElementById('imagemPreview');
+                const idVitima = idVitimaInput.value; // Obtém o ID da vítima
+                const savarImage = localStorage.getItem(idVitima + '_imagemDaVitima'); // tenta pegar a imagem salva localmente de acordo com o id da vitima
 
-                //verificando se a imagem foi selecionada
-                if (imagemFile) {
-                    const nomeDaImagem = imagemFile.name; //nome da imagem
+                if (savarImage) {
+                    imagePreview.src = savarImage;
+                    imagePreview.style.display = 'block';
+                }
 
-                    const data = {
-                        id_paisDeOrigem: id_paisDeOrigem,
-                        id_autorDoCrime: id_autorDoCrime,
-                        nomeCompleto: nomeCompleto,
-                        nacionalidade: nacionalidade,
-                        altura: parseFloat(altura),
-                        genero: genero,
-                        idade: parseInt(idade),
-                        id_paisVistoPorUltimo: id_paisVistoPorUltimo,
-                        statusDaVitima: statusDaVitima,
-                        foto: nomeDaImagem
-                    };
+                imageUploadInput.addEventListener('change', function () {
+                    if (imageUploadInput.files.length > 0) {
+                        const file = imageUploadInput.files[0];
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const imageDataURL = e.target.result;
+                            localStorage.setItem(idVitima + '_imagemDaVitima', imageDataURL); //salva a imagem localmente
+                            imagePreview.src = e.target.result;                               // att para exibir a nova imagem
+                            imagePreview.style.display = 'block';
+                        };
 
-                    axios.post("http://localhost:3337/api/vitima/", data)
+                        reader.readAsDataURL(file);
+                    } else {
+                        imagePreview.src = '';
+                        imagePreview.style.display = 'none';
+                    }
+                });
+
+                document.getElementById("cadastroVitimaForm").addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    const nomeCompleto = document.getElementById("nomeCompleto").value;
+                    const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
+                    const id_autorDoCrime = document.getElementById("id_autorDoCrime").value;
+                    const nacionalidade = document.getElementById("nacionalidade").value;
+                    const altura = document.getElementById("altura").value;
+                    const genero = document.getElementById("genero").value;
+                    const idade = document.getElementById("idade").value;
+                    const id_paisVistoPorUltimo = document.getElementById("id_paisVistoPorUltimo").value;
+                    const statusDaVitima = document.getElementById("status").value;
+                    const imageUploadInput = document.getElementById('imagem');
+                    const imagemFile = imageUploadInput.files[0];
+
+                    //verificando se a imagem foi selecionada
+                    if (imagemFile) {
+                        const nomeDaImagem = imagemFile.name;
+
+                        const data = {
+                            id_paisDeOrigem: id_paisDeOrigem,
+                            id_autorDoCrime: id_autorDoCrime,
+                            nomeCompleto: nomeCompleto,
+                            nacionalidade: nacionalidade,
+                            altura: parseFloat(altura),
+                            genero: genero,
+                            idade: parseInt(idade),
+                            id_paisVistoPorUltimo: id_paisVistoPorUltimo,
+                            statusDaVitima: statusDaVitima,
+                            foto: nomeDaImagem
+                        };
+
+                        axios.post("http://localhost:3337/api/vitima/", data)
+                            .then(function (response) {
+                                console.log("Cadastro de vítima bem-sucedido!", response.data);
+                                const vitimaId = response.data.id; // Obtém o ID da vítima recém-criada
+                                document.getElementById("idVitima").value = vitimaId;
+                                window.location.href = `detalhesVitima.html?id=${response.data.id}`;
+                            })
+                            .catch(function (error) {
+                                console.error("Erro ao cadastrar vítima:", error);
+                            });
+                    }
+                });
+
+
+                // Função para preencher dinamicamente os campos de Pais de origem e nacionalidade.
+                function buscarDadosDoServidor(endpoint, campoDeSelecao, colunaDaTabela, valorOpcaoDoSelect) {
+                    axios.get(endpoint)
                         .then(function (response) {
-                            console.log("Cadastro de vítima bem-sucedido!", response.data);
-                            const vitimaId = response.data.id; // Obtém o ID da vítima recém-criada
-                            document.getElementById("idVitima").value = vitimaId; 
-                            window.location.href = `detalhesVitima.html?id=${response.data.id}`;
+                            const select = document.getElementById(campoDeSelecao);
+                            for (let i in response.data) {
+                                let option = document.createElement('option');
+                                option.text = response.data[i][colunaDaTabela];
+                                option.value = response.data[i][valorOpcaoDoSelect];
+                                select.add(option);
+                            }
+                            function alterarValor() {
+                                var valor = select.options[select.selectedIndex];
+                                $('#' + campoDeSelecao).val(valor.value).trigger('change');
+                            }
+                            select.addEventListener('change', alterarValor);
                         })
                         .catch(function (error) {
-                            console.error("Erro ao cadastrar vítima:", error);
+                            console.error(error);
                         });
                 }
+                buscarDadosDoServidor("http://localhost:3340/api/pais/", "id_paisDeOrigem", "nome", "id");
+                buscarDadosDoServidor("http://localhost:3340/api/pais/", "nacionalidade", "gentilico", "id");
+                buscarDadosDoServidor("http://localhost:3340/api/pais/", "id_paisVistoPorUltimo", "nome", "id");
+                buscarDadosDoServidor("http://localhost:3338/api/criminoso/", "id_autorDoCrime", "nomeCompleto", "id");
             });
-        });
-    </script>
+
+
+        </script>
 </body>
+
 </html>
