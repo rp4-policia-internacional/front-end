@@ -141,6 +141,15 @@
             });
         });
 
+<<<<<<< HEAD
+                if (probabilidade >= 1) {
+                    const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                    mostrarLoadingEAgendarRedirecionamento(`../resgate/modelResgatada.html?data=${dataEncode}`);
+                } else {
+                    const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                    mostrarLoadingEAgendarRedirecionamento(`../resgate/modelNaoResgatada.html?data=${dataEncode}`);
+                }
+=======
         function mostrarLoadingEAgendarRedirecionamento(url) {
             const loadingModal = document.getElementById('loadingModal');
             $(loadingModal).modal('show');
@@ -160,6 +169,7 @@
             } else {
                 const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
                 mostrarLoadingEAgendarRedirecionamento(`../resgate/modelNaoResgatada.html?data=${dataEncode}`);
+>>>>>>> 4414dfb1d08e9cef6634abc37a0744e6824f2fbb
             }
         }
     </script>

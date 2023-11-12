@@ -66,6 +66,74 @@
         </div>
     </div>
 
+<<<<<<< HEAD
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script>
+            let dataObject;
+            $(document).ready(function () {
+                $("#criminosoEncontradoModal").modal("show");
+    
+                $("#btnAcionarPolicia").click(function () {
+    
+                    // Exibir o modal de progresso
+    
+                    $("#loadingModal").modal("show");
+                    setTimeout(function () {
+                        $("#loadingModal").modal('hide');
+                    }, 3000);
+    
+                });
+    
+                const queryString = window.location.search;
+    
+                //remover o ? do início da string
+                const queryParams = new URLSearchParams(queryString.substring(1));
+                const dataParam = queryParams.get("data");
+    
+                if (dataParam) {
+                    //decodificar a string JSON e converter novamente para JSON
+                    dataObject = JSON.parse(decodeURIComponent(dataParam));
+                    console.log(dataObject);
+    
+                    getCriminoso(dataObject);
+                } else {
+                    console.error("Parâmetro 'data' não encontrado na URL");
+                }
+    
+                function getCriminoso(criminoso) {
+                    axios.get(`http://localhost:8000/api/criminoso/${criminoso.id_criminoso}`)
+                        .then(function (response) {
+                            const data = response.data;
+                            console.log(response.data);
+                            $('#nomeCriminoso').text(`${data.nomeCompleto}`);
+                            getCountryName(data.id_paisVistoPorUltimo);
+                        })
+                        .catch(function (error) {
+                            console.error('Erro ao buscar criminoso: ', error);
+                        });
+                }
+    
+                function getCountryName(countryId) {
+                    
+                    axios.get(`http://localhost:8000/api/pais/${countryId}`)
+                        .then(function (response) {
+                            const countryName = response.data.nome;
+                            $('#nomePaisEncontrado').text(countryName);
+                        })
+                        .catch(function (error) {
+                            console.error('Erro ao buscar o nome do país: ', error);
+                        });
+                }
+            });
+    
+            function mostrarLoadingEAgendarRedirecionamento(url) {
+                const loadingModal = document.getElementById('loadingModal');
+                $(loadingModal).modal('show');
+    
+=======
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -80,6 +148,7 @@
                 // Exibir o modal de progresso
 
                 $("#loadingModal").modal("show");
+>>>>>>> 4414dfb1d08e9cef6634abc37a0744e6824f2fbb
                 setTimeout(function () {
                     $("#loadingModal").modal('hide');
                 }, 3000);
@@ -101,6 +170,21 @@
             } else {
                 console.error("Parâmetro 'data' não encontrado na URL");
             }
+<<<<<<< HEAD
+    
+            function acionarPolicia() {
+                const probabilidade = dataObject.probabilidade;
+    
+                if (probabilidade >= 0) {
+                    const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+    
+                    mostrarLoadingEAgendarRedirecionamento(`../captura/modelCapturado.html?data=${dataEncode}`);
+                } else {
+                    const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                    mostrarLoadingEAgendarRedirecionamento(`../captura/modelNaoCapturado.html?data=${dataEncode}`);
+    
+                }
+=======
 
             function getCriminoso(criminoso) {
                 axios.get(`http://localhost:3338/api/criminoso/${criminoso.id_criminoso}`)
@@ -125,6 +209,7 @@
                     .catch(function (error) {
                         console.error('Erro ao buscar o nome do país: ', error);
                     });
+>>>>>>> 4414dfb1d08e9cef6634abc37a0744e6824f2fbb
             }
         });
 
