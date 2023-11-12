@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Repatriação</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <img src="/src/shared/images/logo.png" width="100px" alt="logo">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -21,6 +23,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
@@ -33,23 +36,24 @@
     </div>
     <div class="container-fluid col-md-8 mt-5 pt-5">
         <h1>Formulário de Repatriação</h1>
-        <p>Repatriação da vítima.</p>    
+        <p>Repatriação da vítima.</p>
         <form id="formRepatriacao">
             <div class="form-group">
-               
-                    <label for="data">Data de inicio:*</label>
-                    <input type="date" id="dataI" name="dataI" class="form-control" required>
-           
+
+                <label for="data">Data de inicio:*</label>
+                <input type="date" id="dataI" name="dataI" class="form-control" required>
+
             </div>
             <div class="form-group">
-               
+
                 <label for="data">Data do fim:*</label>
                 <input type="date" id="dataF" name="dataF" class="form-control" required>
-       
-        </div>
+
+            </div>
             <div class="form-group">
                 <label for="id_paisDeOrigem">País de Origem:*</label>
-                <input type="text" id="paisOrigem" name="paisDeOrigem" class="form-control" placeholder="Informe o país de origem" required>
+                <input type="text" id="paisOrigem" name="paisDeOrigem" class="form-control"
+                    placeholder="Informe o país de origem" required>
             </div>
 
             <div class="form-group">
@@ -64,61 +68,64 @@
                 <label for="agenteResponsavel">Agente responsável:*</label>
                 <select class="form-control" id="agenteResponsavel" name="agenteResponsavel" required>
                     <option>Pedro</option>
-                    <option >Alice</option>
+                    <option>Alice</option>
                     <option>João</option>
-                </select>            </div>
+                </select>
+            </div>
             <div class="form-group">
                 <label for="nomeCompleto">Nome Completo da vitima:*</label>
-                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control" placeholder="Informe o nome completo" required>
-            </div>  
+                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control"
+                    placeholder="Informe o nome completo" required>
+            </div>
             <button onclick="enviarRepatriacao()" type="submit" class="btn btn-secondary">Enviar</button>
         </form>
     </div>
     <script>
-         const FormMediator ={
-      sendData: function(formData){
-        axios.post("http://localhost:3342/api/repatriacao/",formData)
-        .then(function(response){
-          console.log("Solicitação de repatriação bem-sucedida!",response.data);
-        })
-        .catch(function(error){
-          console.error("Erro ao solicitar repatriação:", error);
+        const FormMediator = {
+            sendData: function (formData) {
+                axios.post("http://localhost:3342/api/repatriacao/", formData)
+                    .then(function (response) {
+                        console.log("Solicitação de repatriação bem-sucedida!", response.data);
+                    })
+                    .catch(function (error) {
+                        console.error("Erro ao solicitar repatriação:", error);
+                    });
+            }
+        };
+        document.getElementById("formRepatriacao").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const dateI = document.getElementById("dataE").value;
+            const dateF = document.getElementById("dataF").value;
+            const id_pais_origem = document.getElementById("paisOrigem").value;
+            const agente = document.getElementById("agenteResponsavel").value;
+            const nomeCompleto = document.getElementById("nomeCompleto").value;
+            const transporte = document.getElementById("transporte").value;
+            const dataIObj = new Date(dateI);
+            const dataFObj = new Date(dateF);
+            console.log(dataIObj);
+            console.log(dataFObj);
+            console.log(id_pais_origem);
+            console.log(agente);
+            console.log(nomeCompleto);
+            console.log(transporte);
+
+            const formData = {
+                data_inicio: dataIObj,
+                data_fim: dataFObj,
+                id_pais_origem: id_pais_origem,
+                agente_id: agente,
+                id_vitima: nomeCompleto,
+                transporte: transporte,
+            };
+
+            FormMediator.sendData(formData);
+
         });
-      }
-    };
-    document.getElementById("formRepatriacao").addEventListener("submit", function(event){
-      event.preventDefault();
-      const dateI = document.getElementById("dataE").value;
-      const dateF = document.getElementById("dataF").value;
-      const id_pais_origem = document.getElementById("paisOrigem").value;
-      const agente = document.getElementById("agenteResponsavel").value;
-      const nomeCompleto = document.getElementById("nomeCompleto").value;
-      const transporte = document.getElementById("transporte").value;
-      const dataIObj = new Date(dateI);
-      const dataFObj = new Date(dateF);
-     console.log(dataIObj);
-     console.log(dataFObj);
-     console.log(id_pais_origem);
-     console.log(agente);
-     console.log(nomeCompleto);
-     console.log(transporte);
-
-      const formData = {
-         data_inicio: dataIObj,
-         data_fim: dataFObj,
-         id_pais_origem: id_pais_origem,
-         agente_id:agente,
-         id_vitima: nomeCompleto,
-         transporte: transporte,
-      };
-
-      FormMediator.sendData(formData);
-
-    });
-    function enviarRepatriacao() {
+        function enviarRepatriacao() {
             window.location.href = '../repatriacao/detalhesRepatriacao.html';
         }
-      
-      </script>
-    </body>
-  </html>
+
+    </script>
+</body>
+
+</html>

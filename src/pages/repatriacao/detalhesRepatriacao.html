@@ -14,15 +14,15 @@
     <div class="modal" data-backdrop="static" data-keyboard="false" id="DetalhesRepatriacaoModal">
         <div class="modal-dialog">
             <div class="modal-content" style="border: 3px solid green;">
-                <!-- Conteúdo do modal -->
+
                 <div class="modal-header">
                     <h4 class="modal-title text-center">Resumo da repatriação</h4>
                 </div>
                 <div class="modal-body d-flex justify-content-center align-items-center">
 
-                    <p class="text-center"> 
-                        A vitima <span id ="nomeVitima"></span> será repatriada para <span id="paisDeOrigem"></span>
-                        pelo agente <span id="nomeAgente"></span> por meio de trasnporte <span id="transporte"></span> 
+                    <p class="text-center">
+                        A vitima <span id="nomeVitima"></span> será repatriada para <span id="paisDeOrigem"></span>
+                        pelo agente <span id="nomeAgente"></span> por meio de trasnporte <span id="transporte"></span>
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -42,56 +42,57 @@
             $("#DetalhesRepatriacaoModal").modal("show");
         });
     </script>
-  <script>
-    const queryString = window.location.search;
+    <script>
+        const queryString = window.location.search;
 
-    //remover o ? do início da string
-    const queryParams = new URLSearchParams(queryString.substring(1));
-    const dataParam = queryParams.get("data");
+        //remover o ? do início da string
+        const queryParams = new URLSearchParams(queryString.substring(1));
+        const dataParam = queryParams.get("data");
 
-    if (dataParam) {
-        //decodificar a string JSON e converter novamente para JSON
-        dataObject = JSON.parse(decodeURIComponent(dataParam));
-        console.log(dataObject);
+        if (dataParam) {
+            //decodificar a string JSON e converter novamente para JSON
+            dataObject = JSON.parse(decodeURIComponent(dataParam));
+            console.log(dataObject);
 
-        getRepatriacao(dataObject);
-    } else {
-        console.error("Parâmetro 'data' não encontrado na URL");
-    }
-
-    function getVitima(repatriacao) {
-        axios.get(`http://localhost:3336/api/repatriacao/${repatriacao.id_repatriacao}`)
-        .then(async function (response) {
-            const data = response.data;
-            console.log(response.data);
-            $('#nomeVitima').text(`${data.nomeCompleto}`);
-            $('#nomeAgente').text(`${data.agente}`);
-            $('#transporte').text(`${data.transporte}`);
-            
-            // buscar o nome do país com base no id
-            const pais = await getPaisById(data.id_pais_origem);
-            $('#paisDeOrigem').text(pais.nome);
-        
-        })
-        .catch(function (error) {
-            console.error('Erro ao buscar repatriação: ', error);
-        });
-    }
-
-    function confirmarVisualizacao() {
-        // Redirecionar para a página dentro da pasta "extradicao"
-        window.location.href = '../home/telaInicial.html';
-    }
-
-    async function getPaisById(id) {
-        try {
-            const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error('Erro ao buscar país: ', error);
-            throw error;
+            getRepatriacao(dataObject);
+        } else {
+            console.error("Parâmetro 'data' não encontrado na URL");
         }
-    }
-</script>
+
+        function getVitima(repatriacao) {
+            axios.get(`http://localhost:3336/api/repatriacao/${repatriacao.id_repatriacao}`)
+                .then(async function (response) {
+                    const data = response.data;
+                    console.log(response.data);
+                    $('#nomeVitima').text(`${data.nomeCompleto}`);
+                    $('#nomeAgente').text(`${data.agente}`);
+                    $('#transporte').text(`${data.transporte}`);
+
+                    // buscar o nome do país com base no id
+                    const pais = await getPaisById(data.id_pais_origem);
+                    $('#paisDeOrigem').text(pais.nome);
+
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar repatriação: ', error);
+                });
+        }
+
+        function confirmarVisualizacao() {
+            // Redirecionar para a página dentro da pasta "extradicao"
+            window.location.href = '../home/telaInicial.html';
+        }
+
+        async function getPaisById(id) {
+            try {
+                const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                return response.data;
+            } catch (error) {
+                console.error('Erro ao buscar país: ', error);
+                throw error;
+            }
+        }
+    </script>
 </body>
+
 </html>

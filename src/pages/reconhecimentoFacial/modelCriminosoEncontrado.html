@@ -1,151 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <style>
-            #loadingModal {
-                background-color: rgba(0, 0, 0, 0.5);
-            }
-        </style>
 
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        #loadingModal {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
 
-        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
-                <div class="modal-content bg-transparent border-0">
-                    <div class="modal-body text-center bg-transparent">
-                        <div class="progress bg-transparent">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                        </div>
-                        <p class="text-white"  style="margin-top: 10px;">Comunicando a polícia local</p>
+</head>
+
+<body>
+
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body text-center bg-transparent">
+                    <div class="progress bg-transparent">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
                     </div>
+                    <p class="text-white" style="margin-top: 10px;">Comunicando a polícia local</p>
                 </div>
             </div>
         </div>
-        
-    
-        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true"></div>
+    </div>
 
-        <div class="modal" data-backdrop="static" data-keyboard="false" id="criminosoEncontradoModal">
-            <div class="modal-dialog">
-                <div class="modal-content" style="border: 3px solid green;">
-                    <!-- Conteúdo do modal -->
-                    <div class="modal-header">
-                        <h4 class="modal-title text-center">O criminoso foi identificado</h4>
-                    </div>
-                    <div class="modal-body d-flex justify-content-center align-items-center">
-                        <img src="../../shared/images/procurado.svg"></img>
-                        <p class="text-center">Criminoso <span id="nomeCriminoso"></span> 
-                            foi encontrado no país <span id="nomePaisEncontrado"></span> 
-                            por uma das câmeras de segurança! 
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="btnAcionarPolicia" type="button" class="btn btn-dark" data-dismiss="modal" onclick="acionarPolicia()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                              </svg>
-                            Acionar polícia</button>
-                    </div>
-                    
-                     
+
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
+        aria-hidden="true"></div>
+
+    <div class="modal" data-backdrop="static" data-keyboard="false" id="criminosoEncontradoModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border: 3px solid green;">
+
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">O criminoso foi identificado</h4>
                 </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img src="../../shared/images/procurado.svg"></img>
+                    <p class="text-center">Criminoso <span id="nomeCriminoso"></span>
+                        foi encontrado no país <span id="nomePaisEncontrado"></span>
+                        por uma das câmeras de segurança!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnAcionarPolicia" type="button" class="btn btn-dark" data-dismiss="modal"
+                        onclick="acionarPolicia()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                        Acionar polícia</button>
+                </div>
+
+
             </div>
         </div>
+    </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <script>
-            let dataObject;
-            $(document).ready(function () {
-                $("#criminosoEncontradoModal").modal("show");
-    
-                $("#btnAcionarPolicia").click(function () {
-    
-                    // Exibir o modal de progresso
-    
-                    $("#loadingModal").modal("show");
-                    setTimeout(function () {
-                        $("#loadingModal").modal('hide');
-                    }, 3000);
-    
-                });
-    
-                const queryString = window.location.search;
-    
-                //remover o ? do início da string
-                const queryParams = new URLSearchParams(queryString.substring(1));
-                const dataParam = queryParams.get("data");
-    
-                if (dataParam) {
-                    //decodificar a string JSON e converter novamente para JSON
-                    dataObject = JSON.parse(decodeURIComponent(dataParam));
-                    console.log(dataObject);
-    
-                    getCriminoso(dataObject);
-                } else {
-                    console.error("Parâmetro 'data' não encontrado na URL");
-                }
-    
-                function getCriminoso(criminoso) {
-                    axios.get(`http://localhost:3338/api/criminoso/${criminoso.id_criminoso}`)
-                        .then(function (response) {
-                            const data = response.data;
-                            console.log(response.data);
-                            $('#nomeCriminoso').text(`${data.nomeCompleto}`);
-                            getCountryName(data.id_paisVistoPorUltimo); // Obtenha o nome do país
-                        })
-                        .catch(function (error) {
-                            console.error('Erro ao buscar criminoso: ', error);
-                        });
-                }
-    
-                function getCountryName(countryId) {
-                    // Função para obter o nome do país com base no ID do país
-                    axios.get(`http://localhost:3340/api/pais/${countryId}`)
-                        .then(function (response) {
-                            const countryName = response.data.nome;
-                            $('#nomePaisEncontrado').text(countryName);
-                        })
-                        .catch(function (error) {
-                            console.error('Erro ao buscar o nome do país: ', error);
-                        });
-                }
-            });
-    
-            function mostrarLoadingEAgendarRedirecionamento(url) {
-                const loadingModal = document.getElementById('loadingModal');
-                $(loadingModal).modal('show');
-    
+    <script>
+        let dataObject;
+        $(document).ready(function () {
+            $("#criminosoEncontradoModal").modal("show");
+
+            $("#btnAcionarPolicia").click(function () {
+
+                // Exibir o modal de progresso
+
+                $("#loadingModal").modal("show");
                 setTimeout(function () {
-                    $(loadingModal).modal('hide');
-                    window.location.href = url;
+                    $("#loadingModal").modal('hide');
                 }, 3000);
-            }
-    
-            function acionarPolicia() {
-                const probabilidade = dataObject.probabilidade;
-    
-                if (probabilidade > 1) {
-                    const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
-    
-                    mostrarLoadingEAgendarRedirecionamento(`../captura/modelCapturado.html?data=${dataEncode}`);
-                } else {
-                    const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
-                    mostrarLoadingEAgendarRedirecionamento(`../captura/modelNaoCapturado.html?data=${dataEncode}`);
-    
-                }
-            }
-        </script>
 
-        
+            });
 
-    </body>
+            const queryString = window.location.search;
+
+            //remover o ? do início da string
+            const queryParams = new URLSearchParams(queryString.substring(1));
+            const dataParam = queryParams.get("data");
+
+            if (dataParam) {
+                //decodificar a string JSON e converter novamente para JSON
+                dataObject = JSON.parse(decodeURIComponent(dataParam));
+                console.log(dataObject);
+
+                getCriminoso(dataObject);
+            } else {
+                console.error("Parâmetro 'data' não encontrado na URL");
+            }
+
+            function getCriminoso(criminoso) {
+                axios.get(`http://localhost:3338/api/criminoso/${criminoso.id_criminoso}`)
+                    .then(function (response) {
+                        const data = response.data;
+                        console.log(response.data);
+                        $('#nomeCriminoso').text(`${data.nomeCompleto}`);
+                        getCountryName(data.id_paisVistoPorUltimo); // Obtenha o nome do país
+                    })
+                    .catch(function (error) {
+                        console.error('Erro ao buscar criminoso: ', error);
+                    });
+            }
+
+            function getCountryName(countryId) {
+                // Função para obter o nome do país com base no ID do país
+                axios.get(`http://localhost:3340/api/pais/${countryId}`)
+                    .then(function (response) {
+                        const countryName = response.data.nome;
+                        $('#nomePaisEncontrado').text(countryName);
+                    })
+                    .catch(function (error) {
+                        console.error('Erro ao buscar o nome do país: ', error);
+                    });
+            }
+        });
+
+        function mostrarLoadingEAgendarRedirecionamento(url) {
+            const loadingModal = document.getElementById('loadingModal');
+            $(loadingModal).modal('show');
+
+            setTimeout(function () {
+                $(loadingModal).modal('hide');
+                window.location.href = url;
+            }, 3000);
+        }
+
+        function acionarPolicia() {
+            const probabilidade = dataObject.probabilidade;
+
+            if (probabilidade > 1) {
+                const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+
+                mostrarLoadingEAgendarRedirecionamento(`../captura/modelCapturado.html?data=${dataEncode}`);
+            } else {
+                const dataEncode = encodeURIComponent(JSON.stringify(dataObject));
+                mostrarLoadingEAgendarRedirecionamento(`../captura/modelNaoCapturado.html?data=${dataEncode}`);
+
+            }
+        }
+    </script>
+
+
+
+</body>
+
 </html>
