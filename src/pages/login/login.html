@@ -9,16 +9,15 @@
   <link rel="stylesheet" href="../login/CSS/style.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
     integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <style>
-      .error-message {
-    display: none;
-    background-color: #ff0000;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
-
-    </style>
+  <style>
+    .error-message {
+      display: none;
+      background-color: #ff0000;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
@@ -31,39 +30,38 @@
         <h2 class="title title-primary">Bem vindo!</h2>
         <p class="description description-primary">Participe da Polícia Internacional</p>
         <p class="description description-primary">Solicite sua participação na organização</p>
-        <button id="solicitacao" class="btn btn-primary">Solicitar Participação</button>
+        <button id="solicitacao" class="btn btn-primary" onclick="redirectToHomePage()">Solicitar Participação</button>
       </div>
       <div class="second-column">
         <h2 class="title title-second">Login</h2>
 
         <p class="description description-second">Use e-mail e senha:</p>
         <form class="form">
-          <!-- Para o campo de e-mail -->
-<div class="form-group">
-  <label class="label-input" for="inputEmail"> <!-- Use "for" com "id" do campo de e-mail -->
-    <i class="far fa-envelope icon-modify"></i>
-    <input type="email" class="form-control" id="email" placeholder="Email">
-  </label>
-</div>
+          
+          <div class="form-group">
+            <label class="label-input" for="inputEmail"> 
+              <i class="far fa-envelope icon-modify"></i>
+              <input type="email" class="form-control" id="email" placeholder="Email">
+            </label>
+          </div>
 
-<!-- Para o campo de senha -->
-<div class="form-group">
-  <label class="label-input" for="inputPassword"> <!-- Use "for" com "id" do campo de senha -->
-    <i class="fas fa-lock icon-modify"></i>
-    <input type="password" class="form-control" id="senha" placeholder="Senha">
-  </label>
-</div>
+          <div class="form-group">
+            <label class="label-input" for="inputPassword"> 
+              <i class="fas fa-lock icon-modify"></i>
+              <input type="password" class="form-control" id="senha" placeholder="Senha">
+            </label>
+          </div>
 
-<div id="error-message" class="error-message">Dados inválidos</div>
+          <div id="error-message" class="error-message">Dados inválidos</div>
 
-<button id="loginButton" class="btn btn-second">Entrar</button>
+          <button id="loginButton" class="btn btn-second" onclick="redirectToHome()">Entrar</button>
 
-              <p class="description description-second">Ainda não tem um cadastro? <a href="cadastroUsuario.html"
-                  style="color: blue;">Cadastre-se</a></p>
+          <p class="description description-second">Ainda não tem um cadastro? <a href="cadastroUsuario.html"
+              style="color: blue;">Cadastre-se</a></p>
 
         </form>
-      </div><!-- second column -->
-    </div><!-- first content -->
+      </div>
+    </div>
 
   </div>
 
@@ -86,25 +84,35 @@
 
 
   <script>
+    function redirectToHomePage() {
+      window.location.href = "../pais/formSolicitacaoPais.html";
+    }
+
+    function redirectToHome() {
+      window.location.href = "../home/telaInicial.html";
+    }
+
+
+
     const errorMessage = document.getElementById("error-message");
 
     async function getToken() {
       const email = document.getElementById("email").value;
       const senha = document.getElementById("senha").value;
-  
+
       try {
         const response = await axios.post('http://localhost:3343/api/login/', {
           email: email,
           senha: senha
         });
-  
+
         return response.data.acessToken;
       } catch (error) {
         errorMessage.style.display = "block";
         return null;
       }
     }
-  
+
     function decodeToken(token) {
       try {
         const tokenParts = token.split('.');
@@ -114,10 +122,10 @@
         console.error("Erro ao decodificar o token: " + error);
       }
     }
-  
+
     async function validateToken(event) {
       event.preventDefault();
-  
+
       try {
         const token = await getToken();
         if (token) {
@@ -134,7 +142,7 @@
       console.log(decodeTokenObject.tipoUsuario);
       return decodeTokenObject.tipoUsuario;
     }
-  
+
     document.getElementById("loginButton").addEventListener("click", validateToken);
   </script>
 

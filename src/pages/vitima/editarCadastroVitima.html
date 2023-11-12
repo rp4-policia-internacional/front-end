@@ -16,62 +16,56 @@
         <form id="editarCadastroVitimaForm">
             <div class="form-group">
                 <label for="nomeCompleto">Nome Completo*:</label>
-                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control"
-                   
-            </div>
-            <div class="form-group">
+                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control" </div>
+                <div class="form-group">
 
-                <label for="id_paisDeOrigem">País de Origem*:</label>
-                <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control"
-                   
-            </div>
-            <div class="form-group">
-                <label for="id_autorDoCrime">Autor do Crime*:</label>
-                <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control"
-                 
-            </div>
-            <div class="form-group">
-                <label for="nacionalidade">Nacionalidade*:</label>
-                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control"
-                  
-            </div>
-            <div class="form-group">
-                <label for="altura">Altura*:</label>
-                <input type="text" id="altura" name="altura" class="form-control" placeholder="Informe a altura">
-            </div>
-            <div class="form-group">
-                <label for="genero">Gênero*:</label>
-                <select id="genero" name="genero" class="form-control">
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="idade">Idade*:</label>
-                <input type="text" id="idade" name="idade" class="form-control" placeholder="Informe a idade">
-            </div>
-            <div class="form-group">
-                <label for="id_paisVistoPorUltimo">País Visto por Último*:</label>
-                <input type="text" id="id_paisVistoPorUltimo" name="paisVistoPorUltimo" class="form-control"
-                   
-            </div>
-            <div class="form-group">
-                <label for="status">Status*:</label>
-                <select id="status" name="status" class="form-control">
-                    <option selected>Selecionar</option>
-                    <option>Sequestrado(a)</option>
-                    <option>Desaparecido(a)</option>
-                    <option>Repatriado(a)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="foto">Foto*:</label>
-                <input type="text" id="foto" name="foto" class="form-control" placeholder="Informe a URL da foto">
-            </div>
-            <button type="submit" class="btn  btn-secondary">Salvar Alterações</button>
-            <a href="detalhesVitima.html">
-                <button type="button" class="btn btn-secondary">Cancelar</button>
-            </a>
+                    <label for="id_paisDeOrigem">País de Origem*:</label>
+                    <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control" </div>
+                    <div class="form-group">
+                        <label for="id_autorDoCrime">Autor do Crime*:</label>
+                        <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control" </div>
+                        <div class="form-group">
+                            <label for="nacionalidade">Nacionalidade*:</label>
+                            <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" </div>
+                            <div class="form-group">
+                                <label for="altura">Altura*:</label>
+                                <input type="text" id="altura" name="altura" class="form-control"
+                                    placeholder="Informe a altura">
+                            </div>
+                            <div class="form-group">
+                                <label for="genero">Gênero*:</label>
+                                <select id="genero" name="genero" class="form-control">
+                                    <option value="masculino">Masculino</option>
+                                    <option value="feminino">Feminino</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="idade">Idade*:</label>
+                                <input type="text" id="idade" name="idade" class="form-control"
+                                    placeholder="Informe a idade">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_paisVistoPorUltimo">País Visto por Último*:</label>
+                                <input type="text" id="id_paisVistoPorUltimo" name="paisVistoPorUltimo"
+                                    class="form-control" </div>
+                                <div class="form-group">
+                                    <label for="status">Status*:</label>
+                                    <select id="status" name="status" class="form-control">
+                                        <option selected>Selecionar</option>
+                                        <option>Sequestrado(a)</option>
+                                        <option>Desaparecido(a)</option>
+                                        <option>Repatriado(a)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="foto">Foto*:</label>
+                                    <input type="text" id="foto" name="foto" class="form-control"
+                                        placeholder="Informe a URL da foto">
+                                </div>
+                                <button type="submit" class="btn  btn-secondary">Salvar Alterações</button>
+                                <a href="detalhesVitima.html">
+                                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                                </a>
         </form>
     </div>
 
@@ -81,15 +75,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         crossorigin="anonymous"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-      
-      function getIdURL() {
+
+        function getIdURL() {
             const url = window.location.href;
             const urlObj = new URL(url);
             return urlObj.searchParams.get("id");
@@ -103,7 +97,7 @@
                 const vitima = response.data;
 
 
-                
+
                 document.getElementById("nomeCompleto").value = vitima.nomeCompleto;
                 document.getElementById("id_paisDeOrigem").value = vitima.id_paisDeOrigem;
                 document.getElementById("id_autorDoCrime").value = vitima.id_autorDoCrime;
@@ -120,16 +114,16 @@
             }
         }
 
-       
+
         buscarDetalhesVitima();
 
         document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
             event.preventDefault();
             const id = getIdURL();
             if (!id) {
-        console.error("ID da vítima ausente na URL.");
-        return;
-    }
+                console.error("ID da vítima ausente na URL.");
+                return;
+            }
             console.log("ID da vítima:", id);
             const nomeCompleto = document.getElementById("nomeCompleto").value;
             const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
@@ -152,14 +146,14 @@
                 idade: idade,
                 id_paisVistoPorUltimo: paisVistoPorUltimo,
                 statusDaVitima: statusDaVitima,
-                foto: foto 
+                foto: foto
             };
             console.log("Dados a serem enviados:", data);
             // Envia os dados como JSON em uma solicitação PUT
-           // axios.put(`http://localhost:3337/api/vitima/${id}`, data)
-           axios.put(`http://localhost:3337/api/vitima/`, { id, ...data })
+            // axios.put(`http://localhost:3337/api/vitima/${id}`, data)
+            axios.put(`http://localhost:3337/api/vitima/`, { id, ...data })
 
-           .then(function (response) {
+                .then(function (response) {
                     console.log("Atualização de vítima bem-sucedida!", response.data);
                     window.location.href = `detalhesVitima.html?id=${id}`;
                 })
@@ -168,6 +162,7 @@
                 });
         });
     </script>
-    
+
 </body>
+
 </html>

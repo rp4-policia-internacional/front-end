@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Editar Organização de Vítima</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+</head>
+<body>
+    <div class="container-fluid col-md-8 mt-5 pt-5">
+        <div class="col-md-3">
+            <a href="listarOrg.html">
+                <button type="button" class="btn btn-secondary">Voltar</button>
+            </a>
+        </div>
+        <h1>Editar Organização de Criminoso</h1>
+        <p>Preencha os campos obrigatórios (*) antes de salvar.</p>
+
+        <div class="container-fluid col-md-8 mt-5 pt-5"></div>
+            <form id="formEditarOrganizacao" method="post">
+              
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="nome">Nome:</label>
+                            <input type="text" class="form-control" id="nome" placeholder="Nome">
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="descricao">Descrição:</label>
+                            <input type="double" class="form-control" id="descricao" >
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+
+    <script>
+        
+        function getIdURL() {
+            const url = window.location.href;
+            const urlObj = new URL(url);
+            return urlObj.searchParams.get("id");
+        }
+
+        // Detalhes do Organizacao pelo ID
+        async function buscarDetalhesOrganizacao() {
+            var id = getIdURL();
+            try {
+            
+            const response = await axios.get(`http://localhost:3338/api/organizacao/${id}`);
+            const organizacao = response.data;
+            
+            document.getElementById("nome").value = organizacao.nome;
+            document.getElementById("descricao").value = organizacao.descricao;    
+            
+            }catch (error){
+                console.error('Erro ao buscar detalhes do criminoso:', error)
+            }             
+        }
+
+        buscarDetalhesOrganizacao();
+
+        document.getElementById("formEditarOrganizacao").addEventListener("submit", function (event) {
+            event.preventDefault(); 
+
+            const id= getIdURL();
+            const nome= document.getElementById("nome").value;
+            const descricao = document.getElementById("descricao").value;
+            
+            const data = {
+
+                nome: nome,
+                descricao: descricao
+            };
+            console.log("Dados a serem enviados:", data);
+
+
+            // Envia os dados como JSON em uma solicitação PUT ou PATCH
+            axios.put(`http://localhost:3338/api/organizacao`, { id, ...data }) 
+                .then(function (response) {
+                  
+                    console.log("Atualização do organizacao bem-sucedida!", response.data);
+                
+                    window.location.href = `listarOrg.html`;
+                })
+                .catch(function (error) {
+                    console.error("Erro ao atualizar organizacao:", error);
+                });
+        });
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+
+#my-navbar {
+    background-color:  #160341; 
+    padding: 10px 0;
+}
+
+.btn-secondary {
+    background-color: #808080; 
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.my-custom-brand:hover {
+    color: #ffffff; 
+    text-decoration: none; 
+}
+
+
+.my-custom-brand {
+    font-family: 'Open Sans', sans-serif; 
+    color: #ffffff; 
+    font-size: 28px; 
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.btn.btn-danger {
+    background-color: #d42a3b; 
+    color: #fff; 
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    border: none;
+    font-family: 'Open Sans', sans-serif; 
+}
+
+.btn.btn-danger:hover {
+    background-color: #c82333; 
+}

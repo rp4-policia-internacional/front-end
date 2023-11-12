@@ -7,6 +7,9 @@
     <title>Formulário Criminoso</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
+    </nav>  
 
     <div class="col-md-3" style="margin-top: 50px">
         <a href="../criminoso/listarCriminoso.html">
@@ -15,6 +18,7 @@
     </div>
 
     <div class="container mt-5">
+        <input type="hidden" id="idCriminoso" name="idCriminoso">
         <form id="formCadastroCriminoso" action="/api/criminoso/create" method="post">
             <div class="form-group">
                 <label for="imagem">Inserir imagem</label>
@@ -62,8 +66,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="nacionalidade">Nacionalidade:</label>
-                        <input type="text" class="form-control" id="nacionalidade" placeholder="Brasil">
+                        <label for="id_paisOrigem">Nacionalidade:</label>
+                        <select id="id_paisOrigem" class="form-control">
+                            
+                        </select>
                     </div>
                 </div>
             </div>
@@ -128,16 +134,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const imageUploadInput = document.getElementById('imagem');
+            const idCriminosoInput = document.getElementById('idCriminoso');
             const imagePreview = document.getElementById('imagemPreview');
+            const idCriminoso = idCriminosoInput.value; // Obtém o ID da vítima
+            const savarImage = localStorage.getItem(idCriminoso + '_imagemDoCriminoso'); 
 
             imageUploadInput.addEventListener('change', function () {
                 if (imageUploadInput.files.length > 0) {
                     const file = imageUploadInput.files[0];
                     const reader = new FileReader();
-
                     reader.onload = function (e) {
+
+
+                        const imageDataURL = e.target.result;
+                        localStorage.setItem(idCriminoso + '_imagemDoCriminoso', imageDataURL); //salva a imagem localmente
                         imagePreview.src = e.target.result;
                         imagePreview.style.display = 'block';
+
+
                     };
 
                     reader.readAsDataURL(file);
@@ -163,12 +177,17 @@
                 const caracteristicas = document.getElementById("caracteristica").value;
                 const foto =  document.getElementById("imagem").value;
                 const genero = document.getElementById("genero").value;
-                const id_paisOrigem = document.getElementById("nacionalidade").value;
+                const id_paisOrigem = document.getElementById("id_paisOrigem").value;
                 const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
                 const id_organizacao =  document.getElementById("id_organizacao").value;
-                const formData = new FormData();
-                formData.append('imagem', imageUploadInput.files[0]);
-                
+              
+                const imageUploadInput = document.getElementById('imagem');
+                const imagemFile = imageUploadInput.files[0]; 
+
+
+
+                if (imagemFile) {
+                    const nomeDaImagem = imagemFile.name;
                 const data = {
 
                     nomeCompleto: nomeCompleto,
@@ -184,18 +203,29 @@
                     id_paisOrigem:id_paisOrigem,
                     id_organizacao:id_organizacao
                 };
-
+            
                 // Envia os dados como JSON em uma solicitação POST
                 axios.post("http://localhost:3338/api/criminoso/", data)
                 .then(function (response) {
                 // Trate a resposta do back-end, se necessário
                 console.log("Cadastro de criminoso bem-sucedido!", response.data);
                 //  modal de feedback
-                $("#cadastroCriminosoModal").modal("show");
+                //$("#cadastroCriminosoModal").modal("show");
+
+
+                const criminosoId = response.data.id; // Obtém o ID da vítima recém-criada
+                            document.getElementById("idCriminoso").value = criminosoId; 
+                            window.location.href = `detalhesCriminoso.html?id=${response.data.id}`;
+
                 })
+
+
+
+                
                 .catch(function (error) {
                 console.error("Erro ao cadastrar criminoso:", error);
                 });
+            }
             });
         });
 
@@ -226,6 +256,31 @@
         })
         .finally(function () {
             // sempre será executado
+        });
+        //Coloca as pais do banco no select
+        axios.get("http://localhost:3340/api/pais/")
+        .then(function (response) {
+            const select = document.getElementById("id_paisOrigem");
+
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#id_paisOrigem').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
         });
 
     </script>
