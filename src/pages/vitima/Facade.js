@@ -1,7 +1,7 @@
 
 class Facade {
     constructor() {
-    
+
     }
 
     async buscarDetalhesVitima(id, detalhesVitimaElement) {
@@ -11,13 +11,13 @@ class Facade {
 
             //const paisVitoPorUltimo = await this.getPaisVitoPorUltimoById(vitima.id_paisVistoPorUltimo);
             const paisVitoPorUltimo = vitima.id_paisVistoPorUltimo
-            ? await this.getPaisVitoPorUltimoById(vitima.id_paisVistoPorUltimo)
-            : 'País não disponível';
+                ? await this.getPaisVitoPorUltimoById(vitima.id_paisVistoPorUltimo)
+                : 'País não disponível';
 
             const paisDeOrigem = await this.getPaisById(vitima.id_paisDeOrigem);
             const nacionalidade = await this.getNacionalidadeById(vitima.nacionalidade);
 
-           
+
             detalhesVitimaElement.innerHTML = `
                 <div class="mt-3">
                     <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
@@ -87,6 +87,6 @@ class Facade {
             return 'País não encontrado';
         }
     }
-    
+
 }
 
