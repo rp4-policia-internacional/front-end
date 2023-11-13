@@ -56,12 +56,49 @@
     </style>
 
 <script src="Facade.js"></script>
-<script >
+<script >function getURLParamS(nome) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(nome);
+}
 
 document.addEventListener('DOMContentLoaded', async function () {
+    const idVitimaInput = document.getElementById('idVitima');
+
+    // Obter o ID da vítima da URL
+    const idVitima = getURLParamS('id');
+
+    // Definir o valor do campo 'idVitima' (caso não tenha sido definido ainda)
     
+const idVitimaA = idVitimaInput.value;
+    const imagePreview = document.getElementById('imagemPreview');
+    const savedImage = localStorage.getItem(idVitimaA + '_imagemDaVitima');
+
+    console.log('ID da Vítima:', idVitima);
+    //console.log('Imagem salva:', savedImage);
+
+    if (savedImage !== null) {
+        imagePreview.src = savedImage;
+        imagePreview.style.display = 'block';
+    }
+
+    const facade = new Facade();
+
+    // Buscar detalhes da vítima usando o ID da vítima
+    await facade.buscarDetalhesVitima(idVitima, document.getElementById('detalhesVitima'));
+
+    const removerVitimaBtn = document.getElementById('removerVitima');
+    removerVitimaBtn.addEventListener('click', async function () {
+        if (confirm('Tem certeza de que deseja remover esta vítima?')) {
+            await facade.removerVitima(idVitima);
+        }
+    });
+
+    const editarLink = document.getElementById('editarLink');
+    editarLink.href = `editarCadastroVitima.html?id=${idVitima}`;
+});
 
 
+/*document.addEventListener('DOMContentLoaded', async function () {
     const urlParams = new URLSearchParams(window.location.search);
     const idVitima = urlParams.get('id'); 
 
@@ -90,9 +127,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const editarLink = document.getElementById('editarLink');
     editarLink.href = `editarCadastroVitima.html?id=${idVitima}`;
-});
-
-
+});*/
 
 
 
