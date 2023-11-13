@@ -43,7 +43,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+   
     <style>
         body {
             font-size: 16px;
@@ -55,15 +55,53 @@
         }
     </style>
 
-    <script>
-        function getURLParametro(nome) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(nome);
-        }
+<script src="Facade.js"></script>
+<script >
 
-        document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
+    
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const idVitima = urlParams.get('id'); 
+
+    const idVitimaInput = document.getElementById('idVitima');
+    idVitimaInput.value = idVitima; 
+
+    const imagePreview = document.getElementById('imagemPreview');
+    const savedImage = localStorage.getItem(idVitima + '_imagemDaVitima');
+
+    if (savedImage) {
+        imagePreview.src = savedImage;
+        imagePreview.style.display = 'block';
+    }
+
+    const facade = new Facade();
+
+    await facade.buscarDetalhesVitima(idVitima, document.getElementById('detalhesVitima'));
+    console.log('ID da Vítima:', idVitima);
+
+    const removerVitimaBtn = document.getElementById('removerVitima');
+    removerVitimaBtn.addEventListener('click', async function () {
+        if (confirm('Tem certeza de que deseja remover esta vítima?')) {
+            await facade.removerVitima(idVitima);
+        }
+    });
+
+    const editarLink = document.getElementById('editarLink');
+    editarLink.href = `editarCadastroVitima.html?id=${idVitima}`;
+});
+
+
+
+
+
+   
+/*<script>
+    document.addEventListener('DOMContentLoaded', function () {
             const idVitimaInput = document.getElementById('idVitima');
             const idVitima = idVitimaInput.value; // Obtém o ID da vítima
+            
             const imagePreview = document.getElementById('imagemPreview');
             const savedImage = localStorage.getItem(idVitima + '_imagemDaVitima');
 
@@ -124,7 +162,7 @@
 
                 detalhesVitima.innerHTML = `
             <div class="mt-3">
-                <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
+             <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
                 <p><strong>País de Origem:</strong> ${paisDeOrigem}</p>
                 <p><strong>Autor do Crime:</strong> ${vitima.id_autorDoCrime}</p>
                 <p><strong>Nacionalidade:</strong> ${nacionalidade}</p>
@@ -165,7 +203,7 @@
             buscarDetalhesVitima(idVitima);
             const editarLink = document.getElementById('editarLink');
             editarLink.href = `editarCadastroVitima.html?id=${idVitima}`;
-        });
+        });*/
     </script>
 </body>
 
