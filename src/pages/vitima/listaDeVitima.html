@@ -183,9 +183,9 @@
                 }
 
                 function acionarResgate(vitima) {
-                    const probabilidade = vitima.probabilidade;
+                    const probabilidade = Math.random() * (10 - 1) + 1
 
-                    if (probabilidade == 1) {
+                    if (probabilidade >= 1) {
                         const dataEncode = encodeURIComponent(JSON.stringify(vitima));
                         mostrarLoadingEAgendarRedirecionamento(`../resgate/modelResgatada.html?data=${dataEncode}`);
                     } else {
