@@ -140,13 +140,22 @@
                                 const emitirPedidoButton = document.createElement('button');
                                 emitirPedidoButton.type = 'button';
                                 emitirPedidoButton.className = 'btn btn-danger';
-                                emitirPedidoButton.textContent = 'Emitir pedido de busca e resgate';
-                                emitirPedidoButton.addEventListener('click', function () {
-                                    const vitimaId = vitima.id;
-                                    vitimaSelecionadaID = vitima.id;
-                                    emitirPedidoDeBuscaEResgate(vitimaId);
-                                });
+                                emitirPedidoButton.setAttribute('data-status', vitima.statusDaVitima);
 
+                                if (vitima.statusDaVitima === 'Encontrada') {
+                                    emitirPedidoButton.textContent = 'Acionar polícia local';
+                                    emitirPedidoButton.removeEventListener('click', emitirPedidoDeBuscaEResgate);
+                                    emitirPedidoButton.addEventListener('click', function () {
+                                        acionarResgate(vitima);
+                                    });
+                                } else {
+                                    emitirPedidoButton.textContent = 'Emitir pedido de busca e resgate';
+                                    emitirPedidoButton.addEventListener('click', function () {
+                                        const vitimaId = vitima.id;
+                                        vitimaSelecionadaID = vitima.id;
+                                        emitirPedidoDeBuscaEResgate(vitimaId);
+                                    });
+                                }
                                 const emitirPedidoCell = document.createElement('td');
                                 emitirPedidoCell.appendChild(emitirPedidoButton);
 
@@ -172,6 +181,18 @@
                             console.error('Erro ao buscar vítima: ', error);
                         });
                 }
+
+                function acionarResgate(vitima) {
+                    const probabilidade = vitima.probabilidade;
+
+                    if (probabilidade == 1) {
+                        const dataEncode = encodeURIComponent(JSON.stringify(vitima));
+                        mostrarLoadingEAgendarRedirecionamento(`../resgate/modelResgatada.html?data=${dataEncode}`);
+                    } else {
+                        const dataEncode = encodeURIComponent(JSON.stringify(vitima));
+                        mostrarLoadingEAgendarRedirecionamento(`../resgate/modelNaoResgatada.html?data=${dataEncode}`);
+                    }
+            }
 
                 function mostrarLoadingEAgendarRedirecionamento(url) {
                     const loadingModal = document.getElementById('loadingModal');
