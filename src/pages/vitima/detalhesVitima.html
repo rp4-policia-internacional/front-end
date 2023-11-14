@@ -55,8 +55,12 @@
         }
     </style>
 
-    <script src="Facade.js"></script>
-    <script>function getURLParamS(nome) {
+    <script src="../../pages/Facade/DetalhesFacade.js"></script>
+    <script src="DetalhesVitima.js"></script>
+    <script src="../criminoso/DetalhesCriminoso.js"></script>
+    <script>
+    
+    function getURLParamS(nome) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(nome);
         }
@@ -80,7 +84,7 @@
                 imagePreview.style.display = 'block';
             }
 
-            const facade = new Facade();
+            const facade = new DetalhesFacade();
 
             // Buscar detalhes da vítima usando o ID da vítima
             await facade.buscarDetalhesVitima(idVitima, document.getElementById('detalhesVitima'));
@@ -100,7 +104,7 @@
 
 
 
-        
+
         /*document.addEventListener('DOMContentLoaded', async function () {
             const urlParams = new URLSearchParams(window.location.search);
             const idVitima = urlParams.get('id'); 

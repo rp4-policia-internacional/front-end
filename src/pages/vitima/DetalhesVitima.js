@@ -1,9 +1,7 @@
 
-class Facade {
-    constructor() {
 
-    }
-
+//Classe que diminui a complexidade do html detalhesVitima.html
+class DetalhesVitima {
     async buscarDetalhesVitima(id, detalhesVitimaElement) {
         try {
             const response = await axios.get(`http://localhost:3337/api/vitima/${id}`);
@@ -35,6 +33,7 @@ class Facade {
         }
     }
 
+    
     async removerVitima(id) {
         try {
             await axios.delete(`http://localhost:3337/api/vitima/${id}`);
@@ -45,6 +44,7 @@ class Facade {
         }
     }
 
+    //campo Páis de origem dinâmico
     async getPaisById(id) {
         try {
             const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
@@ -57,7 +57,7 @@ class Facade {
         }
     }
 
-
+    // Campo Nacionalidade dinâmico
     async getNacionalidadeById(id) {
         try {
             const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
@@ -68,6 +68,7 @@ class Facade {
         }
     }
 
+    //Campo nome do criminoso dinâmico
     async getCriminosoById(id) {
         try {
             const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
@@ -78,6 +79,7 @@ class Facade {
         }
     }
 
+    //campo Pais visto por ultimo dinâmico
     async getPaisVitoPorUltimoById(id) {
         try {
             const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
