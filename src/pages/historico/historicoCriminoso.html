@@ -35,7 +35,7 @@
         </nav>
 
         <div class="col-md-3" style="margin-top: 10px">
-            <a href="../home/telaInicial.html">
+            <a href="../home/listaCriminoso.html">
                 <button type="button" class="btn btn-secondary">Voltar</button>
             </a>
         </div>
@@ -50,6 +50,55 @@
 
         <script>
             
+            function getIdURL() {
+                const url = window.location.href;
+                const urlObj = new URL(url);
+                return urlObj.searchParams.get("id");
+            }
+            
+            axios.get('http://localhost:3338/api/criminoso/historico')
+                .then(async function (response) {
+                    const criminoso = response.data;
+                    const historicoTabela = document.getElementById('historicoTabela');
+            
+                    for (const criminoso of criminosos) {
+                        const row = document.createElement('tr');
+                        const paisNome = await getPaisNome(historico.id_paisOrigem);
+                        row.innerHTML = `
+                            <td>${criminoso.nomeCompleto}</td>
+                            <td>${paisNome}</td>
+                            <td>${criminoso.genero}</td>
+                            <td>${criminoso.idade} anos</td>
+                            <td>${criminoso.status}</td>
+                        `;
+            
+                        historicoTabela.appendChild(row);
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar historico:', error);
+                });
+            
+            
+            function mostrarLoadingEAgendarRedirecionamento(url) {
+                const loadingModal = document.getElementById('loadingModal');
+                $(loadingModal).modal('show');
+            
+                setTimeout(function () {
+                    $(loadingModal).modal('hide');
+                    window.location.href = url;
+                }, 3000);
+            }
+            
+            async function getPaisNome(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                    return response.data.nome;
+                } catch (error) {
+                    console.error('Erro ao buscar país: ', error);
+                    return 'País não encontrado';
+                }
+            }
            
         </script>
    
