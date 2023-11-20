@@ -149,12 +149,14 @@
                                 emitirPedidoButton.setAttribute('data-status', vitima.statusDaVitima);
 
                                 if (vitima.statusDaVitima === 'Encontrada') {
+                                    emitirPedidoButton.className = 'btn btn-dark';
                                     emitirPedidoButton.textContent = 'Acionar polícia local';
                                     emitirPedidoButton.removeEventListener('click', emitirPedidoDeBuscaEResgate);
                                     emitirPedidoButton.addEventListener('click', function () {
                                         acionarResgate(vitima);
                                     });
                                 } else {
+                                    emitirPedidoButton.className = 'btn btn-primary';
                                     emitirPedidoButton.textContent = 'Emitir pedido de busca e resgate';
                                     emitirPedidoButton.addEventListener('click', function () {
                                         const vitimaId = vitima.id;
