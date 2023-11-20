@@ -17,55 +17,65 @@
             <div class="form-group">
                 <label for="nomeCompleto">Nome Completo*:</label>
                 <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control" </div>
-                <div class="form-group">
-
-                    <label for="id_paisDeOrigem">País de Origem*:</label>
-                    <input type="text" id="id_paisDeOrigem" name="id_paisDeOrigem" class="form-control" </div>
+                <div class="col-md-6">
                     <div class="form-group">
-                        <label for="id_autorDoCrime">Autor do Crime*:</label>
-                        <input type="text" id="id_autorDoCrime" name="id_autorDoCrime" class="form-control" </div>
+                        <label for="id_paisDeOrigem">Pais de origem:</label>
+                        <select id="id_paisDeOrigem" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_autorDoCrime">Autor do Crime:*</label>
+
+                        <select id="id_autorDoCrime" class="form-control"> </select>
+
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="nacionalidade">Nacionalidade*:</label>
-                            <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" </div>
-                            <div class="form-group">
-                                <label for="altura">Altura*:</label>
-                                <input type="text" id="altura" name="altura" class="form-control"
-                                    placeholder="Informe a altura">
-                            </div>
-                            <div class="form-group">
-                                <label for="genero">Gênero*:</label>
-                                <select id="genero" name="genero" class="form-control">
-                                    <option value="masculino">Masculino</option>
-                                    <option value="feminino">Feminino</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="idade">Idade*:</label>
-                                <input type="text" id="idade" name="idade" class="form-control"
-                                    placeholder="Informe a idade">
-                            </div>
-                            <div class="form-group">
-                                <label for="id_paisVistoPorUltimo">País Visto por Último*:</label>
-                                <input type="text" id="id_paisVistoPorUltimo" name="paisVistoPorUltimo"
-                                    class="form-control" </div>
-                                <div class="form-group">
-                                    <label for="status">Status*:</label>
-                                    <select id="status" name="status" class="form-control">
-                                        <option selected>Selecionar</option>
-                                        <option>Sequestrado(a)</option>
-                                        <option>Desaparecido(a)</option>
-                                        <option>Repatriado(a)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="foto">Foto*:</label>
-                                    <input type="text" id="foto" name="foto" class="form-control"
-                                        placeholder="Informe a URL da foto">
-                                </div>
-                                <button type="submit" class="btn  btn-secondary">Salvar Alterações</button>
-                                <a href="detalhesVitima.html">
-                                    <button type="button" class="btn btn-secondary">Cancelar</button>
-                                </a>
+                            <label for="nacionalidade">Nacionalidade:*</label>
+                            <select id="nacionalidade" class="form-control"> </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="altura">Altura*:</label>
+                        <input type="text" id="altura" name="altura" class="form-control"
+                            placeholder="Informe a altura">
+                    </div>
+                    <div class="form-group">
+                        <label for="genero">Gênero*:</label>
+                        <select id="genero" name="genero" class="form-control">
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="idade">Idade*:</label>
+                        <input type="text" id="idade" name="idade" class="form-control" placeholder="Informe a idade">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_paisVistoPorUltimo">País Visto por Último:*</label>
+                            <select id="id_paisVistoPorUltimo" class=form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status*:</label>
+                        <select id="status" name="status" class="form-control">
+                            <option selected>Selecionar</option>
+                            <option>Sequestrado(a)</option>
+                            <option>Desaparecido(a)</option>
+                            <option>Repatriado(a)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="foto">Foto*:</label>
+                        <input type="text" id="foto" name="foto" class="form-control"
+                            placeholder="Informe a URL da foto">
+                    </div>
+                    <button type="submit" class="btn  btn-secondary">Salvar Alterações</button>
+                    <a href="detalhesVitima.html">
+                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                    </a>
         </form>
     </div>
 
@@ -91,13 +101,9 @@
 
         async function buscarDetalhesVitima() {
             const id = getIdURL();
-
             try {
                 const response = await axios.get(`http://localhost:3337/api/vitima/${id}`);
                 const vitima = response.data;
-
-
-
                 document.getElementById("nomeCompleto").value = vitima.nomeCompleto;
                 document.getElementById("id_paisDeOrigem").value = vitima.id_paisDeOrigem;
                 document.getElementById("id_autorDoCrime").value = vitima.id_autorDoCrime;
@@ -108,13 +114,10 @@
                 document.getElementById("id_paisVistoPorUltimo").value = vitima.id_paisVistoPorUltimo;
                 document.getElementById("status").value = vitima.statusDaVitima;
                 document.getElementById("foto").value = vitima.foto;
-
             } catch (error) {
                 console.error("Erro ao buscar detalhes da vítima:", error);
             }
         }
-
-
         buscarDetalhesVitima();
 
         document.getElementById("editarCadastroVitimaForm").addEventListener("submit", function (event) {
@@ -149,10 +152,8 @@
                 foto: foto
             };
             console.log("Dados a serem enviados:", data);
-            // Envia os dados como JSON em uma solicitação PUT
-            // axios.put(`http://localhost:3337/api/vitima/${id}`, data)
+          
             axios.put(`http://localhost:3337/api/vitima/`, { id, ...data })
-
                 .then(function (response) {
                     console.log("Atualização de vítima bem-sucedida!", response.data);
                     window.location.href = `detalhesVitima.html?id=${id}`;
@@ -161,8 +162,32 @@
                     console.error("Erro ao atualizar vítima:", error);
                 });
         });
+
+        // Função para preencher dinamicamente os campos de Pais de origem e nacionalidade.
+        function buscarDadosDoServidor(endpoint, campoDeSelecao, colunaDaTabela, valorOpcaoDoSelect) {
+            axios.get(endpoint)
+                .then(function (response) {
+                    const select = document.getElementById(campoDeSelecao);
+                    for (let i in response.data) {
+                        let option = document.createElement('option');
+                        option.text = response.data[i][colunaDaTabela];
+                        option.value = response.data[i][valorOpcaoDoSelect];
+                        select.add(option);
+                    }
+                    function alterarValor() {
+                        var valor = select.options[select.selectedIndex];
+                        $('#' + campoDeSelecao).val(valor.value).trigger('change');
+                    }
+                    select.addEventListener('change', alterarValor);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
+        buscarDadosDoServidor("http://localhost:3340/api/pais/", "id_paisDeOrigem", "nome", "id");
+        buscarDadosDoServidor("http://localhost:3340/api/pais/", "nacionalidade", "gentilico", "id");
+        buscarDadosDoServidor("http://localhost:3340/api/pais/", "id_paisVistoPorUltimo", "nome", "id");
+        buscarDadosDoServidor("http://localhost:3338/api/criminoso/", "id_autorDoCrime", "nomeCompleto", "id");
     </script>
-
 </body>
-
 </html>

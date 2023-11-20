@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Editar Cadastro de Vítima</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 </head>
+
 <body>
     <div class="container-fluid col-md-8 mt-5 pt-5">
         <div class="col-md-3">
@@ -21,150 +23,157 @@
         <p>Preencha os campos obrigatórios (*) antes de salvar.</p>
 
         <div class="container-fluid col-md-8 mt-5 pt-5"></div>
-            <form id="formEditarCriminoso" method="post">
-                <div class="form-group">
-                    <label for="imagem">Inserir imagem</label>
-                    <input type="file" class="form-control-file" id="imagem" accept="image/*">
+        <form id="formEditarCriminoso" method="post">
+            <div class="form-group">
+                <label for="imagem">Inserir imagem</label>
+                <input type="file" class="form-control-file" id="imagem" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <div class="text-center">
+                    <img id="imagemPreview" src="" alt="Prévia da imagem"
+                        style="max-width: 300px; display: none; max-height: 100px">
                 </div>
-                
-                <div class="form-group">
-                    <div class="text-center">
-                        <img id="imagemPreview" src="" alt="Prévia da imagem" style="max-width: 300px; display: none; max-height: 100px">
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="nomeCompleto">Nome Completo:</label>
-                            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="altura">Altura:</label>
-                            <input type="double" class="form-control" id="altura" placeholder="167" >
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="idade">Idade:</label>
-                            <input type="number" class="form-control" id="idade" >
-                        </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="nomeCompleto">Nome Completo:</label>
+                        <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="genero">Gênero:</label>
-                            <select id="genero" class="form-control">
-                                <option>Feminino</option>
-                                <option>Masculino</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="id_paisOrigem">Nacionalidade:</label>
-                            <select id="id_paisOrigem" class="form-control">
-                            </select>
-                        </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="altura">Altura:</label>
+                        <input type="double" class="form-control" id="altura" placeholder="167">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="dataNascimento">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="dataNascimento">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="apelido">Apelido:</label>
-                            <input type="text" class="form-control" id="apelido">
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="idade">Idade:</label>
+                        <input type="number" class="form-control" id="idade">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="status">Status:</label>
-                            <select id="status" class="form-control">
-                                <option>Foragido</option>
-                                <option>Capturado</option>
-                                <option>Extraditado</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="paisVistoPorUltimo">País em que foi visto pela última vez:</label>
-                            <input type="text" class="form-control" id="paisVistoPorUltimo">
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="genero">Gênero:</label>
+                        <select id="genero" class="form-control">
+                            <option>Feminino</option>
+                            <option>Masculino</option>
+                        </select>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="caracteristica">Caracteristicas:</label>
-                            <input type="text" class="form-control" id="caracteristica" rows="4" cols="50" >
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="id_organizacao">Organização:</label>
-                            <select id="id_organizacao" class="form-control">
-                                
-                            </select>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nacionalidade">Nacionalidade:*</label>
+                        <select id="nacionalidade" class="form-control"> </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
-        </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dataNascimento">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="dataNascimento">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="apelido">Apelido:</label>
+                        <input type="text" class="form-control" id="apelido">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" class="form-control">
+                            <option>Foragido</option>
+                            <option>Capturado</option>
+                            <option>Extraditado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_paisOrigem">Pais de origem:</label>
+                        <select id="id_paisOrigem" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="paisVistoPorUltimo">País Visto por Último:*</label>
+                        <select id="paisVistoPorUltimo" class=form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="caracteristica">Caracteristicas:</label>
+                        <input type="text" class="form-control" id="caracteristica" rows="4" cols="50">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_organizacao">Organização:</label>
+                        <select id="id_organizacao" class="form-control">
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
 
     <script>
-        
+
         function getIdURL() {
             const url = window.location.href;
             const urlObj = new URL(url);
             return urlObj.searchParams.get("id");
         }
 
-        // Detalhes do criminoso pelo ID
         async function buscarDetalhesCriminoso() {
             var id = getIdURL();
             try {
-            
-            const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
-            const criminoso = response.data;
-            const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao); 
-            const DataPais = await buscarPais(criminoso.id_paisOrigem);          
-            const formattedDate = await dataNascimentoFormatada(criminoso.dataNascimento);
-            console.log(DataOrganizacao.nome);
-            console.log(criminoso.id_paisOrigem);
+                const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+                const criminoso = response.data;
+                const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
 
-            
-            document.getElementById("nomeCompleto").value = criminoso.nomeCompleto;
-            document.getElementById("altura").value = criminoso.altura;
-            document.getElementById("idade").value = criminoso.idade;
-            document.getElementById("dataNascimento").value = formattedDate;
-            document.getElementById("status").value = criminoso.status;
-            document.getElementById("apelido").value = criminoso.apelido;
-            document.getElementById("caracteristica").value = criminoso.caracteristicas;
-            document.getElementById("genero").value = criminoso.genero;
-            document.getElementById("id_paisOrigem").value = DataPais.nome;
-            document.getElementById("paisVistoPorUltimo").value = criminoso.id_paisVistoPorUltimo;
-            document.getElementById("id_organizacao").value  = DataOrganizacao.id;          
-            
-            }catch (error){
+                if (DataOrganizacao) {
+                    console.log(DataOrganizacao.nome);
+                } else {
+                    console.error('Organização não encontrada ou nome não disponível.');
+                }
+                console.log(criminoso.id_paisOrigem);
+                const DataPais = await buscarPais(criminoso.id_paisOrigem);
+                const formattedDate = await dataNascimentoFormatada(criminoso.dataNascimento);
+                console.log(criminoso.id_paisOrigem);
+
+                document.getElementById("nomeCompleto").value = criminoso.nomeCompleto;
+                document.getElementById("altura").value = criminoso.altura;
+                document.getElementById("idade").value = criminoso.idade;
+                document.getElementById("dataNascimento").value = formattedDate;
+                document.getElementById("status").value = criminoso.status;
+                document.getElementById("apelido").value = criminoso.apelido;
+                document.getElementById("caracteristica").value = criminoso.caracteristicas;
+                document.getElementById("genero").value = criminoso.genero;
+                document.getElementById("id_paisOrigem").value = criminoso.id_paisOrigem;
+                document.getElementById("paisVistoPorUltimo").value = criminoso.id_paisVistoPorUltimo;
+                document.getElementById("id_organizacao").value = DataOrganizacao ? DataOrganizacao.id : '';
+            } catch (error) {
                 console.error('Erro ao buscar detalhes do criminoso:', error)
-            }             
+            }
         }
-
         buscarDetalhesCriminoso();
 
         async function buscarOrganizacao(id) {
@@ -173,14 +182,13 @@
                 return response.data;
             } catch (error) {
                 alert('Erro ao buscar organização:', error);
-                throw error; // Rejeita a Promise em caso de erro, se necessário.
+                throw error; 
             }
         }
 
-        async function dataNascimentoFormatada(dataString){
+        async function dataNascimentoFormatada(dataString) {
             const dataParteDaData = dataString.split('T')[0];
             const dataDate = moment(dataParteDaData).format("YYYY-MM-DD");
-
             return dataDate
             console.log(dataDate);
         }
@@ -191,116 +199,135 @@
                 return response.data;
             } catch (error) {
                 alert('Erro ao buscar psia:', error);
-                throw error; // Rejeita a Promise em caso de erro, se necessário.
+                throw error;
             }
         }
-       
 
         document.getElementById("formEditarCriminoso").addEventListener("submit", function (event) {
-            event.preventDefault(); 
-
-            const id= getIdURL('id');
-            const nomeCompleto= document.getElementById("nomeCompleto").value;
+            event.preventDefault();
+            const id = getIdURL('id');
+            const nomeCompleto = document.getElementById("nomeCompleto").value;
             const altura = parseFloat(document.getElementById("altura").value);
             const idade = parseInt(document.getElementById("idade").value);
             const dataNascimento = document.getElementById("dataNascimento").value;
-            const status= document.getElementById("status").value;
+            const status = document.getElementById("status").value;
             const apelido = document.getElementById("apelido").value;
             const caracteristicas = document.getElementById("caracteristica").value;
-            const foto =  document.getElementById("imagem").value;
+            const foto = document.getElementById("imagem").value;
             const genero = document.getElementById("genero").value;
             const id_paisOrigem = document.getElementById("id_paisOrigem").value;
             const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
-            const id_organizacao =  document.getElementById("id_organizacao").value;
-           
-            
-            const data = {
+            const id_organizacao = document.getElementById("id_organizacao").value;
 
+            const data = {
                 nomeCompleto: nomeCompleto,
                 altura: altura,
-                idade: idade, 
+                idade: idade,
                 dataNascimento: dataNascimento,
-                status:status,
+                status: status,
                 apelido: apelido,
                 caracteristicas: caracteristicas,
                 foto: foto,
-                genero:genero,
+                genero: genero,
                 id_paisVistoPorUltimo: id_paisVistoPorUltimo,
-                id_paisOrigem:id_paisOrigem,
-                id_organizacao:id_organizacao
+                id_paisOrigem: id_paisOrigem,
+                id_organizacao: id_organizacao
             };
             console.log("Dados a serem enviados:", data);
 
-
-            // Envia os dados como JSON em uma solicitação PUT ou PATCH
-            axios.put(`http://localhost:3338/api/criminoso`, { id, ...data }) 
+            // Envia os dados como JSON em uma solicitação PUT 
+            axios.put(`http://localhost:3338/api/criminoso`, { id, ...data })
                 .then(function (response) {
-                  
                     console.log("Atualização do criminoso bem-sucedida!", response.data);
-                
                     window.location.href = `detalhesCriminoso.html?id=${id}`;
                 })
                 .catch(function (error) {
                     console.error("Erro ao atualizar criminoso:", error);
                 });
         });
-       
-        axios.get(`http://localhost:3338/api/organizacao/`)
-        .then(function (response) {
-            const select = document.getElementById("id_organizacao");
 
-                for (let i in response.data){
-                
-                    let option = document.createElement('option');
-                        option.text = response.data[i].nome;
-                        option.value = response.data[i].id;
+        // Função para preencher dinamicamente os campos de Pais de origem e nacionalidade.
+        function buscarDadosDoServidor(endpoint, campoDeSelecao, colunaDaTabela, valorOpcaoDoSelect) {
+            axios.get(endpoint)
+                .then(function (response) {
+                    const select = document.getElementById(campoDeSelecao);
+                    for (let i in response.data) {
+                        let option = document.createElement('option');
+                        option.text = response.data[i][colunaDaTabela];
+                        option.value = response.data[i][valorOpcaoDoSelect];
                         select.add(option);
-                }
-                function alteraValor(){
-                    var valor = select.options[select.selectedIndex];    
-                    $('#id_organizacao').val(valor.value).trigger('change');                                  
-                }            
-                // Adicione o evento de mudança ao select
-                select.addEventListener('change', alteraValor);
-                
-           
-        })
-        .catch(function (error) {
-            // manipula erros da requisição
-            console.error(error);
-        });
-        //Coloca as pais do banco no select
-        axios.get("http://localhost:3340/api/pais/")
-        .then(function (response) {
-            const select = document.getElementById("id_paisOrigem");
+                    }
+                    function alterarValor() {
+                        var valor = select.options[select.selectedIndex];
+                        $('#' + campoDeSelecao).val(valor.value).trigger('change');
+                    }
+                    select.addEventListener('change', alterarValor);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
+        buscarDadosDoServidor("http://localhost:3340/api/pais/", "id_paisOrigem", "nome", "id");
+        buscarDadosDoServidor("http://localhost:3338/api/organizacao/", "id_organizacao", "nome", "id");
+        buscarDadosDoServidor("http://localhost:3340/api/pais/", "paisVistoPorUltimo", "nome", "id");
 
-                for (let i in response.data){
-                
-                    let option = document.createElement('option');
-                        option.text = response.data[i].nome;
-                        option.value = response.data[i].id;
-                        select.add(option);
-                }
-                function alteraValor(){
-                    var valor = select.options[select.selectedIndex];    
-                    $('#id_paisOrigem').val(valor.value).trigger('change');                                  
-                }            
-                // Adicione o evento de mudança ao select
-                select.addEventListener('change', alteraValor);
-                
-           
-        })
-        .catch(function (error) {
-            // manipula erros da requisição
-            console.error(error);
-        });
+
+
+
+
+        /* axios.get(`http://localhost:3338/api/organizacao/`)
+             .then(function (response) {
+                 const select = document.getElementById("id_organizacao");
+ 
+                 for (let i in response.data) {
+ 
+                     let option = document.createElement('option');
+                     option.text = response.data[i].nome;
+                     option.value = response.data[i].id;
+                     select.add(option);
+                 }
+                 function alteraValor() {
+                     var valor = select.options[select.selectedIndex];
+                     $('#id_organizacao').val(valor.value).trigger('change');
+                 }
+                 // Adicione o evento de mudança ao select
+                 select.addEventListener('change', alteraValor);
+ 
+ 
+             })
+             .catch(function (error) {
+                 // manipula erros da requisição
+                 console.error(error);
+             });
+         //Coloca as pais do banco no select
+         axios.get("http://localhost:3340/api/pais/")
+             .then(function (response) {
+                 const select = document.getElementById("id_paisOrigem");
+ 
+                 for (let i in response.data) {
+ 
+                     let option = document.createElement('option');
+                     option.text = response.data[i].nome;
+                     option.value = response.data[i].id;
+                     select.add(option);
+                 }
+                 function alteraValor() {
+                     var valor = select.options[select.selectedIndex];
+                     $('#id_paisOrigem').val(valor.value).trigger('change');
+                 }
+                 // Adicione o evento de mudança ao select
+                 select.addEventListener('change', alteraValor);
+ 
+ 
+             })
+             .catch(function (error) {
+                 // manipula erros da requisição
+                 console.error(error);
+             });*/
 
     </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIy"></script>
-
-
 </body>
-
 </html>

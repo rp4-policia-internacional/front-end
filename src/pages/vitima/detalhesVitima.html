@@ -8,7 +8,6 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Detalhes da vítima</title>
 </head>
-
 <body>
     <div class="container mt-5">
         <div class="row">
@@ -20,15 +19,12 @@
             <div class="col-md-9 mt-5">
                 <h1 id="detalhesVitima">Carregando...</h1>
                 <div class="d-flex align-items-start">
-
                     <input type="hidden" id="idVitima" name="idVitima">
                     <div class="ml-2">
                         <label for="imagem">Imagem da Vítima:</label>
                         <img id="imagemPreview" src="" alt="Imagem da Vítima" class="img-thumbnail"
                             style="max-width: 300px;">
                     </div>
-
-
                     <div class="ml-4" id="detalhesVitima">
                     </div>
                 </div>
@@ -41,14 +37,12 @@
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <style>
         body {
             font-size: 16px;
         }
-
         h1,
         p {
             font-size: 14px;
@@ -67,35 +61,25 @@
 
         document.addEventListener('DOMContentLoaded', async function () {
             const idVitimaInput = document.getElementById('idVitima');
-
-
             const idVitima = getURLParamS('id');
-
-
             const idVitimaA = idVitimaInput.value;
             const imagePreview = document.getElementById('imagemPreview');
             const savedImage = localStorage.getItem(idVitimaA + '_imagemDaVitima');
-
             console.log('ID da Vítima:', idVitima);
-            //console.log('Imagem salva:', savedImage);
-
             if (savedImage !== null) {
                 imagePreview.src = savedImage;
                 imagePreview.style.display = 'block';
             }
 
             const facade = new DetalhesFacade();
-
-            // Buscar detalhes da vítima usando o ID da vítima
-            await facade.buscarDetalhesVitima(idVitima, document.getElementById('detalhesVitima'));
+            await facade.buscarDetalhes(idVitima, document.getElementById('detalhesVitima'));
 
             const removerVitimaBtn = document.getElementById('removerVitima');
             removerVitimaBtn.addEventListener('click', async function () {
                 if (confirm('Tem certeza de que deseja remover esta vítima?')) {
-                    await facade.removerVitima(idVitima);
+                    await facade.remover(idVitima);
                 }
             });
-
             const editarLink = document.getElementById('editarLink');
             editarLink.href = `editarCadastroVitima.html?id=${idVitima}`;
         });
@@ -248,5 +232,4 @@
                 });*/
     </script>
 </body>
-
 </html>

@@ -66,10 +66,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="id_paisOrigem">Nacionalidade:</label>
-                        <select id="id_paisOrigem" class="form-control">
-                            
-                        </select>
+                        <label for="nacionalidade">Nacionalidade:*</label>
+                        <select id="nacionalidade" class="form-control"> </select>
                     </div>
                 </div>
             </div>
@@ -100,8 +98,14 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="paisVistoPorUltimo">País em que foi visto pela última vez:</label>
-                        <input type="text" class="form-control" id="paisVistoPorUltimo" placeholder="Brasil">
+                        <label for="id_paisDeOrigem">Pais de origem:</label>
+                        <select id="id_paisDeOrigem" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_paisVistoPorUltimo">País Visto por Último:*</label>
+                        <select id="id_paisVistoPorUltimo" class=form-control"></select>
                     </div>
                 </div>
             </div>
@@ -172,13 +176,15 @@
                 const altura = parseFloat(document.getElementById("altura").value);
                 const idade = parseInt(document.getElementById("idade").value);
                 const dataNascimento = document.getElementById("dataNascimento").value;
+                const nacionalidade = document.getElementById("nacionalidade").value;
                 const status= document.getElementById("status").value;
                 const apelido = document.getElementById("apelido").value;
                 const caracteristicas = document.getElementById("caracteristica").value;
                 const foto =  document.getElementById("imagem").value;
                 const genero = document.getElementById("genero").value;
-                const id_paisOrigem = document.getElementById("id_paisOrigem").value;
-                const id_paisVistoPorUltimo = document.getElementById("paisVistoPorUltimo").value;
+               
+                const id_paisDeOrigem = document.getElementById("id_paisDeOrigem").value;
+                const id_paisVistoPorUltimo = document.getElementById("id_paisVistoPorUltimo").value;
                 const id_organizacao =  document.getElementById("id_organizacao").value;
               
                 const imageUploadInput = document.getElementById('imagem');
@@ -200,7 +206,7 @@
                     foto: foto,
                     genero:genero,
                     id_paisVistoPorUltimo: id_paisVistoPorUltimo,
-                    id_paisOrigem:id_paisOrigem,
+                    id_paisOrigem:id_paisDeOrigem,
                     id_organizacao:id_organizacao
                 };
             
@@ -258,7 +264,7 @@
             // sempre será executado
         });
         //Coloca as pais do banco no select
-        axios.get("http://localhost:3340/api/pais/")
+       /* axios.get("http://localhost:3340/api/pais/")
         .then(function (response) {
             const select = document.getElementById("id_paisOrigem");
 
@@ -281,8 +287,34 @@
         .catch(function (error) {
             // manipula erros da requisição
             console.error(error);
-        });
+        });*/
 
+
+
+
+        function buscarDadosDoServidor(endpoint, campoDeSelecao, colunaDaTabela, valorOpcaoDoSelect) {
+                    axios.get(endpoint)
+                        .then(function (response) {
+                            const select = document.getElementById(campoDeSelecao);
+                            for (let i in response.data) {
+                                let option = document.createElement('option');
+                                option.text = response.data[i][colunaDaTabela];
+                                option.value = response.data[i][valorOpcaoDoSelect];
+                                select.add(option);
+                            }
+                            function alterarValor() {
+                                var valor = select.options[select.selectedIndex];
+                                $('#' + campoDeSelecao).val(valor.value).trigger('change');
+                            }
+                            select.addEventListener('change', alterarValor);
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                }
+                buscarDadosDoServidor("http://localhost:3340/api/pais/", "id_paisVistoPorUltimo", "nome", "id");
+                buscarDadosDoServidor("http://localhost:3340/api/pais/", "nacionalidade", "gentilico", "id");
+                buscarDadosDoServidor("http://localhost:3340/api/pais/", "id_paisDeOrigem", "nome", "id");
     </script>
 </body>
 </html>

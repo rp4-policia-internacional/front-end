@@ -4,23 +4,26 @@
 class DetalhesVitima {
     async buscarDetalhesVitima(id, detalhesVitimaElement) {
         try {
+            console.log('Elemento detalhesCriminosoElement:', detalhesVitimaElement);
             const response = await axios.get(`http://localhost:3337/api/vitima/${id}`);
             const vitima = response.data;
 
-            //const paisVitoPorUltimo = await this.getPaisVitoPorUltimoById(vitima.id_paisVistoPorUltimo);
             const paisVitoPorUltimo = vitima.id_paisVistoPorUltimo
                 ? await this.getPaisVitoPorUltimoById(vitima.id_paisVistoPorUltimo)
                 : 'País não disponível';
 
             const paisDeOrigem = await this.getPaisById(vitima.id_paisDeOrigem);
             const nacionalidade = await this.getNacionalidadeById(vitima.nacionalidade);
-
-
+           
+             const nomeCriminoso = vitima.id_autorDoCrime
+             ? await this.getCriminosoById(vitima.id_autorDoCrime)
+             : 'Criminoso não disponível';
+             
             detalhesVitimaElement.innerHTML = `
                 <div class="mt-3">
                     <p><strong>Nome Completo:</strong> ${vitima.nomeCompleto}</p>
                     <p><strong>País de Origem:</strong> ${paisDeOrigem}</p>
-                    <p><strong>Autor do Crime:</strong> ${vitima.id_autorDoCrime}</p>
+                    <p><strong>Autor do Crime:</strong> ${nomeCriminoso}</p>
                     <p><strong>Nacionalidade:</strong> ${nacionalidade}</p>
                     <p><strong>Altura:</strong> ${vitima.altura}</p>
                     <p><strong>Gênero:</strong> ${vitima.genero}</p>
@@ -33,7 +36,6 @@ class DetalhesVitima {
         }
     }
 
-    
     async removerVitima(id) {
         try {
             await axios.delete(`http://localhost:3337/api/vitima/${id}`);

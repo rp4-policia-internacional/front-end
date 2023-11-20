@@ -3,36 +3,24 @@ class DetalhesCriminoso {
     async buscarDetalhesCriminoso(id, detalhesCriminosoElement) {
         try {
 
-
-            if (!id) {
-                console.error('ID do criminoso não fornecido.');
-                return;
-            }
-           
-
+            console.log('Elemento detalhesCriminosoElement:', detalhesCriminosoElement);
             const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
-            console.log('Resposta da API:', response.data); 
-            
+            console.log('Resposta da API:', response.data);
             const criminoso = response.data;
-            const organizacao = await this.buscarOrganizacao(criminoso.id_organizacao);
-
-      
-
+            const organizacaoId = criminoso.id_organizacao;
+            const organizacao = organizacaoId ? await this.buscarOrganizacao(organizacaoId) : 'Organização não disponível';
+            const paisDeOrigem = await this.getPaisById(criminoso.id_paisDeOrigem);
+           
             const dataFormatada = await this.dataNascimentoFormatada(criminoso.dataNascimento);
 
-            if (!criminoso) {
-                console.error('Criminoso não encontrado.');
-                return;
-            }
-
             detalhesCriminosoElement.innerHTML = `
-               
                 <div class="mt-3">
                     <p><strong>Nome Completo:</strong> ${criminoso.nomeCompleto}</p>
                     <p><strong>Altura:</strong> ${criminoso.altura}</p>
                     <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
                     <p><strong>Data de Nascimento:</strong> ${dataFormatada}</p>
-                    <p><strong>Nacionalidade:</strong> ${await this.getPaisById(criminoso.id_paisOrigem)}</p>
+                    <p><strong>País de Origem:</strong> ${paisDeOrigem}</p>
+                   
                     <p><strong>Gênero:</strong> ${criminoso.genero}</p>
                     <p><strong>País Visto por Último:</strong> ${await this.getPaisVistoPorUltimoById(criminoso.id_paisVistoPorUltimo)}</p>
                     <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
@@ -41,22 +29,26 @@ class DetalhesCriminoso {
                     <p><strong>Organização:</strong> ${organizacao}</p>
                 </div>
             `;
-
-            const removerCriminosoBtn = document.getElementById('removerCriminoso');
-            removerCriminosoBtn.addEventListener('click', async () => {
-                if (confirm('Tem certeza de que deseja remover este Criminoso?')) {
-                    await this.removerCriminoso(id);
-                }
-            });
         } catch (error) {
             console.error('Erro ao buscar detalhes do criminoso:', error);
         }
     }
 
+    async removerCriminoso(id) {
+        try {
+            await axios.delete(`http://localhost:3338/api/criminoso/${id}`);
+            alert('Criminoso removido com sucesso!');
+            window.location.href = 'listarCriminoso.html';
+        } catch (error) {
+            console.error('Erro ao remover criminoso:', error);
+        }
+    }
+
+
     async buscarOrganizacao(idOrganizacao) {
         try {
             const response = await axios.get(`http://localhost:3338/api/organizacao/${idOrganizacao}`);
-            return response.data;
+            return response.data.nome;
         } catch (error) {
             console.error('Erro ao buscar organização:', error);
             throw error;
@@ -72,15 +64,6 @@ class DetalhesCriminoso {
         return dataFormatada;
     }
 
-    async removerCriminoso(id) {
-        try {
-            await axios.delete(`http://localhost:3338/api/criminoso/${id}`);
-            alert('Criminoso removido com sucesso!');
-            window.location.href = 'listarCriminoso.html';
-        } catch (error) {
-            console.error('Erro ao remover criminoso:', error);
-        }
-    }
 
     async getPaisById(id) {
         try {
@@ -92,6 +75,8 @@ class DetalhesCriminoso {
             return 'País não encontrado';
         }
     }
+
+
 
     async getPaisVistoPorUltimoById(id) {
         try {

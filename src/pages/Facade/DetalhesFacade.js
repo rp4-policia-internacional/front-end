@@ -4,19 +4,14 @@ class DetalhesFacade {
         this.detalhesCriminoso = new DetalhesCriminoso();
     }
 
-    async buscarDetalhesVitima(id, detalhesVitimaElement) {
-        await this.detalhesVitima.buscarDetalhesVitima(id, detalhesVitimaElement); 
+    async buscarDetalhes(id, detalhesVitimaElement, detalhesCriminosoElement){
+    await this.detalhesVitima.buscarDetalhesVitima(id, detalhesVitimaElement); 
+    await this.detalhesCriminoso.buscarDetalhesCriminoso(id, detalhesCriminosoElement);
     }
-
-    async buscarDetalhesCriminoso(id, detalhesCriminosoElement) {
-        await this.detalhesCriminoso.buscarDetalhesCriminoso(id, detalhesCriminosoElement);
-    }
-
-    async removerVitima(id) {
+   
+    async remover(id){
         await this.detalhesVitima.removerVitima(id);
-    }
-
-    async removerCriminoso(id) {
         await this.detalhesCriminoso.removerCriminoso(id);
     }
+
 }
