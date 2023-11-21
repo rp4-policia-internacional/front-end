@@ -10,142 +10,29 @@
 </head>
 
 <body>
+  <h1>Dashboard Polícia Internacional</h1>
   <div style="width: 300px; height: 300px;">
     <canvas id="myChart1" width="50" height="80"></canvas>
     <canvas id="myChart2" width="50" height="80"></canvas>
+    <canvas id="myChart3" width="50" height="80"></canvas>
+    <canvas id="myChart4" width="50" height="80"></canvas>
   </div>
   <script src="../Facade/ChartFacade.js" defer></script>
   <script src="../Charts/chartPais.js" defer></script>
   <script src="../Charts/chartCriminoso.js" defer></script>
-
+  <script src="../Charts/ChartVitima.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const contextoChartPais = document.getElementById('myChart1').getContext('2d');
-  const contextoChartCriminoso = document.getElementById('myChart2').getContext('2d');
+      const contextoChartCriminoso = document.getElementById('myChart2').getContext('2d');
+      const contextoChartVitima = document.getElementById('myChart3').getContext('2d');
+      const contextoChartCriminosoOrganizacao = document.getElementById('myChart4').getContext('2d');
 
-  const chartFacade = new ChartFacade(contextoChartPais, contextoChartCriminoso);
-  chartFacade.charts();
+      const chartFacade = new ChartFacade(contextoChartPais, contextoChartCriminoso, contextoChartVitima, contextoChartCriminosoOrganizacao);
+      chartFacade.charts();
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        // Lista de criminosos
-        const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
-        const criminosos = responseCriminosos.data;
-
-        // Lista de países
-        const responsePaises = await axios.get(`http://localhost:3340/api/pais`);
-        const paises = responsePaises.data;
-
-        // Contagem de criminosos por país
-        const porPais = criminosos.reduce((acc, criminoso) => {
-          const pais = criminoso.id_paisOrigem;
-          acc[pais] = (acc[pais] || 0) + 1;
-          return acc;
-        }, {});
-
-        // Nomes de países
-        const result1 = Object.keys(porPais).map(paisId => {
-          const nomePais = paises.find(pais => pais.id === paisId)?.nome || `País ${paisId}`;
-          return { pais: nomePais, quantidade: porPais[paisId] };
-        });
-
-       
-
-        const labels1 = result1.map(item => item.pais);
-        const values1 = result1.map(item => item.quantidade);
-
-        // Gráfico 1: Número de Criminosos por País
-        const ctx1 = document.getElementById('myChart1').getContext('2d');
-        new Chart(ctx1, {
-          type: 'bar',
-          data: {
-            labels: labels1,
-            datasets: [{
-              label: 'Número de Criminosos por País',
-              data: values1,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-            }],
-          },
-          options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            aspectRatio: 0.1,
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-
-        // Gráfico 2: Status dos Criminosos
-        const statusCriminosos = criminosos.reduce((acc, criminoso) => {
-          const status = criminoso.status;
-          acc[status] = (acc[status] || 0) + 1;
-          return acc;
-        }, {});
-
-        const result2 = Object.keys(statusCriminosos).map(status => ({ status, quantidade: statusCriminosos[status] }));
-
-        const labels2 = result2.map(item => item.status);
-        const values2 = result2.map(item => item.quantidade);
-
-        const ctx2 = document.getElementById('myChart2').getContext('2d');
-        new Chart(ctx2, {
-          type: 'bar',
-          data: {
-            labels: labels2,
-            datasets: [{
-              label: 'Status dos Criminosos',
-              data: values2,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1,
-            }],
-          },
-          options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            width: 50,  // Ajuste a largura conforme necessário
-            height: 80,  // Ajuste a altura conforme necessário
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-
-      } catch (error) {
-        console.error('Erro ao buscar dados:', error);
-      }
-    });*/
   </script>
 </body>
 
