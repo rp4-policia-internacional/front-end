@@ -57,7 +57,29 @@
                 <tbody id="extradicaoTabela"></tbody>
             </table>
         </div>
+        <script>
+            class Mediator{
+                constructor(){
+                    this.inscrito = {};
+                }
+                //Método para se inscrever em um evento
+                inscrever(evento,callback){
+                    if(!this.inscrito[evento]){
+                        this.inscrever[evento] = [];
+                    }
+                    this.inscrever[evento].push(callback);
+                }
 
+                //Método para publicar um evento
+                publish(evento,data){
+                    if(this.inscrito[evento]){
+                        this.inscrito[evento].forEach(callback =>{
+                            callback(data);
+                        });
+                    }
+                }
+            }
+        </script>
         <script>
             
             let extradicaoSelecionadoId;
