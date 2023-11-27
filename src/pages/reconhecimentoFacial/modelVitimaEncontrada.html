@@ -31,12 +31,8 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
-        aria-hidden="true"></div>
-
-
-    <div class="modal" data-backdrop="static" data-keyboard="false" id="vitimaEncontradaModal">
+    <div class="modal fade" id="vitimaEncontradaModal" tabindex="-1" role="dialog" aria-labelledby="vitimaEncontradaModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" style="border: 3px solid green;">
 
@@ -65,12 +61,8 @@
                     </button>
                 </div>
 
-
             </div>
-
-
         </div>
-    </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -120,6 +112,8 @@
                     const pais = await getPaisById(data.id_paisVistoPorUltimo);
                     $('#nomePaisEncontrada').text(pais.nome);
 
+                    // Enviar notificação quando a vítima é encontrada
+                    showNotification('Vítima Encontrada', `A vítima ${data.nomeCompleto} foi encontrada no país ${pais.nome}`);
 
                     $("#vitimaEncontradaModal").modal("show");
                 } catch (error) {
@@ -167,42 +161,61 @@
         async function atualizarStatusVitima(vitima, novoStatus) {
             try {
                 await axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
-                .then(async function (response) {
-                    
-                    await axios.put('http://localhost:3337/api/vitima/', 
-                        { 
-                            id: vitima.id_vitima, 
-                            statusDaVitima: novoStatus ,
-                            id_paisDeOrigem: response.data.id_paisDeOrigem,
-                            id_autorDoCrime: response.data.id_autorDoCrime,
-                            nomeCompleto: response.data.nomeCompleto,
-                            nacionalidade: response.data.nacionalidade,
-                            altura: parseFloat(response.data.altura),
-                            genero: response.data.genero,
-                            idade: parseInt(response.data.idade),
-                            id_paisVistoPorUltimo: response.data.id_paisVistoPorUltimo,
-                            foto: response.data.foto
-                        }
-                    )
-                    .then((async function (response) {
-                        const data = response.data;
-                        console.log(response.data);
-                        console.log(response.data);
-                    }));
+                    .then(async function (response) {
 
-                })
-                
+                        await axios.put('http://localhost:3337/api/vitima/',
+                            {
+                                id: vitima.id_vitima,
+                                statusDaVitima: novoStatus,
+                                id_paisDeOrigem: response.data.id_paisDeOrigem,
+                                id_autorDoCrime: response.data.id_autorDoCrime,
+                                nomeCompleto: response.data.nomeCompleto,
+                                nacionalidade: response.data.nacionalidade,
+                                altura: parseFloat(response.data.altura),
+                                genero: response.data.genero,
+                                idade: parseInt(response.data.idade),
+                                id_paisVistoPorUltimo: response.data.id_paisVistoPorUltimo,
+                                foto: response.data.foto
+                            }
+                        )
+                            .then((async function (response) {
+                                const data = response.data;
+                                console.log(response.data);
+                                console.log(response.data);
+                            }));
+
+                    })
+
             } catch (error) {
                 console.error('Erro ao atualizar o status da vítima: ', error);
                 throw error;
+            }
         }
-}
 
-        async function listaVitimas(vitima){
+        async function listaVitimas(vitima) {
             await atualizarStatusVitima(vitima, "Encontrada");
             window.location.href = "../vitima/listaDeVitima.html";
         }
 
+        function showNotification(title, body) {
+            if (!("Notification" in window)) {
+                console.log('Esse navegador não suporta notificações desktop');
+            } else {
+                Notification.requestPermission().then((permission) => {
+                    if (permission === 'granted') {
+                        const notification = new Notification(title, { body });
+
+                        notification.onclick = (e) => {
+                            e.preventDefault();
+                            window.focus();
+                            notification.close();
+                        };
+                    }
+                });
+            }
+        }
     </script>
+
+</body>
 
 </html>
