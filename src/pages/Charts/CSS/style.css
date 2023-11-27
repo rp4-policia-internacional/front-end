@@ -1,0 +1,129 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    background-color: #73b4ff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #fff;
+    height: 100%;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+.sidebar h3 {
+    color: #cfbebe;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    padding: 10px 0;
+    color: #444;
+}
+
+.sidebar a:hover,
+.sidebar a.sidebar-active {
+    background-color: #444;
+    color: #fff;
+    font-weight: bold;
+    border-left: 2px solid #73b4ff;
+}
+
+.sidebar a>i {
+    margin-right: 10px;
+}
+
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background-color: 555;
+
+}
+
+.box-info {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+
+.box-info-single {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    padding: 30px;
+    margin: 0 10px;
+    background-color: linear-gradient(45deg, #ff5370, #ff8669);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.info-text {
+    color: #0c0c0c;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-text h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.content {
+    width: 80%;
+    background-color: rgb(245, 245, 245);
+    padding: 20px;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.chart {
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 8px;
+}

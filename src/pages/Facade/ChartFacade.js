@@ -1,3 +1,6 @@
+
+//Uma fachada para exconder a complexidade interna do sistema.
+
 class ChartFacade {
     constructor(contextoChartPais, contextoChartCriminosos, contextoChartVitima, contextoChartCriminosoOrganizacao) {
         this.chartPais = new ChartPais(contextoChartPais);
@@ -6,6 +9,8 @@ class ChartFacade {
         this.chartCriminosoOrganizacao = new ChartCriminoso(contextoChartCriminosoOrganizacao);
     }
 
+
+    // Este método chama todos os charts 
     async charts() {
         await this.chartPais.chartCriminososPorPais();
         await this.chartVitima.chartStatusDaVitima();

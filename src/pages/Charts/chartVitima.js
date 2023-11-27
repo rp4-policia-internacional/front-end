@@ -3,6 +3,7 @@ class ChartVitima {
     this.contextoDoGrafico = contextoDoGrafico;
   }
 
+  //busca dados da api vitima
   async buscandoDados() {
     try {
       const responseVitima = await axios.get(`http://localhost:3337/api/vitima`);
@@ -12,6 +13,9 @@ class ChartVitima {
       return [];
     }
   }
+
+
+  //gera um gráfico de pie para qtd de vitimas por status 
   chartStatusDaVitima() {
     this.buscandoDados().then(vitimas => {
       const statusVitimas = vitimas.reduce((contagem, vitima) => {

@@ -3,6 +3,7 @@ class ChartPais {
         this.contextoDoGrafico = contextoDoGrafico;
     }
 
+    //busca os dados dos criminosos e  pais 
     async buscandoDados() {
         try {
             const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
@@ -17,6 +18,8 @@ class ChartPais {
         }
     }
 
+
+    //Processa os dados obtido e gera os gráficos de barra , qtd de criminosos por pais 
     chartCriminososPorPais() {
         this.buscandoDados().then(({ criminosos, paises }) => {
             const criminososPorPais = criminosos.reduce((contagem, criminoso) => {
@@ -25,7 +28,7 @@ class ChartPais {
                 return contagem;
             }, {});
 
-            const result = Object.keys(criminososPorPais).map(paisId => {
+             const result = Object.keys(criminososPorPais).map(paisId => {
                 const nomePais = paises.find(pais => pais.id === paisId)?.nome || `País ${paisId}`;
                 return { pais: nomePais, quantidade: criminososPorPais[paisId] };
             });
@@ -34,6 +37,9 @@ class ChartPais {
             const values = result.map(item => item.quantidade);
             console.log("pais", values);
 
+
+
+           // Cria um gráfico de barras usando a biblioteca Chart.js
             new Chart(this.contextoDoGrafico, {
                 type: 'bar',
                 data: {

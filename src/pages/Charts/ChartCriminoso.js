@@ -3,6 +3,7 @@ class ChartCriminoso {
         this.contextoDoGrafico = contextoDoGrafico;
     }
 
+    //busca os dados dos criminosos
     async buscandoDados() {
         try {
             const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
@@ -12,6 +13,8 @@ class ChartCriminoso {
             return [];
         }
     }
+
+    //gera um gráfico com a qtd de criminosos por status 
     chartStatusDoCriminoso() {
         this.buscandoDados().then(criminosos => {
             const statusCriminosos = criminosos.reduce((contagem, criminoso) => {
@@ -52,6 +55,8 @@ class ChartCriminoso {
         });
     }
 
+
+    //gera um gráfico de pizza mostra a qtd de distribuições  de criminosos nas organizações.
     async chartParticipacaoOrganizacao() {
         try {
 
