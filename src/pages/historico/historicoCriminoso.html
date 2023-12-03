@@ -72,6 +72,20 @@
                             <td>${criminoso.status}</td>
                         `;
             
+                        //botao ver detalhes
+                        const verDetalhesButton = document.createElement('button');
+                        verDetalhesButton.type = 'button';
+                        verDetalhesButton.className = 'btn btn-secondary';
+                        verDetalhesButton.textContent = 'Ver detalhes';
+                        verDetalhesButton.addEventListener('click', function () {
+                           
+                            criminosoSelecionadoId = criminoso.id;
+                            window.location.href = `detalhesCriminoso.html?id=${criminoso.id}`;
+                        });
+                        const verDetalhesCell = document.createElement('td');
+                        verDetalhesCell.appendChild(verDetalhesButton);
+                        row.appendChild(verDetalhesCell);
+                        
                         historicoTabela.appendChild(row);
                     }
                 })
