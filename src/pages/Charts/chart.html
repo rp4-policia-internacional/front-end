@@ -4,8 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard de Países</title>
+  <title>Dashboard</title>
   <link rel="stylesheet" href="../Charts/CSS/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 </head>
@@ -23,46 +25,124 @@
     </div>
   </header>
 
-  <section class="main">
-    <div class="sidebar">
-      <h3>Menu</h3>
-      <a href="#" class="sidebar-active"><i class="fas fa-home"></i> Home</a>
-      <a href="#"><i class="fas fa-chart-bar"></i> Charts</a>
-      <a href="#"><i class="fas fa-user"></i> Perfil</a>
-      <a href="#"><i class="fas fa-cog"></i> Configurações</a>
+  <div class="container">
+    <section class="menu-lateral">
+      <div class="btn-expandir">
+        <i class="bi bi-list" id="btn-exp"></i>
+        <ul>
+          <li class="item-menu ativo">
+            <a href="#">
+              <span class="icon"><i class="bi bi-house-door"></i> </span>
+              <span class="txt-link"> Home</span>
+            </a>
+          </li>
+          <li class="item-menu">
+            <a href="#">
+              <span class="icon"> <i class="bi bi-columns-gap"></i></span>
+              <span class="txt-link">Dashboard </span>
+            </a>
+          </li>
+          <li class="item-menu">
+            <a href="#">
+              <span class="icon"><i class="bi bi-info"></i> </span>
+              <span class="txt-link">Infomação</span>
+            </a>
+          </li>
+          <li class="item-menu">
+            <a href="#">
+              <span class="icon"><i class="bi bi-gear"></i> </span>
+              <span class="txt-link"> Configurações</span>
+            </a>
+          </li>
+          <li class="item-menu">
+            <a href="#">
+              <span class="icon"><i class="bi bi-person-circle"></i> </span>
+              <span class="txt-link"> Perfil</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <section class="content">
+    <div class="titulo">
+      <h2>Relatório da Polícia Internacional </h2>
+      <br />
       <hr>
-    </div>
-
-
-    <div class="content">
-      <div class="titulo">
-        <h2>Dashboard|| Polícia Internacional </h2>
-        <br />
-        <hr>
-        <p>
-          <i class="fas fa-house"></i> Análise as principais informações
-        </p>
-        <div class="box-info">
-          <div class="box-info-single">
-            <div class="info-text">
-              <h3>Total de criminosos</h3>
-              <i class="criminals"> <i class="fa-solid fa-handcuffs"></i> </i>
-            </div>
+      <p>
+        <i class="fas fa-house"></i> Análise as principais informações
+      </p>
+      <div class="box-info">
+        <div class="box-info-single cor-1">
+          <div class="info-text">
+            <h3 id="totalCriminosos">Total de criminosos</h3>
+            <i class="bi bi-fingerprint"></i>
           </div>
-          <div class="box-info-single">
-            <div class="info-text">
-              <h3>Total de capturas</h3>
-              <i class="criminals"><i class="fa-solid fa-people-robbery"></i> </i>
-            </div>
+        </div>
+        <div class="box-info-single cor-2">
+          <div class="info-text">
+            <h3 id="totalRepatriacao">Total de repatriacao</h3>
+            <i class="criminals"><i class="bi bi-card-text"></i></i>
           </div>
-          <div class="box-info-single">
-            <div class="info-text">
-              <h3>Total de vítimas</h3>
-              <i class="criminals"> <i class="fa-solid fa-person"></i> </i>
+        </div>
+        <div class="box-info-single cor-3">
+          <div class="info-text">
+            <h3 id="totalVitimas">Total de vítimas</h3>
+            <i class="criminals"><i class="bi bi-people-fill"></i></i>
+          </div>
+        </div>
+        <div class="box-info-single cor-4">
+          <div class="info-text">
+            <h3 id="totalExtradicoes">Total de Extradições</h3>
+            <i class="criminals">
+              <i class="bi bi-pass-fill"></i>
+            </i>
+          </div>
+        </div>
+      </div>
+
+      <div class="filtro-container">
+        <button id="btn-filtro" data-toggle="modal" data-target="#filtroModal">Filtrar</button>
+      </div>
+      <div class="modal fade" id="filtroModal" tabindex="-1" role="dialog" aria-labelledby="filtroModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="filtroModalLabel">Opções de Filtro</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <label for="genero">Gênero:</label>
+              <select id="genero" class="form-control">
+
+              </select>
+              <label for="faixaEtaria">Faixa Etária:</label>
+              <select id="faixaEtaria" class="form-control">   
+              </select>
+        
+              <label for="capitalPais">Capital do País:</label>
+              <select id="capitalPais" class="form-control">
+            
+              </select>
+      
+              <label for="paisEspecifico">País Específico:</label>
+              <select id="paisEspecifico" class="form-control">
+              
+              </select>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-primary" id="aplicarFiltro">Aplicar Filtro</button>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </section>
 
   <div class="chart-container">
@@ -79,19 +159,71 @@
       <canvas id="myChart4"></canvas>
     </div>
   </div>
+
   <script src="../Facade/ChartFacade.js" defer></script>
   <script src="../Charts/chartPais.js" defer></script>
   <script src="../Charts/chartCriminoso.js" defer></script>
   <script src="../Charts/ChartVitima.js" defer></script>
+  <script src="../Charts/GerenciadorDeEstatistica.js" defer></script>
+  <script src="../Charts/ChartFiltro.js" defer></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
   <script>
+
     document.addEventListener('DOMContentLoaded', async () => {
+      const totalCriminososElement = document.getElementById('totalCriminosos');
+      const totalRepatriacaoElement = document.getElementById('totalRepatriacao');
+      const totalVitimasElement = document.getElementById('totalVitimas');
+      const totalExtradicoesElement = document.getElementById('totalExtradicoes');
       const contextoChartPais = document.getElementById('myChart1').getContext('2d');
       const contextoChartCriminoso = document.getElementById('myChart2').getContext('2d');
       const contextoChartVitima = document.getElementById('myChart3').getContext('2d');
       const contextoChartCriminosoOrganizacao = document.getElementById('myChart4').getContext('2d');
 
-      const chartFacade = new ChartFacade(contextoChartPais, contextoChartCriminoso, contextoChartVitima, contextoChartCriminosoOrganizacao);
-      chartFacade.charts();
+      const chartFacade = new ChartFacade(
+        contextoChartPais,
+        contextoChartCriminoso,
+        contextoChartVitima,
+        contextoChartCriminosoOrganizacao,
+        totalCriminososElement,
+        totalRepatriacaoElement,
+        totalVitimasElement,
+        totalExtradicoesElement
+      );
+      await chartFacade.charts();
+    });
+
+    //SideBar
+    var menuItem = document.querySelectorAll('.item-menu');
+    function selectLink() {
+      menuItem.forEach((item) =>
+        item.classList.remove('ativo')
+      )
+      this.classList.add('ativo')
+    }
+    menuItem.forEach((item) =>
+      item.addEventListener('click', selectLink)
+    );
+    var btnExp = document.querySelector('#btn-exp');
+    var menuSide = document.querySelector('.menu-lateral');
+    var container = document.querySelector('.container');
+    btnExp.addEventListener('click', function () {
+      menuSide.classList.toggle('expandir');
+      container.classList.toggle('expandir');
+
+
+      //Filtro
+      const filtro = new ChartFiltro();
+      document.getElementById('genero').addEventListener('change', (event) => {
+        filtro.setGenero(event.target.value);
+        atualizarGraficos();
+      });
+      document.getElementById('btn-filtro').addEventListener('click', () => {
+      });
+      async function atualizarGraficos() {
+        await chartFacade.charts();
+      }
     });
   </script>
 </body>

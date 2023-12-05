@@ -1,6 +1,7 @@
 class ChartCriminoso {
-    constructor(contextoDoGrafico) {
+    constructor(contextoDoGrafico, filtro) {
         this.contextoDoGrafico = contextoDoGrafico;
+        this.filtro = filtro;
     }
 
     //busca os dados dos criminosos
