@@ -13,7 +13,7 @@ class ChartFacade {
             totalVitimasElement,
             totalExtradicoesElement
         );
-        this.filtro = filtro;
+        this.filtro = new ChartFiltro();
     }
     async charts() {
         await this.chartPais.chartCriminososPorPais();
@@ -21,5 +21,6 @@ class ChartFacade {
         await this.chartCriminoso.chartStatusDoCriminoso();
         await this.chartCriminosoOrganizacao.chartParticipacaoOrganizacao();
         await this.gerenciadorEstatistico.atualizarTotais();
+        await this.filtro.setGeneroSelecionado();
     }
 }

@@ -1,15 +1,33 @@
-class ChartVitima {
-  constructor(contextoDoGrafico) {
-    this.contextoDoGrafico = contextoDoGrafico;
-  }
 
-  //busca dados da api vitima
+class ChartVitima {
+  constructor(contextoDoGrafico, filtro) {
+    this.contextoDoGrafico = contextoDoGrafico;
+    this.filtro = filtro;
+  }
   async buscandoDados() {
     try {
       const responseVitima = await axios.get(`http://localhost:3337/api/vitima`);
-      return responseVitima.data;
+
+      if (this.filtro && this.filtro.getGeneroSelecionado() !== 'todos') {
+        const generoSelecionado = this.filtro.getGeneroSelecionado();
+
+        const vitimasFiltradas = responseVitima.data.filter(vitima => vitima.genero === generoSelecionado);
+
+        // contagem de vítimas por gênero
+        const contagemVitimasPorGenero = vitimasFiltradas.reduce((contagem, vitima) => {
+          if (vitima.genero) {
+            contagem[vitima.genero] = (contagem[vitima.genero] || 0) + 1;
+          }
+          return contagem;
+        }, {});
+        console.log('Contagem de vítimas por gênero:', contagemVitimasPorGenero);
+
+        return vitimasFiltradas;
+      } else {
+        return responseVitima.data;
+      }
     } catch (error) {
-      console.error('Erro ao buscar dados de vitimas:', error);
+      console.error('Erro ao buscar dados de vítimas:', error);
       return [];
     }
   }
@@ -23,6 +41,13 @@ class ChartVitima {
         contagem[status] = (contagem[status] || 0) + 1;
         return contagem;
       }, {});
+      // Contagem de vítimas por gênero
+      const contagemVitimasPorGenero = vitimas.reduce((contagem, vitima) => {
+        const genero = vitima.genero;
+        contagem[genero] = (contagem[genero] || 0) + 1;
+        return contagem;
+      }, {});
+      console.log('Contagem de vítimas por gênero:', contagemVitimasPorGenero);
 
       const result = Object.keys(statusVitimas).map(status => ({ status, quantidade: statusVitimas[status] }));
 
