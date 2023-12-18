@@ -9,8 +9,9 @@ class DetalhesCriminoso {
             const criminoso = response.data;
             const organizacaoId = criminoso.id_organizacao;
             const organizacao = organizacaoId ? await this.buscarOrganizacao(organizacaoId) : 'Organização não disponível';
-            const paisDeOrigem = await this.getPaisById(criminoso.id_paisDeOrigem);
-           
+            
+            const paisDeOrigemNome = await this.getPaisById(criminoso.id_paisOrigem);
+
             const dataFormatada = await this.dataNascimentoFormatada(criminoso.dataNascimento);
 
             detalhesCriminosoElement.innerHTML = `
@@ -19,7 +20,8 @@ class DetalhesCriminoso {
                     <p><strong>Altura:</strong> ${criminoso.altura}</p>
                     <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
                     <p><strong>Data de Nascimento:</strong> ${dataFormatada}</p>
-                    <p><strong>País de Origem:</strong> ${paisDeOrigem}</p>
+                    <p><strong>País de Origem:</strong> ${paisDeOrigemNome}</p>
+                    
                    
                     <p><strong>Gênero:</strong> ${criminoso.genero}</p>
                     <p><strong>País Visto por Último:</strong> ${await this.getPaisVistoPorUltimoById(criminoso.id_paisVistoPorUltimo)}</p>
@@ -48,7 +50,7 @@ class DetalhesCriminoso {
     async buscarOrganizacao(idOrganizacao) {
         try {
             const response = await axios.get(`http://localhost:3338/api/organizacao/${idOrganizacao}`);
-            return response.data.nome;
+            return response.data ? response.data.nome : 'Nenhuma organização';
         } catch (error) {
             console.error('Erro ao buscar organização:', error);
             throw error;
@@ -63,20 +65,26 @@ class DetalhesCriminoso {
         const dataFormatada = `${dia}/${mes}/${ano}`;
         return dataFormatada;
     }
-
+    
 
     async getPaisById(id) {
         try {
             const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
-            const pais = response.data;
-            return pais ? pais.nome : 'País não encontrado';
+    
+            // Verifica se response.data é um objeto não nulo e possui a propriedade 'nome'
+            if (response.data && typeof response.data === 'object' && response.data.nome) {
+                // Retorna o nome do país se estiver disponível
+                return response.data.nome;
+            } else {
+                // Se response.data não for um objeto, ou for nulo, trata como 'País não encontrado'
+                return 'País não encontrado';
+            }
         } catch (error) {
             console.error('Erro ao buscar país: ', error);
             return 'País não encontrado';
         }
     }
-
-
+    
 
     async getPaisVistoPorUltimoById(id) {
         try {
