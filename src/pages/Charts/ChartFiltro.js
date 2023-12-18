@@ -1,6 +1,8 @@
 class ChartFiltro {
   constructor() {
     this.generoSelecionado = 'todos';
+    this.faixaEtaria = 'todas';
+
   }
 
   setGeneroSelecionado(genero) {
@@ -10,8 +12,13 @@ class ChartFiltro {
   getGeneroSelecionado() {
     return this.generoSelecionado;
   }
+
   setFaixaEtaria(faixaEtaria) {
     this.faixaEtaria = faixaEtaria;
+  }
+
+  getFaixaEtaria() {
+    return this.faixaEtaria;
   }
 
   setCapitalPais(capital) {

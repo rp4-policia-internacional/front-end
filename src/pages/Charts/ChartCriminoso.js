@@ -5,28 +5,51 @@ class ChartCriminoso {
       this.filtro = filtro;
     }
    //busca os dados dos criminosos
-    async buscandoDados() {
-      try {
-        const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
-        return responseCriminosos.data;
-      } catch (error) {
-        console.error('Erro ao buscar dados de criminosos:', error);
-        return [];
-      }
-    }
-  
-    async chartStatusDoCriminoso() {
-      try {
-        let criminosos = await this.buscandoDados(); 
+   async buscandoDados() {
+    try {
+      const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
+     
+      if (this.filtro && this.filtro.getGeneroSelecionado() !== 'todos') {
+        const generoSelecionado = this.filtro.getGeneroSelecionado();
+        const faixaEtariaSelecionada = this.filtro.getFaixaEtaria();
+        
+      
+        const criminososFiltrados = responseCriminosos.data.filter(criminoso => criminoso.genero === generoSelecionado);
 
-        const contagemCriminososPorGenero = criminosos.reduce((contagem, criminoso) => {
+        if (faixaEtariaSelecionada !== 'todas') {
+          // Adiciona a filtragem por faixa etária
+          criminososFiltrados = criminososFiltrados.filter(criminoso => {
+            const idade = calcularIdade(criminoso.dataNascimento); // Implemente a função calcularIdade
+            return verificarFaixaEtaria(idade, faixaEtariaSelecionada); // Implemente a função verificarFaixaEtaria
+          });
+        }
+        // Contagem de criminosos por gênero
+        const contagemCriminososPorGenero = criminososFiltrados.reduce((contagem, criminoso) => {
           if (criminoso.genero) {
             contagem[criminoso.genero] = (contagem[criminoso.genero] || 0) + 1;
           }
           return contagem;
         }, {});
         console.log('Contagem de criminosos por gênero:', contagemCriminososPorGenero);
+
+        return criminososFiltrados;
+      } else {
+        // Se não houver filtro de gênero, retorna todos os criminosos
+        return responseCriminosos.data;
+      }
+    } catch (error) {
+      console.error('Erro ao buscar dados de criminosos:', error);
+      return [];
+    }
+  }
   
+
+
+    //Tem uma verificação p ver se o filtro de genero esta ativo, os criminosos sao filtrados com base no genero slecionado antes de gerar o grafico
+    async chartStatusDoCriminoso() {
+      try {
+        let criminosos = await this.buscandoDados(); 
+       
         const statusCriminosos = criminosos.reduce((contagem, criminoso) => {
           const status = criminoso.status;
           contagem[status] = (contagem[status] || 0) + 1;
@@ -61,9 +84,7 @@ class ChartCriminoso {
             },
           },
         });
-        if (this.filtro && this.filtro.getGeneroSelecionado() !== 'todos') {
-            criminosos = criminosos.filter(criminoso => criminoso.genero === this.filtro.getGeneroSelecionado());
-          }
+        
       } catch (error) {
         console.error('Erro ao gerar o gráfico de status dos criminosos:', error);
       }
@@ -72,7 +93,17 @@ class ChartCriminoso {
     async chartParticipacaoOrganizacao() {
       try {
         //const criminosos = await this.buscandoDados();
+
+
+      
         let criminosos = await this.buscandoDados();
+
+        if (this.filtro && this.filtro.getGeneroSelecionado() !== 'todos') {
+          criminosos = criminosos.filter(criminoso => criminoso.genero === this.filtro.getGeneroSelecionado());
+      }
+
+
+
         const criminososComOrganizacao = criminosos.filter(criminoso => criminoso.id_organizacao);
         const organizacoes = await axios.get(`http://localhost:3338/api/organizacao`);
         const dadosOrganizacao = organizacoes.data;

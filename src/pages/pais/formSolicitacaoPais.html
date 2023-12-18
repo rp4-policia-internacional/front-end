@@ -158,6 +158,20 @@
             axios.post("http://localhost:3340/api/pais/", data)
                 .then(function (response) {
                     console.log("Dados enviados com sucesso:", response.data);
+
+                    
+                    console.log("Dados enviados com sucesso:", response.data);
+        console.log("País cadastrado no banco de dados:", data);
+        console.log("Pais cadastrado:", response.data.nome);
+
+
+
+// Adicionando mensagem de confirmação
+alert("Dados enviados com sucesso! País cadastrado: " + response.data.nome);
+
+// Redirecionando após o envio
+redirectToHomePage();
+
                 })
                 .catch(function (error) {
                     console.error("Erro ao enviar dados:", error);
