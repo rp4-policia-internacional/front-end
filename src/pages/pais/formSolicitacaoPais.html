@@ -39,7 +39,7 @@
 
             <div class="form-group">
                 <label for="capital">Capital:</label>
-                <input type="text" id="capital" name "capital" class="form-control" placeholder="Informe a capital"
+                <input type="text" id="capital" name="capital" class="form-control" placeholder="Informe a capital"
                     required>
             </div>
 
@@ -104,20 +104,27 @@
             </div>
 
 
-            <button type="submit" class="btn btn-primary" onclick="redirectToHomePage()">Enviar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
 
         </form>
-        </form>
+
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 
     <script>
 
-        function redirectToHomePage() {
-            window.location.href = "../adm/modelFeedback.html";
-        }
+       
 
 
 
@@ -157,6 +164,13 @@
             axios.post("http://localhost:3340/api/pais/", data)
                 .then(function (response) {
                     console.log("Dados enviados com sucesso:", response.data);
+
+                    
+                    setTimeout(function () {
+                        window.location.href = "../adm/modelFeedback.html";
+                    }, 1000);
+
+
                 })
                 .catch(function (error) {
                     console.error("Erro ao enviar dados:", error);
