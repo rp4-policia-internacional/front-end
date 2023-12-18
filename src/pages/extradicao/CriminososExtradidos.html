@@ -30,16 +30,13 @@
         <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 100px;">
             <thead>
                 <tr>
-                    <tr>
                     <th>NomeCompleto</th>
+                   
                     <th>Idade</th>
                     <th>Data de nascimento</th>
                     <th>Foto</th>
                     <th>País de origem</th>
                     <th>Gênero</th>
-
-                </tr>
-
 
                 </tr>
             </thead>
@@ -50,15 +47,36 @@
             </tbody>
         </table>
         <script>
-            // Fazer uma requisição Axios GET para obter a lista de vítimas
-            axios.get('http://localhost:3338/api/criminoso')
-                .then(function (response) {
-                    const criminosos = response.data;
-                    const listaCriminososTabela = document.getElementById('listaCriminososExtraditados');
-                    // Preencher a tabela com os criminosos extraditados
-                    criminosos.forEach(function (criminoso) {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
+            class Mediator{
+                constructor(){
+                    this.inscrito = {};
+                }
+                //Método para se inscrever em um evento
+                inscrever(evento,callback){
+                    if(!this.inscrito[evento]){
+                        this.inscrever[evento] = [];
+                    }
+                    this.inscrever[evento].push(callback);
+                }
+
+                //Método para publicar um evento
+                publish(evento,data){
+                    if(this.inscrito[evento]){
+                        this.inscrito[evento].forEach(callback =>{
+                            callback(data);
+                        });
+                    }
+                }
+            }
+        </script>
+        <script>
+            const mediator = new Mediator();
+
+            //Se inscrever no evento listar criminosos
+            mediator.inscrever('listarCriminoso', function(criminoso){
+                   const listaCriminososTabela = document.getElementById('listaCriminososExtraditados');
+                   const linha = document.createElement('tr');
+                   linha.innerHTML = `
                         <td>${criminoso.nomeCompleto}</td>
                         <td>${criminoso.idade}</td>
                         <td>${criminoso.dataNascimento}</td>
@@ -69,11 +87,22 @@
                             <td><a href="detalhesCriminoso.html?id=${criminoso.id}"><button type="button" class="btn btn-secondary">Ver detalhes</button></a></td>
                             <td><button type="button" class="btn btn-danger">Emitir pedido de busca e captura</button></td>
                         `;
-                        listaCriminososTabela.appendChild(row);
+                        listaCriminososTabela.appendChild(linha);
+
+            });
+            // Fazer uma requisição Axios GET para obter a lista de vítimas
+            axios.get('http://localhost:3338/api/criminoso')
+                .then(function (response) {
+                    const criminosos = response.data;
+                    const listaCriminososTabela = document.getElementById('listaCriminososExtraditados');
+                   
+                    //Prencher a tabela com os dados dos criminosos usando o Mediator
+                    criminosos.forEach(function(criminoso){
+                        meidiator.publish('listarCriminoso',criminoso);
                     });
                 })
-                .catch(function (error) {
-                    console.error('Erro ao buscar buscarCriminoso:', error);
+                .catch(function(error){
+                    console.error('Erro ao buscar o criminoso:', error);
                 });
         </script>
     </body>

@@ -51,6 +51,9 @@
                     </p>
                 </div>
                 <div class="modal-footer">
+                    <button id="btnVoltarLista" type="button" class="btn btn-dark" data-dismiss="modal" onclick="listaVitimas()">
+                        Voltar para lista
+                    </button>
                     <button id="btnAcionarResgate" type="button" class="btn btn-dark" data-dismiss="modal"
                         onclick="acionarResgate()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -58,19 +61,11 @@
                             <path
                                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                         </svg>
-                        Acionar resgate</button>
+                        Acionar resgate
+                    </button>
                 </div>
 
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                    </svg>
-                    Acionar resgate</button>
             </div>
 
 
@@ -139,6 +134,12 @@
                     $("#loadingModal").modal('hide');
                 }, 3000);
             });
+
+            $("#btnVoltarLista").click(function () {
+                console.log("data object");
+                console.log(dataObject);
+                listaVitimas(dataObject);
+            });
         });
 
         function mostrarLoadingEAgendarRedirecionamento(url) {
@@ -162,6 +163,46 @@
                 mostrarLoadingEAgendarRedirecionamento(`../resgate/modelNaoResgatada.html?data=${dataEncode}`);
             }
         }
+
+        async function atualizarStatusVitima(vitima, novoStatus) {
+            try {
+                await axios.get(`http://localhost:3337/api/vitima/${vitima.id_vitima}`)
+                .then(async function (response) {
+                    
+                    await axios.put('http://localhost:3337/api/vitima/', 
+                        { 
+                            id: vitima.id_vitima, 
+                            statusDaVitima: novoStatus ,
+                            id_paisDeOrigem: response.data.id_paisDeOrigem,
+                            id_autorDoCrime: response.data.id_autorDoCrime,
+                            nomeCompleto: response.data.nomeCompleto,
+                            nacionalidade: response.data.nacionalidade,
+                            altura: parseFloat(response.data.altura),
+                            genero: response.data.genero,
+                            idade: parseInt(response.data.idade),
+                            id_paisVistoPorUltimo: response.data.id_paisVistoPorUltimo,
+                            foto: response.data.foto
+                        }
+                    )
+                    .then((async function (response) {
+                        const data = response.data;
+                        console.log(response.data);
+                        console.log(response.data);
+                    }));
+
+                })
+                
+            } catch (error) {
+                console.error('Erro ao atualizar o status da vítima: ', error);
+                throw error;
+        }
+}
+
+        async function listaVitimas(vitima){
+            await atualizarStatusVitima(vitima, "Encontrada");
+            window.location.href = "../vitima/listaDeVitima.html";
+        }
+
     </script>
 
 </html>
