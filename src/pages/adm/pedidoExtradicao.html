@@ -1,64 +1,141 @@
 <html>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="css/bootstrap.css">
+        
+        <link rel="stylesheet" type="text/css" href="estilo.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
+        <title> Registro de extradiçoes </title>
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+        <style>
+            #loadingModal {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        </style>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
+        </nav>
 
+        <div class="col-md-3" style="margin-top: 10px">
+            <a href="../adm/homeAdm.html">
+                <button type="button" class="btn btn-secondary">Voltar</button>
+            </a>
+        </div>
+         <div class="container-fluid">
+       
+           
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 20px;">                <thead class="thead-dark">
+                    <tr>
+                        <th>Nome do criminoso</th>
+                        <th>País de origem</th>
+                        <th>Transporte</th>
+                        <th>Agente responsável</th>
+                        
 
-<link rel="stylesheet" href="css/bootstrap.css">
+                    </tr>
+                </thead>
+                <!-- Corpo da tabela (mantido como antes) -->
+                <tbody id="extradicaoTabela"></tbody>
+            </table>
+        </div>
+        <script>
+            class Mediator{
+                constructor(){
+                    this.inscrito = {};
+                }
+                //Método para se inscrever em um evento
+                inscrever(evento,callback){
+                    if(!this.inscrito[evento]){
+                        this.inscrever[evento] = [];
+                    }
+                    this.inscrever[evento].push(callback);
+                }
 
-<link rel="stylesheet" type="text/css" href="estilo.css">
+                //Método para publicar um evento
+                publish(evento,data){
+                    if(this.inscrito[evento]){
+                        this.inscrito[evento].forEach(callback =>{
+                            callback(data);
+                        });
+                    }
+                }
+            }
+        </script>
+        <script>
+            
+            let extradicaoSelecionadoId;
+            
+            async function getPaisNome(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                    return response.data.nome;
+                } catch (error) {
+                    console.error('Erro ao buscar país: ', error);
+                    return 'País não encontrado';
+                }
+            }
 
-<head>
-    <title> Pedidos de extradicao </title>
-    <div>
-        <img src="/src/shared/images/logo.png" width="100px" alt="logo" class="img">
-    </div class="container">
-    <div>
-        <img style="position: absolute; top: 50px; left: 1300px; bottom: 50px;" src="/src/shared/images/user.png"
-            width="56" height="64" alt="user" class="img">
-    </div>
+            async function getCriminosoNome(id) {
+                try {
+                    const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+                    return response.data.nome;
+                } catch (error) {
+                    console.error('Erro ao buscar criminoso: ', error);
+                    return 'Criminoso não encontrado';
+                }
+            }
+            
+            
+            axios.get('http://localhost:3336/api/extradicao/')
+                .then(async function (response) {
+                    const extradicoes = response.data;
+                    const extradicoesTabela = document.getElementById('extradicaoTabela');
+            
+                    for (const extradicao of extradicoes) {
+                        const row = document.createElement('tr');
+                        const paisNome = await getPaisNome(extradicao.id_paisOrigem);
+                        const criminosoNome = await getCriminosoNome(extradicao.id_criminoso);
+                        row.innerHTML = `
+                            <td>${criminosoNome}</td>
+                            <td>${paisNome}</td>
+                            <td>${extradicao.transporte}</td>
+                            <td>${extradicao.agente}</td>
+                            <
 
-    <img style="position: absolute; top: 50px; left: 1200px; bottom: 50px;" src="/src/shared/images/notification.png"
-        width="56" height="64" alt="user" class="img">
-    </div>
-</head>
-
-<body>
-    <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 100px;">
-        <thead>
-            <tr>
-                <th>Código do Pedido</th>
-                <th>Grupo ou criminoso capturado</th>
-                <th>Agentes da OPI</th>
-                <th>Data Inicial </th>
-                <th>Data final</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>19078-89</td>
-                <td>Goro Akechi</td>
-                <td><img style="margin-left: 30%;" width="56" height="64" src="/src/shared/images/agente.png"
-                        alt="Imagem"></a>
-                </td>
-                <td>25/09/2023</td>
-                <td>5/10/2023</td>
-            </tr>
-        </tbody>
-    </table>
-</body>
-
+                            `;
+            
+            
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar extradições:', error);
+                });
+            
+           
+          
+            
+          
+          
+        </script>
+   
+    </body>
 </html>
