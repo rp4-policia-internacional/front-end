@@ -31,21 +31,59 @@
     
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
+            <a class="navbar-brand" href="#"><img src="../../shared/images/logo_1.png" width="75px" alt="logo"class="img"  >
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                    <a class="nav-link" href="../home/telaInicial.html">Home <span class="sr-only"></span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Criminoso
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../criminoso/formCadastro.html">Cadastro</a>
+                        <a class="dropdown-item" active  href="../criminoso/listarCriminoso.html">Lista de criminosos</a>
+                    </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Vítima
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../vitima/cadastroVitima.html">Cadastro</a>
+                        <a class="dropdown-item" active  href="../vitima/listaDeVitima.html">Lista de vitimas</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Organização Criminosa
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../criminoso/formCadastroOrg.html">Cadastro</a>
+                        <a class="dropdown-item" active  href="../criminoso/listarOrg.html">Lista de organizações</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </nav>
 
-        <div class="col-md-3" style="margin-top: 10px">
-            <a href="../home/listaCriminoso.html">
-                <button type="button" class="btn btn-secondary">Voltar</button>
-            </a>
-        </div>
-         <div class="container-fluid">
-       
-            <div class="d-flex justify-content-center align-items-center mb-5" style="margin-right: 80px;" >
-                <strong>HISTÓRICO </strong> 
+        <div class="container-fluid pl-5"">
+            <div class="row justify-content-start" style="margin-top: 10px">
+                <a href="../criminoso/listarCriminoso.html">
+                    <button type="button" class="btn btn-secondary">Voltar</button>
+                </a>
             </div>
+            <div class="row justify-content-center mt-5">
+                <h1>Histórico do Criminoso </h1>
+             </div>   
 
-            <div class="d-flex justify-content-center align-items-center mb-5" style="margin-right: 80px;" >
+            <div class="table-responsive-lg">
                 <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 20px;">
                     <thead class="thead-dark">
                         <tr>
@@ -53,17 +91,21 @@
                             <th>País de origem</th>
                             <th>Gênero</th>
                             <th>Idade</th>
+                            <th>Altura</th>
                             <th>Status</th>
+                            <th>Apelido</th>
+                            <th>Caracteristicas</th>
+                            <th>Genero</th>
+                            <th>País visto por último</th>
                             <th>Data da modificação</th>
-                            <th></th>
+                            
                         </tr>
                     </thead>
                     <!-- Corpo da tabela (mantido como antes) -->
                     <tbody id="historicoTabela"></tbody>
                 </table>
             </div>
-
-            
+  
         </div>
 
         <script>
@@ -88,31 +130,20 @@
                         console.log(historicos);
                         const row = document.createElement('tr');
                         const paisNome = await getPaisNome(criminoso.id_paisOrigem);
+                        const paisUltimo = await getPaisNome(criminoso.id_paisVistoPorUltimo);
                         row.innerHTML = `
                             <td>${criminoso.nomeCompleto}</td>
                             <td>${paisNome}</td>
                             <td>${criminoso.genero}</td>
                             <td>${criminoso.idade} anos</td>
+                            <td>${criminoso.altura}</td>
                             <td>${criminoso.status}</td>
+                            <td>${criminoso.apelido}</td>
+                            <td>${criminoso.caracteristicas}</td>
+                            <td>${criminoso.genero} </td>
+                            <td>${criminoso.id_paisVistoPorUltimo}</td>
                             <td>${criminoso.dataAtualizacao}</td>
                         `;
-            
-                        //botao ver detalhes
-                        const verDetalhesButton = document.createElement('button');
-                        verDetalhesButton.type = 'button';
-                        verDetalhesButton.className = 'btn btn-secondary';
-                        verDetalhesButton.textContent = 'Ver detalhes';
-                        verDetalhesButton.addEventListener('click', function () {
-                           
-                            historicoselecionadoId = criminoso.id;
-                            window.location.href = `detalhesCriminoso.html?id=${criminoso.id}`;
-                        });
-                        const verDetalhesCell = document.createElement('td');
-                        verDetalhesCell.appendChild(verDetalhesButton);
-            
-                    
-            
-                        row.appendChild(verDetalhesCell);
             
                         historicoTabela.appendChild(row);
                     }
