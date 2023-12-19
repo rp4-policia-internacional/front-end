@@ -210,13 +210,15 @@
 
         chartCriminoso.chartStatusDoCriminoso(filtro);
         chartParticipacaoOrganizacao.chartParticipacaoOrganizacao(filtro);
-        chartVitima.chartStatusDaVitima(filtro);
         chartPais.chartCriminososPorPais(filtro);
+        chartVitima.chartStatusDaVitima(filtro);
+       
         $('#filtroModal').modal('hide');
       }
-      document.getElementById('faixaEtaria').addEventListener('change', () => {
-        aplicarFiltro();
-      });
+
+      document.getElementById('genero').addEventListener('change', aplicarFiltro);
+document.getElementById('faixaEtaria').addEventListener('change', aplicarFiltro);
+
       // Elementos totais
       const totalCriminososElement = document.getElementById('totalCriminosos');
       const totalRepatriacaoElement = document.getElementById('totalRepatriacao');

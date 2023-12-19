@@ -3,6 +3,7 @@ class ChartCriminoso {
   constructor(contextoDoGrafico, filtro) {
     this.contextoDoGrafico = contextoDoGrafico;
     this.filtro = filtro;
+    this.chart = null; 
   }
 
 
@@ -113,6 +114,13 @@ class ChartCriminoso {
       if (this.filtro && this.filtro.getGeneroSelecionado() !== 'todos') {
         criminosos = criminosos.filter(criminoso => criminoso.genero === this.filtro.getGeneroSelecionado());
       }
+
+
+       // Antes de criar um novo gráfico
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    
       // qtd de criminosos por organização
       const contagemPorOrganizacao = dadosOrganizacao.reduce((contagem, organizacao) => {
         // Filtragem dos criminosos que estão participando da organização
@@ -126,6 +134,9 @@ class ChartCriminoso {
       const values = Object.values(contagemPorOrganizacao);
 
       console.log("organização", values);
+     
+
+   
 
       new Chart(this.contextoDoGrafico, {
         type: 'pie',

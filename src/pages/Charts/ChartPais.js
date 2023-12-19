@@ -10,31 +10,31 @@ class ChartPais {
       const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
       const responsePaises = await axios.get(`http://localhost:3340/api/pais`);
       let criminososFiltrados = responseCriminosos.data;
+  
       if (filtro) {
         if (filtro.getGeneroSelecionado() !== 'todos') {
           criminososFiltrados = criminososFiltrados.filter((criminoso) => {
             return criminoso.genero === filtro.getGeneroSelecionado();
-          })
+          });
         }
         if (filtro.getFaixaEtaria() !== 'todos') {
           criminososFiltrados = criminososFiltrados.filter((criminoso) => {
             return verificarFaixaEtaria(criminoso.idade, filtro.getFaixaEtaria());
-          })
+          });
         }
       }
-
+  
       return {
-        criminosos: responseCriminosos.data,
+        criminosos: criminososFiltrados,
         paises: responsePaises.data,
       };
-
-
-
+  
     } catch (error) {
       console.error('Erro ao buscar dados de criminosos e países:', error);
       return { criminosos: [], paises: [] };
     }
   }
+  
 
   async chartCriminososPorPais(filtro) {
     try {
