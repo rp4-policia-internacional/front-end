@@ -14,124 +14,167 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
+        <a class="navbar-brand" href="#"><img src="../../shared/images/logo_1.png" width="75px" alt="logo"class="img"  >
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Criminoso
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="formCadastro.html">Cadastro</a>
+                    <a class="dropdown-item" active  href="listarCriminoso.html">Lista de criminosos</a>
+                </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Vítima
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="../vitima/cadastroVitima.html">Cadastro</a>
+                    <a class="dropdown-item" active  href="../vitima/listaDeVitima.html">Lista de vitimas</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Organização Criminosa
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="../criminoso/formCadastroOrg.html">Cadastro</a>
+                    <a class="dropdown-item" active  href="../criminoso/listarOrg.html">Lista de organizações</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </nav>
     
-    <div class="container-fluid col-md-8 mt-5 pt-5">
-        <div class="col-md-3">
+    <div class="container-fluid pl-5"">
+        <div class="row justify-content-start" style="margin-top: 10px">
             <a href="listarCriminoso.html">
                 <button type="button" class="btn btn-secondary">Voltar</button>
             </a>
         </div>
-        <h1>Editar Cadastro de Criminoso</h1>
-        <p>Preencha os campos obrigatórios (*) antes de salvar.</p>
+        <div class="row justify-content-center mt-5">
+            <h1>Editar Cadastro de Criminoso</h1>
+         </div>   
+        <div class="row justify-content-center ">
+            <p>Preencha os campos obrigatórios (*) antes de salvar.</p>   
+        </div>
+        <div class="row justify-content-center mb-5 mt-5">
+            <form id="formEditarCriminoso" method="post">
+                <div class="form-group">
+                    <label for="imagem">Inserir imagem</label>
+                    <input type="file" class="form-control-file" id="imagem" accept="image/*">
+                </div>
 
-        <div class="container-fluid col-md-8 mt-5 pt-5"></div>
-        <form id="formEditarCriminoso" method="post">
-            <div class="form-group">
-                <label for="imagem">Inserir imagem</label>
-                <input type="file" class="form-control-file" id="imagem" accept="image/*">
-            </div>
+                <div class="form-group">
+                    <div class="text-center">
+                        <img id="imagemPreview" src="" alt="Prévia da imagem"
+                            style="max-width: 300px; display: none; max-height: 100px">
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <div class="text-center">
-                    <img id="imagemPreview" src="" alt="Prévia da imagem"
-                        style="max-width: 300px; display: none; max-height: 100px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="nomeCompleto">Nome Completo:</label>
+                            <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="nomeCompleto">Nome Completo:</label>
-                        <input type="text" class="form-control" id="nomeCompleto" placeholder="Nome Completo">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="altura">Altura:</label>
+                            <input type="double" class="form-control" id="altura" placeholder="167">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="idade">Idade:</label>
+                            <input type="number" class="form-control" id="idade">
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="genero">Gênero:</label>
+                            <select id="genero" class="form-control">
+                                <option>Feminino</option>
+                                <option>Masculino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="paisVistoPorUltimo">País Visto por Último:*</label>
+                            <select id="paisVistoPorUltimo" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dataNascimento">Data de Nascimento</label>
+                            <input type="date" class="form-control" id="dataNascimento">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="apelido">Apelido:</label>
+                            <input type="text" class="form-control" id="apelido">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="status">Status:</label>
+                            <select id="status" class="form-control">
+                                <option>Foragido</option>
+                                <option>Capturado</option>
+                                <option>Extraditado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_paisOrigem">Pais de origem:</label>
+                            <select id="id_paisOrigem" class="form-control">
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="altura">Altura:</label>
-                        <input type="double" class="form-control" id="altura" placeholder="167">
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="idade">Idade:</label>
-                        <input type="number" class="form-control" id="idade">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="caracteristica">Caracteristicas:</label>
+                            <input type="text" class="form-control" id="caracteristica" rows="4" cols="50">
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="genero">Gênero:</label>
-                        <select id="genero" class="form-control">
-                            <option>Feminino</option>
-                            <option>Masculino</option>
-                        </select>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="dataNascimento">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="dataNascimento">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="apelido">Apelido:</label>
-                        <input type="text" class="form-control" id="apelido">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="status">Status:</label>
-                        <select id="status" class="form-control">
-                            <option>Foragido</option>
-                            <option>Capturado</option>
-                            <option>Extraditado</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="id_paisOrigem">Pais de origem:</label>
-                        <select id="id_paisOrigem" class="form-control"></select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="paisVistoPorUltimo">País Visto por Último:*</label>
-                        <select id="paisVistoPorUltimo" class=form-control"></select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="caracteristica">Caracteristicas:</label>
-                        <input type="text" class="form-control" id="caracteristica" rows="4" cols="50">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="id_organizacao">Organização:</label>
-                        <select id="id_organizacao" class="form-control">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_organizacao">Organização:</label>
+                            <select id="id_organizacao" class="form-control">
 
-                        </select>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-    </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
 
     <script>
 

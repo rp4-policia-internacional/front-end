@@ -26,7 +26,46 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
+        <a class="navbar-brand" href="#"><img src="../../shared/images/logo_1.png" width="75px" alt="logo"class="img"  >
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="../home/telaInicial.html">Home <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Criminoso
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="../criminoso/formCadastro.html">Cadastro</a>
+                    <a class="dropdown-item" active  href="../criminoso/listarCriminoso.html">Lista de criminosos</a>
+                </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Vítima
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="../vitima/cadastroVitima.html">Cadastro</a>
+                    <a class="dropdown-item" active  href="../vitima/listaDeVitima.html">Lista de vitimas</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Organização Criminosa
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="../criminoso/formCadastroOrg.html">Cadastro</a>
+                    <a class="dropdown-item" active  href="../criminoso/listarOrg.html">Lista de organizações</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <div class="col-md-3" style="margin-top: 10px">
