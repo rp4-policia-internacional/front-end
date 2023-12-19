@@ -49,12 +49,12 @@
                 <label for="data">Data do fim:*</label>
                 <input type="date" id="dataF" name="dataF" class="form-control" required>
 
-            </div>
-            <div class="form-group">
-                <label for="id_paisDeOrigem">País de Origem:*</label>
-                <input type="text" id="paisOrigem" name="paisDeOrigem" class="form-control"
-                    placeholder="Informe o país de origem" required>
-            </div>
+                <div class="form-group">
+                    <label for="paisOrigem">País de origem:*</label>
+                    <select id="paisOrigem" name="paisOrigem" class="form-control" required>
+                        <option value="0">Selecionar</option>
+                    </select>
+                </div>
 
             <div class="form-group">
                 <label for="paisResponsavel">Tipo de transporte:*</label>
@@ -71,12 +71,14 @@
                     <option>Alice</option>
                     <option>João</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="nomeCompleto">Nome Completo da vitima:*</label>
-                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control"
-                    placeholder="Informe o nome completo" required>
-            </div>
+            
+                <div class="form-group">
+                    <label for="nomeVitima">Nome da vítima*</label>
+                    <select id="nomeVitima" name="nomeVitima" class="form-control" required>
+                        <option value="0">Selecionar</option>
+                    </select>
+                </div>
+                
             <button onclick="enviarRepatriacao()" type="submit" class="btn btn-secondary">Enviar</button>
         </form>
     </div>
@@ -98,7 +100,7 @@
             const dateF = document.getElementById("dataF").value;
             const id_pais_origem = document.getElementById("paisOrigem").value;
             const agente = document.getElementById("agenteResponsavel").value;
-            const nomeCompleto = document.getElementById("nomeCompleto").value;
+            const nomeCompleto = document.getElementById("nomeVitima").value;
             const transporte = document.getElementById("transporte").value;
             const dataIObj = new Date(dateI);
             const dataFObj = new Date(dateF);
@@ -121,6 +123,55 @@
             FormMediator.sendData(formData);
 
         });
+
+
+
+
+
+
+        axios.get("http://localhost:3340/api/pais/")
+      .then(function (response) {
+        const select = document.getElementById("paisOrigem");
+  
+        for (let i in response.data) {
+          let option = document.createElement('option');
+          option.text = response.data[i].nome;
+          option.value = response.data[i].id;
+          select.add(option);
+        }
+  
+        function alteraValor() {
+          var valor = select.options[select.selectedIndex];
+          $('#paisOrigem').val(valor.value).trigger('change');
+        }
+  
+        select.addEventListener('change', alteraValor);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  
+        axios.get("http://localhost:3337/api/vitima/")
+      .then(function (response) {
+        const select = document.getElementById("nomeVitima");
+  
+        for (let i in response.data) {
+          let option = document.createElement('option');
+          option.text = response.data[i].nomeCompleto;
+          option.value = response.data[i].id;
+          select.add(option);
+        }
+  
+        function alteraValor() {
+          var valor = select.options[select.selectedIndex];
+          $('#nomeVitima').val(valor.value).trigger('change');
+        }
+  
+        select.addEventListener('change', alteraValor);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
         function enviarRepatriacao() {
             window.location.href = '../repatriacao/detalhesRepatriacao.html';
         }

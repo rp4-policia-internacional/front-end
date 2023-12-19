@@ -52,3 +52,73 @@
 .btn.btn-danger:hover {
     background-color: #c82333; 
 }
+
+
+.navbar {
+    background-color: #f8f9fa;
+    padding: 10px 20px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    list-style: none;
+    margin: 0;
+}
+
+.navbar li {
+    margin: 0 20px; 
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.navbar-logo {
+    width: 90px; 
+    height: auto;
+    border-radius: 20%;
+    border: 2px solid #f0e9e9;
+}
+
+.btn-login {
+    background-color: rgb(1, 7, 44);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.btn-cadastro {
+    color: black;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid rgb(1, 7, 44);
+    display: inline-block;} 
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+}
+/* Adicione isso ao seu arquivo estilo.css ou ao local onde você tem suas regras de estilo */
+
+.btn-custom {
+    background-color:rgb(1, 7, 44); /* Cor roxa */
+    color: #ffffff; /* Cor do texto branco para melhor contraste */
+    border: 1px solid #800080; /* Adicione uma borda para destacar o botão */
+  }
+  
+  .btn-custom:hover {
+    background-color: rgb(1, 7, 44); /* Cor roxa mais escura ao passar o mouse */
+    border: 1px solid #6a006a; /* Adicione uma borda mais escura ao passar o mouse */
+  }
+  

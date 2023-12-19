@@ -19,8 +19,9 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="../vitima/CSS/styles.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="../home/CSS/style.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <title> Vítimas desaparecidas </title>
@@ -40,15 +41,28 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
-        </nav>
+
+
+<body> 
+    
+    <header class="header">
+        <div class="logo">
+            <a class="navbar-brand" href="#">
+                <img class="navbar-logo" src="../../shared/images/logo.png" alt="carro">
+            </a>
+        </div>
+        <ul class="navbar">
+            <li><a href="../LandingPage/landingPage.html">Home</a></li>
+            <li><a href="../LandingPage/sobre.html">Sobre</a></li>
+            <li><a href="../Charts/chart.html">Dashboard</a></li>
+            <li><a href="../LandingPage/contato.html">Contato</a></li>
+        </ul>
+       
+    </header>
+
 
         <div class="col-md-3" style="margin-top: 10px">
-            <a href="../home/telaInicial.html">
-                <button type="button" class="btn btn-secondary">Voltar</button>
-            </a>
+           
         </div>
         <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
@@ -64,9 +78,7 @@
         </div> 
 
     <div class="col-md-3" style="margin-top: 100px">
-        <a href="../home/telaInicial.html">
-            <button type="button" class="btn btn-secondary">Voltar</button>
-        </a>
+      
     </div>
 
 
@@ -76,6 +88,12 @@
         <div class="d-flex justify-content-end align-items-center mb-5" style="margin-right: 80px;"
             onclick="direcionaNovaVitimaPage()">
             <i class="fas fa-user-plus fa-lg"></i>
+            <style>
+                .fa-user-plus {
+                    font-size: 2em; 
+                }
+            </style>
+            
         </div>
 
         <div class="row">
@@ -156,7 +174,7 @@
                                         acionarResgate(vitima);
                                     });
                                 } else {
-                                    emitirPedidoButton.className = 'btn btn-primary';
+                                    emitirPedidoButton.className = 'btn btn-danger';
                                     emitirPedidoButton.textContent = 'Emitir pedido de busca e resgate';
                                     emitirPedidoButton.addEventListener('click', function () {
                                         const vitimaId = vitima.id;
@@ -239,7 +257,7 @@
                     window.location.href = "../vitima/cadastroVitima.html";
                 }
 
-                // chamando a funcao p preencher a atbela
+        
                 preencherTabela();
             </script>
     </body>

@@ -43,11 +43,11 @@
 
 .card-container {
     display: flex;
-    /* Exibir os cards em uma linha */
+   
     gap: 20px;
-    /* Espaço entre os cards */
+   
     margin-top: 150px;
-    /* Espaço acima dos cards */
+   
 }
 
 
@@ -145,7 +145,7 @@
 .navbar {
     background-color: #f8f9fa;
     padding: 0px 0;
-    /*altura*/
+   
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,7 +162,7 @@
     height: auto;
     margin-right: 6px;
     border-radius: 50%;
-    /* borda arredondada */
+    
     border: 2px solid #f0e9e9;
 }
 
@@ -186,7 +186,7 @@
     color: black;
 }
 .nav-item {
-    margin: 0 10px; /* Espaçamento entre os itens do menu */
+    margin: 0 10px; 
 }
 .nav-link {
     text-decoration: none;
@@ -215,7 +215,7 @@
     text-align: center;
     font-weight: bold;
     border: 2px solid rgb(1, 7, 44);
-    display: inline-block; /* Permitir que os botões fiquem na mesma linha */
+    display: inline-block; 
    
 }
 
@@ -292,10 +292,9 @@ img {
     
         text-align: justify;
         line-height: 20px;
-        max-width: 50%; /* Ajuste conforme necessário */
+        max-width: 50%;
         font-family: 'Open Sans', sans-serif;
-        margin-top: 20px; /* Ajuste a margem superior conforme necessário */
-}
+        margin-top: 20px; 
 form [type="submit"] {
     
     background-color: rgb(1, 7, 44);
@@ -304,8 +303,8 @@ form [type="submit"] {
     font-weight: bold;
     border: 2px solid white;
     border-radius: 5px;
-    padding: 0 20px; /* Ajuste o espaçamento interno conforme necessário */
-    text-decoration: none; /* Adicione isso para remover a sublinhado padrão em alguns navegadores */
+    padding: 0 20px; 
+    text-decoration: none; 
     display: flex;
     align-items: center;
 }
@@ -370,11 +369,12 @@ footer {
 }
 .content-container {
     display: flex;
-    align-items: center; /* Centraliza verticalmente */
+    align-items: center; 
 }
 
 .content-container img {
-    max-width: 50%; /* Ajuste a largura conforme necessário */
-    margin-left: 50px; /* Espaçamento entre a imagem e o texto */
-    margin-right: 20px; /* Ajuste a margem direita conforme necessário */
+    max-width: 50%; 
+    margin-left: 50px; 
+    margin-right: 20px; 
+}
 }
