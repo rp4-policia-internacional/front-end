@@ -19,13 +19,82 @@ body {
 }
 
 .header {
-    background-color: #f8f9fa;
-    padding: 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+}
+
+.logo h3 {
+    margin: 0;
+}
+
+.navbar {
+    background-color: #f8f9fa;
+    padding: 10px 20px; /* Ajuste o padding conforme necessário */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
     width: 100%;
+    top: 0;
+    left: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
+
+.navbar li {
+    margin: 0 90px; /* Espaçamento entre os itens do menu */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.navbar-logo {
+    max-width: 200px; /* Defina o valor desejado para limitar a largura */
+    height: auto;
+    border-radius: 20%;
+    border: 2px solid #f0e9e9;
+}
 
 
+.icons-header, .info-header, .user-actions {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.navbar-logo {
+    width: 90px; /* Defina o mesmo valor da largura desejada na landing page */
+    height: auto;
+    border-radius: 20%;
+    border: 2px solid #f0e9e9;
+}
+
+.btn-login {
+    background-color: rgb(1, 7, 44);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.btn-cadastro {
+    color: black;
+    padding: 6px 6px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid rgb(1, 7, 44);
+    display: inline-block; /* Permitir que os botões fiquem na mesma linha */
+   
 }
 
 .menu-lateral {
@@ -164,13 +233,21 @@ ul li.item-menu a .icon>i {
     align-items: center;
 }
 
+.modal-dialog {
+    padding: 6px;
+border-radius: 8px;
+
+}
+.modal-content{
+    padding: 20px;
+}
 .chart-container {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
-}
+    justify-content: center;
+  }
 
-.chart {
+  .chart {
     width: 300px;
     height: 300px;
     margin: 10px;
@@ -178,14 +255,24 @@ ul li.item-menu a .icon>i {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
+  }
 canvas {
     width: 100% !important;
     height: auto !important;
     border-radius: 8px;
 }
+#btn-filtro {
+    background-color: #35034d; /* Cor de fundo azul */
+    color: #fff; /* Cor do texto branco */
+    padding: 10px 20px; /* Preenchimento interno */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Borda arredondada */
+    cursor: pointer;
+  }
 
+  #btn-filtro:hover {
+    background-color: #0056b3; /* Cor de fundo azul mais escura ao passar o mouse */
+  }
 .cor-1 {
     background-color: linear-gradient(45deg, #ff5370, #ff8669);
 }
@@ -201,3 +288,4 @@ canvas {
 .cor-4 {
     background-color: linear-gradient(45deg, #9c27b0, #e91e63);
 }
+

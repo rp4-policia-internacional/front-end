@@ -167,9 +167,8 @@
          id_criminoso: nomeCompleto,
          transporte: transporte,
       };
-
+  
       FormMediator.sendData(formData);
-
     });
    //Coloca as pais do banco no select
    axios.get("http://localhost:3340/api/pais/")
@@ -205,7 +204,7 @@
                 for (let i in response.data){
                 
                     let option = document.createElement('option');
-                        option.text = response.data[i].nome;
+                        option.text = response.data[i].nomeCompleto;
                         option.value = response.data[i].id;
                         select.add(option);
                 }
