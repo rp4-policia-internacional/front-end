@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-md-3 ml-4 text-right">
-                <a href="historicoCriminoso.html?id=" id="editarLink">
+                <a href="../historico/historicoCriminoso.html?id=" id="historicoCriminoso">
                     <button type="button" class="btn btn-secondary">Histórico do Criminoso</button>
                 </a>
                 <a href="editarCadastroCriminoso.html?id=" id="editarLink">
@@ -72,7 +72,7 @@
             const idCriminoso= idCriminosoInput.value; // Obtém o ID da vítima
             const imagePreview = document.getElementById('imagemPreview');
 
-            // Restaurar a imagem da vítima ao carregar a página
+            // Restaurar a imagem da  ao carregar a página
             const savedImage = localStorage.getItem(idCriminoso + '_imagemDoCriminoso');
 
             if (savedImage) {
@@ -89,6 +89,7 @@
                 const criminoso = response.data;
                 const detalhesCriminoso = document.getElementById('detalhesCriminoso');
                 const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
+                const DataPais = await buscarPais(criminoso.id_paisOrigem);
                 console.log(criminoso);
                 const dataFormat = await dataNascimentoFormatada(criminoso.dataNascimento);
                 console.log(DataOrganizacao);
@@ -101,7 +102,7 @@
                         <p><strong>Altura:</strong> ${criminoso.altura}</p>
                         <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
                         <p><strong>Data de Nascimento:</strong> ${dataFormat}</p>
-                        <p><strong>Nacionalidade:</strong> ${criminoso.id_paisOrigem}</p>
+                        <p><strong>Nacionalidade:</strong> ${DataPais.nome}</p>
                         <p><strong>Gênero:</strong> ${criminoso.genero}</p>
                         <p><strong>País Visto por Último:</strong> ${criminoso.id_paisVistoPorUltimo}</p>
                         <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
@@ -135,6 +136,16 @@
             }
         }
 
+        async function buscarPais(id) {
+            try {
+                const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                return response.data;
+            } catch (error) {
+                alert('Erro ao buscar psia:', error);
+                throw error; // Rejeita a Promise em caso de erro, se necessário.
+            }
+        }
+
         async function dataNascimentoFormatada(dataString){
             const data = new Date(dataString); // Cria um objeto Date
 
@@ -162,12 +173,17 @@
         }
 
         // Buscar detalhes do criminoso pelo ID 
-        window.addEventListener('load', function () {
+        window.addEventListener('load', async function () {
             const idCriminoso = getURLParametro('id');
             buscarDetalhesCriminoso(idCriminoso);
             const editarLink = document.getElementById('editarLink');
+            const historicoCriminoso =document.getElementById('historicoCriminoso');
             editarLink.href = `editarCadastroCriminoso.html?id=${idCriminoso}`;
+            historicoCriminoso.href = `../historico/historicoCriminoso.html?id=${idCriminoso}`;
+
+
         });
+
     
         
     </script>
