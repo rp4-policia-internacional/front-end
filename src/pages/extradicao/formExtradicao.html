@@ -1,204 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Extradição</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <img src="../../shared/images/logo.png" width="100px" alt="logo">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <img src="/src/shared/images/logo.png" width="100px" alt="logo">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
-  </nav>
-
-  <div class="col-md-3" style="margin-top: 10px">
-      <a href="../home/telaInicial.html">
-          <button type="button" class="btn btn-secondary">Voltar</button>
-      </a>
-  </div>
     <div>  
       <form id="formExtradicao"   method="POST" name="formulario" > 
 
-
-      <div class="form-group">
-        <div class="   col-md-6 offset-md-3">
-          <label> Data inicio:</label>
-          <input id="dataE" type="text" name="data" class="form-control " placeholder=" Data:" required="">
+          <div class="form-group">
+              <div class="   col-md-6 offset-md-3">
+                  <label > Data inicio:</label>
+                  <input id="dataE" type="text" name="data" class="form-control " placeholder=" Data:" required="" >    
+              </div>
+          </div>
+          <div class="form-group">
+            <div class="   col-md-6 offset-md-3">
+                <label > Data fim:</label>
+                <input id="dataF" type="text" name="dataF" class="form-control " placeholder=" Data:" required="" >    
+            </div>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="   col-md-6 offset-md-3">
-          <label> Data fim:</label>
-          <input id="dataF" type="text" name="dataF" class="form-control " placeholder=" Data:" required="">
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-md-6 offset-md-3">
+        <div class="form-group">
+          <div class="col-md-6 offset-md-3">
           <label for="paisOrigem">País de origem:*</label>
           <select id="paisOrigem" name="paisOrigem" class="form-control">
-            <option value="0">Selecionar</option>
+              <option value="0">Selecionar</option>
           </select>
-        </div>
+      </div>
       </div>
       <div class="form-group">
         <div class="col-md-6 offset-md-3">
-          <label for="agente">Agente:*</label>
-          <input id="agente" name="agente" class="form-control">
+        <label for="agente">Agente:*</label>
+        <input id="agente" name="agente" class="form-control">
 
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-md-6 offset-md-3">
-          <label for="nomeCriminoso">Nome do criminoso*</label>
-          <select id="nomeCriminoso" name="nomeCriminoso" class="form-control">
-            <option value="0">Selecionar</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-md-6 offset-md-3">
-          <label for="transporte">Transporte:*</label>
-          <select id="transporte" name="transporte" class="form-control">
-            <option selected>Selecionar</option>
-            <option>Terrestre</option>
-            <option>Aquático</option>
-            <option>Aéreo</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div style="width: 500px;" class="col-md-6 offset-md-3">
-          <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center"
-            onclick="enviarExtradicao()" data-toggle="modal" data-target="#extradicaoLabel">
-            Enviar
-          </button>
-
-        </div>
-      </div>
-
-    </form>
+    </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-6 offset-md-3">
+      <label for="nomeCriminoso">Nome do criminoso</label>
+      <select id="nomeCriminoso" name="nomeCriminoso" class="form-control">
+      </select>
   </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-6 offset-md-3">
+    <label for="transporte">Transporte:*</label>
+    <select id="transporte" name="transporte" class="form-control">
+        <option selected>Selecionar</option>
+        <option>Terrestre</option>
+        <option>Aquático</option>
+        <option>Aéreo</option>
+    </select>
+</div>
+</div>
+      
+          <div class="form-group">
+              <div style="width: 500px;"class="col-md-6 offset-md-3">
+                <button style="margin-top: 15%;" type="submit" class="btn btn-primary btn-lg btn-block text-center" onclick="enviarExtradicao()" data-toggle="modal" data-target="#extradicaoLabel">
+                    Enviar                  
+                </button>
 
-  <script>
-    const FormMediator = {
-      sendData: function (formData) {
-        axios.post("http://localhost:3336/api/extradicao/", formData)
-          .then(function (response) {
-            console.log("Cadastro de extradição bem-sucedido!", response.data);
-          })
-          .catch(function (error) {
-            console.error("Erro ao cadastrar a extradição:", error);
-          });
+              </div>
+          </div>
+    
+      </form> 
+    </div>
+
+   <script>
+    const FormMediator ={
+      sendData: function(formData){
+        axios.post("http://localhost:3336/api/extradicao/",formData)
+        .then(function(response){
+          console.log("Cadastro de extradição bem-sucedido!",response.data);
+        })
+        .catch(function(error){
+          console.error("Erro ao cadastrar a extradição:", error);
+        });
       }
     };
-    document.getElementById("formExtradicao").addEventListener("submit", function (event) {
+    document.getElementById("formExtradicao").addEventListener("submit", function(event){
       event.preventDefault();
       const dateE = document.getElementById("dataE").value;
       const dateF = document.getElementById("dataF").value;
       const id_pais_origem = document.getElementById("paisOrigem").value;
       const agente = document.getElementById("agente").value;
-
       const nomeCriminosoSelect = document.getElementById("nomeCriminoso");
-      const nomeCriminoso = nomeCriminosoSelect.options[nomeCriminosoSelect.selectedIndex].value;
-
-
-
-      //const nomeCriminoso = document.getElementById("nomeCriminoso").value;
+      const nomeCriminoso = nomeCriminosoSelect.options[nomeCriminosoSelect.selectedIndex].valor;
       const transporte = document.getElementById("transporte").value;
       const dataEObj = new Date(dateE);
       const dataFObj = new Date(dateF);
-
-
-      console.log("Data de Início:", dataEObj);
-      console.log("Data de Fim:", dataFObj);
-      console.log("País de Origem:", id_pais_origem);
-      console.log("Agente:", agente);
-      console.log("Nome do Criminoso:", nomeCriminoso);
-      console.log("Transporte:", transporte);
-
+     console.log(dataEObj);
+     console.log(dataFObj);
+     console.log(id_pais_origem);
+     console.log(agente);
+     console.log(nomeCriminoso);
+     console.log(transporte);
 
       const formData = {
-        data_inicio: dataEObj,
-        data_fim: dataFObj,
-        id_pais_origem: id_pais_origem,
-        agente_id: agente,
-        id_criminoso: nomeCriminoso,
-        transporte: transporte,
+         data_inicio: dataEObj,
+         data_fim: dataFObj,
+         id_pais_origem: id_pais_origem,
+         agente_id:agente,
+         id_criminoso: nomeCriminoso,
+         transporte: transporte,
       };
 
       FormMediator.sendData(formData);
 
     });
-    //Coloca as pais do banco no select
-    axios.get("http://localhost:3340/api/pais/")
-      .then(function (response) {
-        const select = document.getElementById("paisOrigem");
+   //Coloca as pais do banco no select
+   axios.get("http://localhost:3340/api/pais/")
+        .then(function (response) {
+            const select = document.getElementById("paisOrigem");
 
-        for (let i in response.data) {
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#paisOrigem').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        });
 
-          let option = document.createElement('option');
-          option.text = response.data[i].nome;
-          option.value = response.data[i].id;
-          select.add(option);
-        }
-        function alteraValor() {
-          var valor = select.options[select.selectedIndex];
-          $('#paisOrigem').val(valor.value).trigger('change');
-        }
-        // Adicione o evento de mudança ao select
-        select.addEventListener('change', alteraValor);
+         //Coloca os criminosos do banco no select
+   axios.get("http://localhost:3338/api/criminoso/")
+        .then(function (response) {
+            const select = document.getElementById("nomeCriminoso");
 
-
-      })
-      .catch(function (error) {
-        // manipula erros da requisição
-        console.error(error);
-      });
-
-    //Coloca as pais do banco no select
-    axios.get("http://localhost:3338/api/criminoso/")
-      .then(function (response) {
-        const select = document.getElementById("nomeCriminoso");
-
-        for (let i in response.data) {
-
-          let option = document.createElement('option');
-          option.text = response.data[i].nome;
-          option.value = response.data[i].id;
-          select.add(option);
-        }
-
-
-      })
-      .catch(function (error) {
-        // manipula erros da requisição
-        console.error(error);
-      });
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#nomeCriminoso').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        });
     function enviarExtradicao() {
-      window.location.href = '../extradicao/detalhesDaExtradicao.html';
-    }
-  </script>
-</body>
-
+            window.location.href = '../extradicao/detalhesDaExtradicao.html';
+        }
+   </script>
+  </body>
 </html>
