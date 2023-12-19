@@ -126,7 +126,7 @@
 
 
             </select>
-            <label for="faixaEtaria">Selecione a Faixa Etária:</label>
+            <label for="faixaEtaria">Selecione a Faixa Etária do criminoso:</label>
             <select id="faixaEtaria">
               <option value="todas">Todas</option>
               <option value="18-25">18-25</option>
@@ -135,21 +135,19 @@
             </select>
 
 
-            <label for="capitalPais">Capital do País:</label>
-            <select id="capitalPais" class="form-control">
-
-            </select>
 
             <label for="paisEspecifico">País Específico:</label>
             <select id="paisEspecifico" class="form-control">
 
             </select>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-primary" id="aplicarFiltro" onclick="aplicarFiltro()">Aplicar
+                Filtro</button>
 
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-primary" id="aplicarFiltro">Aplicar Filtro</button>
-          </div>
+
 
         </div>
       </div>
@@ -181,11 +179,14 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+
+
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-
-
       const filtro = new ChartFiltro();
+
+      // Gráficos
       const contextoChartPais = document.getElementById('myChart1').getContext('2d');
       const chartPais = new ChartPais(contextoChartPais, filtro);
 
@@ -198,36 +199,31 @@
       const contextoChartVitima = document.getElementById('myChart3').getContext('2d');
       const chartVitima = new ChartVitima(contextoChartVitima, filtro);
 
-      // Selector de faixa etária dentro da modal do filtro tem 3 opções: todas, 18-25, 26-35 e 36+
-      const faixaEtariaSelector = document.getElementById('faixaEtaria');
-      faixaEtariaSelector.addEventListener('change', () => {
-        // Obtém o valor da faixa etária selecionada
-        const faixaEtariaSelecionada = faixaEtariaSelector.value;
 
-        // Selector de gênero dentro da modal do filtro tem 3 opções: todos, masculino e feminino
-        const generoSelector = document.getElementById('genero');
-        generoSelector.addEventListener('change', () => {
-          // Obtém o valor do gênero selecionado
-          const generoSelecionado = generoSelector.value;
 
-          // Define os valores no filtro
-          filtro.setGeneroSelecionado(generoSelecionado);
-          filtro.setFaixaEtaria(faixaEtariaSelecionada);
+      window.aplicarFiltro = function () {
+        const faixaEtariaSelecionada = document.getElementById('faixaEtaria').value;
+        const generoSelecionado = document.getElementById('genero').value; // Adicionado esta linha
+        filtro.setFaixaEtaria(faixaEtariaSelecionada);
+        filtro.setGeneroSelecionado(generoSelecionado); // Adicionado esta linha
 
-          // Atualizando gráficos
-          chartCriminoso.chartStatusDoCriminoso();
-          chartParticipacaoOrganizacao.chartParticipacaoOrganizacao();
-          chartVitima.chartStatusDaVitima();
-          chartPais.chartCriminososPorPais();
-        });
+
+        chartCriminoso.chartStatusDoCriminoso(filtro);
+        chartParticipacaoOrganizacao.chartParticipacaoOrganizacao(filtro);
+        chartVitima.chartStatusDaVitima(filtro);
+        chartPais.chartCriminososPorPais(filtro);
+        $('#filtroModal').modal('hide');
+      }
+      document.getElementById('faixaEtaria').addEventListener('change', () => {
+        aplicarFiltro();
       });
-
+      // Elementos totais
       const totalCriminososElement = document.getElementById('totalCriminosos');
       const totalRepatriacaoElement = document.getElementById('totalRepatriacao');
       const totalVitimasElement = document.getElementById('totalVitimas');
       const totalExtradicoesElement = document.getElementById('totalExtradicoes');
 
-
+      // ChartFacade
       const chartFacade = new ChartFacade(
         contextoChartPais,
         contextoChartCriminoso,
@@ -238,33 +234,36 @@
         totalVitimasElement,
         totalExtradicoesElement
       );
+
       await chartFacade.charts();
+
+      // Inicializar gráficos
       chartCriminoso.chartStatusDoCriminoso();
       chartParticipacaoOrganizacao.chartParticipacaoOrganizacao();
       chartVitima.chartStatusDaVitima();
       chartPais.chartCriminososPorPais();
     });
 
-
     // SideBar
     var menuItem = document.querySelectorAll('.item-menu');
+
     function selectLink() {
-      menuItem.forEach((item) =>
-        item.classList.remove('ativo')
-      )
-      this.classList.add('ativo')
+      menuItem.forEach((item) => item.classList.remove('ativo'));
+      this.classList.add('ativo');
     }
-    menuItem.forEach((item) =>
-      item.addEventListener('click', selectLink)
-    );
+
+    menuItem.forEach((item) => item.addEventListener('click', selectLink));
+
     var btnExp = document.querySelector('#btn-exp');
     var menuSide = document.querySelector('.menu-lateral');
     var container = document.querySelector('.container');
+
     btnExp.addEventListener('click', function () {
       menuSide.classList.toggle('expandir');
       container.classList.toggle('expandir');
     });
   </script>
+
 </body>
 
 </html>

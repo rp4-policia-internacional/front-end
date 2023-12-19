@@ -164,6 +164,15 @@ ul li.item-menu a .icon>i {
     align-items: center;
 }
 
+.modal-dialog {
+    padding: 6px;
+border-radius: 8px;
+
+}
+.modal-content{
+    padding: 20px;
+}
+
 .chart-container {
     display: flex;
     justify-content: space-around;
