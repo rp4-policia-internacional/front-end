@@ -28,7 +28,6 @@ class ChartPais {
         criminosos: criminososFiltrados,
         paises: responsePaises.data,
       };
-  
     } catch (error) {
       console.error('Erro ao buscar dados de criminosos e países:', error);
       return { criminosos: [], paises: [] };

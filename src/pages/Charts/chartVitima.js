@@ -8,7 +8,7 @@ class ChartVitima {
       const responseVitima = await axios.get(`http://localhost:3337/api/vitima`);
       let vitimasFiltrados = responseVitima.data;
   
-      /*if (filtro) {
+      if (filtro) {
         if (filtro.getGeneroSelecionado() !== 'todos') {
           vitimasFiltrados = vitimasFiltrados.filter((vitima) => {
             return vitima.genero === filtro.getGeneroSelecionado();
@@ -19,7 +19,7 @@ class ChartVitima {
             return verificarFaixaEtaria(vitima.idade, filtro.getFaixaEtaria());
           });
         }
-      }*/
+      }
   
       return vitimasFiltrados; 
     } catch (error) {
@@ -28,18 +28,9 @@ class ChartVitima {
     }
   }
   
-
   async chartStatusDaVitima(filtro) {
     try {
       let vitimas = await this.buscandoDados(filtro);
-
-      const vitimas18_25 = Array.isArray(vitimas) ? vitimas.filter(vitima => verificarFaixaEtaria(vitima.idade, '18-25')).length : 0;
-      const vitimas26_35 = Array.isArray(vitimas) ? vitimas.filter(vitima => verificarFaixaEtaria(vitima.idade, '26-35')).length : 0;
-      const vitimas36Mais = Array.isArray(vitimas) ? vitimas.filter(vitima => verificarFaixaEtaria(vitima.idade, '36+')).length : 0;
-
-      console.log('Vítimas na faixa etária 18-25:', vitimas18_25);
-      console.log('Vítimas na faixa etária 26-35:', vitimas26_35);
-      console.log('Vítimas na faixa etária 36+:', vitimas36Mais);
 
       const statusVitimas = vitimas.reduce((contagem, vitima) => {
         const status = vitima.statusDaVitima;

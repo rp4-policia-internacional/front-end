@@ -33,7 +33,7 @@ class ChartFiltro {
   constructor() {
     this.generoSelecionado = 'todos';
     this.faixaEtaria = 'todas';
-
+    
   }
 
   setGeneroSelecionado(genero) {

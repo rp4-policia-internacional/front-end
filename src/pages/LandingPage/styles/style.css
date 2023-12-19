@@ -144,7 +144,7 @@
 
 .navbar {
     background-color: #f8f9fa;
-    padding: 6px 0;
+    padding: 0px 0;
     /*altura*/
     display: flex;
     justify-content: space-between;
@@ -160,10 +160,15 @@
 .navbar img {
     width: 90px;
     height: auto;
-    margin-right: 100px;
+    margin-right: 6px;
     border-radius: 50%;
     /* borda arredondada */
     border: 2px solid #f0e9e9;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
 }
 
 .navbar-brand {
@@ -180,7 +185,9 @@
 .nav-item .nav-link {
     color: black;
 }
-
+.nav-item {
+    margin: 0 10px; /* Espaçamento entre os itens do menu */
+}
 .nav-link {
     text-decoration: none;
     color: #ffffff;
@@ -198,16 +205,21 @@
     border-radius: 15px;
     text-align: center;
     font-weight: bold;
+    margin-right: 10px;
 }
 
 .nav-item-btn-cadastro {
     color: black;
-    padding: 10px 20px;
-    border-radius: 15px;
+    padding: 6px 6px;
+    border-radius: 6px;
     text-align: center;
     font-weight: bold;
     border: 2px solid rgb(1, 7, 44);
+    display: inline-block; /* Permitir que os botões fiquem na mesma linha */
+   
 }
+
+
 
 article img {
     width: 450px;
@@ -270,18 +282,32 @@ p {
     line-height: 20px;
     max-width: 500px;
     font-family: 'Open Sans', sans-serif;
+    text-align: justify;
 }
 
 img {
     width: 580px;
 }
-
+#solicitarTexto {
+    
+        text-align: justify;
+        line-height: 20px;
+        max-width: 50%; /* Ajuste conforme necessário */
+        font-family: 'Open Sans', sans-serif;
+        margin-top: 20px; /* Ajuste a margem superior conforme necessário */
+}
 form [type="submit"] {
-    height: 50px;
-    width: 50%;
+    
     background-color: rgb(1, 7, 44);
+    height: 50px;
     color: white;
     font-weight: bold;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 0 20px; /* Ajuste o espaçamento interno conforme necessário */
+    text-decoration: none; /* Adicione isso para remover a sublinhado padrão em alguns navegadores */
+    display: flex;
+    align-items: center;
 }
 
 input {
@@ -293,55 +319,62 @@ input {
     font-size: 15px;
 }
 
-/*form [type="submit"]:hover {
-    cursor: pointer;
-}*/
 
-/*a:hover {
-    color: rgb(236, 236, 236);
-    transition: 0.3s all;
-}*/
-/*header {
-    background-color: white;
-    width: 100%;
-    height: 100px;
-    position: static;
+footer {
+    background-color: linear-gradient(-225deg, rgb(17, 0, 24) 0%, #2d0430 50%, #630005 100%, #0b23a7 100%, #260f5a 100%);
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
 
-}*/
-/*.navbar .navbar-brand {
+/* Seu CSS existente... */
+
+.contact-section {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgb(1, 7, 44);
+    border-radius: 4px;
+}
+
+.contact-section h2 {
     font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}*/
+    margin-bottom: 15px;
+}
 
-/*.card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border-radius: 5px; 
-    max-width: 300px;
-  }
-  
-
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  }
-  
- 
-  .container {
-    padding: 2px 5px;
-  }*/
-
-/* #title img {
-    width: 50px;
-    border-radius: 50%;
-}*/
-
-
-/*header {
-    background-color: white;
-    padding: 15px 0;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+.contact-section form {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}*/
+    flex-direction: column;
+}
+
+.contact-section label {
+    margin-bottom: 8px;
+}
+
+.contact-section input,
+.contact-section textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.contact-section input[type="submit"] {
+    background-color: rgb(1, 7, 44);
+    color: white;
+    font-weight: bold;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.content-container {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.content-container img {
+    max-width: 50%; /* Ajuste a largura conforme necessário */
+    margin-left: 50px; /* Espaçamento entre a imagem e o texto */
+    margin-right: 20px; /* Ajuste a margem direita conforme necessário */
+}

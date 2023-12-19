@@ -5,34 +5,31 @@ class ChartCriminoso {
     this.filtro = filtro;
     this.chart = null; 
   }
-
-
   async buscandoDados(filtro) {
     try {
       const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
       let criminososFiltrados = responseCriminosos.data;
-
-
-
+  
       if (filtro) {
         if (filtro.getGeneroSelecionado() !== 'todos') {
           criminososFiltrados = criminososFiltrados.filter((criminoso) => {
             return criminoso.genero === filtro.getGeneroSelecionado();
-          })
+          });
         }
         if (filtro.getFaixaEtaria() !== 'todos') {
           criminososFiltrados = criminososFiltrados.filter((criminoso) => {
             return verificarFaixaEtaria(criminoso.idade, filtro.getFaixaEtaria());
-          })
+          });
         }
       }
-
+  
       return criminososFiltrados;
     } catch (error) {
       console.error('Erro ao buscar dados de criminosos:', error);
       return [];
     }
   }
+  
 
 
   //Tem uma verificação p ver se o filtro de genero esta ativo, os criminosos sao filtrados com base no genero slecionado antes de gerar o grafico
@@ -68,7 +65,6 @@ class ChartCriminoso {
       const labels = result.map(item => item.status);
       const values = result.map(item => item.quantidade);
 
-      console.log("criminoso", values);
       new Chart(this.contextoDoGrafico, {
         type: 'bar',
         data: {
@@ -91,7 +87,7 @@ class ChartCriminoso {
           },
         },
       });
-
+  
     } catch (error) {
       console.error('Erro ao gerar o gráfico de status dos criminosos:', error);
     }
@@ -99,28 +95,14 @@ class ChartCriminoso {
 
   async chartParticipacaoOrganizacao(filtro) {
     try {
-      //const criminosos = await this.buscandoDados();
-
-
 
       let criminosos = await this.buscandoDados(filtro);
-
-
-
 
       const criminososComOrganizacao = criminosos.filter(criminoso => criminoso.id_organizacao);
       const organizacoes = await axios.get(`http://localhost:3338/api/organizacao`);
       const dadosOrganizacao = organizacoes.data;
-      if (this.filtro && this.filtro.getGeneroSelecionado() !== 'todos') {
-        criminosos = criminosos.filter(criminoso => criminoso.genero === this.filtro.getGeneroSelecionado());
-      }
+     
 
-
-       // Antes de criar um novo gráfico
-    if (this.chart) {
-      this.chart.destroy();
-    }
-    
       // qtd de criminosos por organização
       const contagemPorOrganizacao = dadosOrganizacao.reduce((contagem, organizacao) => {
         // Filtragem dos criminosos que estão participando da organização

@@ -10,22 +10,39 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+  
+
 </head>
 
 <body>
+
   <header class="header">
     <div class="logo">
-      <h3>Dashboard</h3>
+      <a class="navbar-brand" href="#">
+        <img class="navbar-logo" src="../../shared/images/logo.png" alt="carro">
+
+    </a>
     </div>
+    <ul class="navbar">
+        <li><a href="../LandingPage/landingPage.html">Home</a></li>
+        <li><a href="../LandingPage/sobre.html">Sobre</a></li>
+        <li><a href="../Charts/chart.html">Dashboard</a></li>
+        <li><a href="../LandingPage/contato.html">Contato</a></li>
+    </ul>
     <div class="icons-header">
-      <i class="fas fa-search"></i>
+        <i class="fas fa-search"></i>
     </div>
     <div class="info-header">
-      <i class="fas fa-bell"></i>
+        <i class="fas fa-bell"></i>
     </div>
-  </header>
+    <div class="user-actions">
+        <button class="btn-login">Login</button>
+        <button class="btn-cadastro">Cadastro</button>
+    </div>
+</header>
 
-  <div class="container">
+
+  <!--<div class="container">
     <section class="menu-lateral">
       <div class="btn-expandir">
         <i class="bi bi-list" id="btn-exp"></i>
@@ -63,7 +80,7 @@
         </ul>
       </div>
     </section>
-  </div>
+  </div>  -->
 
   <section class="content">
     <div class="titulo">
@@ -116,7 +133,7 @@
               </button>
             </div>
             <div class="filtro-container">
-              <label for="genero">Selecione o Gênero:</label>
+              <label for="genero">Selecione o Gênero para filtrar o Status da Vítima</label>
               <select id="genero" class="form-control">
                 <option value="todos">Todos</option>
                 <option value="masculino">Masculino</option>
@@ -126,20 +143,17 @@
 
 
             </select>
-            <label for="faixaEtaria">Selecione a Faixa Etária do criminoso:</label>
+            <label for="faixaEtaria">Selecione aFaixa Etária do criminoso:</label>
             <select id="faixaEtaria">
               <option value="todas">Todas</option>
               <option value="18-25">18-25</option>
               <option value="26-35">26-35</option>
               <option value="36+">36+</option>
             </select>
-
-
-
-            <label for="paisEspecifico">País Específico:</label>
-            <select id="paisEspecifico" class="form-control">
-
             </select>
+
+
+          
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
               <button type="button" class="btn btn-primary" id="aplicarFiltro" onclick="aplicarFiltro()">Aplicar
@@ -162,6 +176,9 @@
     <div class="chart">
       <canvas id="myChart2"></canvas>
     </div>
+  </div>
+
+  <div class="chart-container">
     <div class="chart">
       <canvas id="myChart3"></canvas>
     </div>
@@ -200,26 +217,27 @@
       const chartVitima = new ChartVitima(contextoChartVitima, filtro);
 
 
-
       window.aplicarFiltro = function () {
         const faixaEtariaSelecionada = document.getElementById('faixaEtaria').value;
-        const generoSelecionado = document.getElementById('genero').value; // Adicionado esta linha
+        const generoSelecionado = document.getElementById('genero').value;
+        
         filtro.setFaixaEtaria(faixaEtariaSelecionada);
-        filtro.setGeneroSelecionado(generoSelecionado); // Adicionado esta linha
+        filtro.setGeneroSelecionado(generoSelecionado);
+      
 
-
+      
         chartCriminoso.chartStatusDoCriminoso(filtro);
         chartParticipacaoOrganizacao.chartParticipacaoOrganizacao(filtro);
         chartPais.chartCriminososPorPais(filtro);
         chartVitima.chartStatusDaVitima(filtro);
-       
+
         $('#filtroModal').modal('hide');
       }
 
       document.getElementById('genero').addEventListener('change', aplicarFiltro);
-document.getElementById('faixaEtaria').addEventListener('change', aplicarFiltro);
+      document.getElementById('faixaEtaria').addEventListener('change', aplicarFiltro);
+   
 
-      // Elementos totais
       const totalCriminososElement = document.getElementById('totalCriminosos');
       const totalRepatriacaoElement = document.getElementById('totalRepatriacao');
       const totalVitimasElement = document.getElementById('totalVitimas');
@@ -247,7 +265,7 @@ document.getElementById('faixaEtaria').addEventListener('change', aplicarFiltro)
     });
 
     // SideBar
-    var menuItem = document.querySelectorAll('.item-menu');
+    /*var menuItem = document.querySelectorAll('.item-menu');
 
     function selectLink() {
       menuItem.forEach((item) => item.classList.remove('ativo'));
@@ -263,7 +281,7 @@ document.getElementById('faixaEtaria').addEventListener('change', aplicarFiltro)
     btnExp.addEventListener('click', function () {
       menuSide.classList.toggle('expandir');
       container.classList.toggle('expandir');
-    });
+    });*/
   </script>
 
 </body>
