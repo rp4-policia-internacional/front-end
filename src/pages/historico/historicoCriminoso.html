@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="css/bootstrap.css">
+        
+        <link rel="stylesheet" type="text/css" href="estilo.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+        <title> historicos foragidos </title>
+
+        <style>
+            #loadingModal {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        </style>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#"><img src="../../shared/images/logo.png" width="75px" alt="logo"class="img"  ></a>
+        </nav>
+
+        <div class="col-md-3" style="margin-top: 10px">
+            <a href="../home/listaCriminoso.html">
+                <button type="button" class="btn btn-secondary">Voltar</button>
+            </a>
+        </div>
+         <div class="container-fluid">
+       
+            <div class="d-flex justify-content-center align-items-center mb-5" style="margin-right: 80px;" >
+                <strong>HISTÓRICO </strong> 
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center mb-5" style="margin-right: 80px;" >
+                <table class="table table-striped table-bordered table-condensed table-hover" style="margin-top: 20px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Nome</th>
+                            <th>País de origem</th>
+                            <th>Gênero</th>
+                            <th>Idade</th>
+                            <th>Status</th>
+                            <th>Data da modificação</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <!-- Corpo da tabela (mantido como antes) -->
+                    <tbody id="historicoTabela"></tbody>
+                </table>
+            </div>
+
+            
+        </div>
+
+        <script>
+            function getURLParametro(nome) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(nome);
+            }
+            function getIdURL() {
+                const url = window.location.href;
+                const urlObj = new URL(url);
+                return urlObj.searchParams.get("id");
+            }
+            var id = getIdURL();
+            console.log(id);
+            
+            axios.get(`http://localhost:3338/api/criminoso/h/${id}`)
+                .then(async function (response) {
+                    const historicos = response.data;
+                    const historicoTabela = document.getElementById('historicoTabela');
+            
+                    for (const criminoso of historicos) {
+                        console.log(historicos);
+                        const row = document.createElement('tr');
+                        const paisNome = await getPaisNome(criminoso.id_paisOrigem);
+                        row.innerHTML = `
+                            <td>${criminoso.nomeCompleto}</td>
+                            <td>${paisNome}</td>
+                            <td>${criminoso.genero}</td>
+                            <td>${criminoso.idade} anos</td>
+                            <td>${criminoso.status}</td>
+                            <td>${criminoso.dataAtualizacao}</td>
+                        `;
+            
+                        //botao ver detalhes
+                        const verDetalhesButton = document.createElement('button');
+                        verDetalhesButton.type = 'button';
+                        verDetalhesButton.className = 'btn btn-secondary';
+                        verDetalhesButton.textContent = 'Ver detalhes';
+                        verDetalhesButton.addEventListener('click', function () {
+                           
+                            historicoselecionadoId = criminoso.id;
+                            window.location.href = `detalhesCriminoso.html?id=${criminoso.id}`;
+                        });
+                        const verDetalhesCell = document.createElement('td');
+                        verDetalhesCell.appendChild(verDetalhesButton);
+            
+                    
+            
+                        row.appendChild(verDetalhesCell);
+            
+                        historicoTabela.appendChild(row);
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Erro ao buscar historicos:', error);
+                });
+            
+            
+                async function getPaisNome(id) {
+                    try {
+                        const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                        return response.data.nome;
+                    } catch (error) {
+                        console.error('Erro ao buscar país: ', error);
+                        return 'País não encontrado';
+                    }
+                }
+                // Buscar detalhes do criminoso pelo ID 
+                window.addEventListener('load', async function () {
+                    const idCriminoso = getURLParametro('id');
+                    //buscarDetalhesCriminoso(idCriminoso);
+                    
+
+                });
+           
+        </script>
+   
+    </body>
+</html>

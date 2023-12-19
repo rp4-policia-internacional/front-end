@@ -51,6 +51,7 @@
                 <tr>
                     <th>Nome</th>
                     <th>Descrição</th>
+                    <th>Sigla</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -70,12 +71,15 @@
             .then(function (response) {
                 const organizacoes = response.data;
                 const organizacaoTabela = document.getElementById('organizacaoTabela');
+                
 
                 organizacoes.forEach(function (organizacao) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${organizacao.nome}</td>
                         <td>${organizacao.descricao}</td>
+                        <td>${organizacao.sigla}</td>
+                        
                     `;
 
                     //botao ver editar
@@ -84,10 +88,8 @@
                     editarButton.className = 'btn btn-warning'; // Use uma classe que represente um botão de edição, se disponível
                     editarButton.textContent = 'Editar';
                     editarButton.addEventListener('click', function () {
-                        // Lidar com a ação de edição aqui
-                        // Você pode usar o organizacaoSelecionadoId para identificar o item a ser editado
-                        // Por exemplo, redirecione para uma página de edição com o ID da organização:
-                        window.location.href = `editarOrganizacao.html?id=${organizacao.id}`;
+                    
+                    window.location.href = `editarOrganizacao.html?id=${organizacao.id}`;
                     });
                     
                     //botao ver excluir
@@ -117,7 +119,7 @@
             })
             .catch(function (error) {
                 //console.error('Erro ao buscar organizacao:', error);
-            });
+            });    
 
         function removerOrganizacao(id) {
             axios.delete(`http://localhost:3338/api/organizacao/${id}`)

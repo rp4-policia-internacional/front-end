@@ -35,14 +35,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 ml-4 text-right">
-                    <a href="editarCadastroCriminoso.html" id="editarLink">
-                        <button type="button" class="btn btn-secondary">Editar</button>
-                    </a>
-                    <button type="button" class="btn btn-danger" id="removerCriminoso">Remover</button>
-                </div>
+                     
+            <div class="col-md-3 ml-4 text-right">
+                <a href="../historico/historicoCriminoso.html?id=" id="historicoCriminoso">
+                    <button type="button" class="btn btn-secondary">Histórico do Criminoso</button>
+                </a>
+                <a href="editarCadastroCriminoso.html?id=" id="editarLink">
+                    <button type="button" class="btn btn-secondary">Editar</button>
+                </a>
+                <button type="button" class="btn btn-danger" id="removerCriminoso">Remover</button>
             </div>
         </div>
+    </div>
+
 
         <style>
             body {
@@ -59,151 +64,131 @@
         <script src="../vitima/DetalhesVitima.js"></script>
 
 
-        <script>
-            function getURLParamS(nome) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(nome);
+    <script>
+       function getURLParametro(nome) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nome);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const idCriminosoInput = document.getElementById('idCriminoso');
+            const idCriminoso= idCriminosoInput.value; // Obtém o ID da vítima
+            const imagePreview = document.getElementById('imagemPreview');
+
+            // Restaurar a imagem da  ao carregar a página
+            const savedImage = localStorage.getItem(idCriminoso + '_imagemDoCriminoso');
+
+            if (savedImage) {
+                imagePreview.src = savedImage;
+                imagePreview.style.display = 'block';
             }
-            document.addEventListener('DOMContentLoaded', async function () {
-                const idCriminosoInput = document.getElementById('idCriminoso');
-                const idCriminoso = getURLParamS('id');
-                const idCriminosoO = idCriminosoInput.value;
-                const imagePreview = document.getElementById('imagemPreview');
-                const savedImage = localStorage.getItem(idCriminosoO + '_imagemDoCriminoso');
+        });
 
-                console.log('ID do criminoso:', idCriminoso);
 
-                if (savedImage !== null) {
-                    imagePreview.src = savedImage;
-                    imagePreview.style.display = 'block';
-                }
-                const detalhesCriminosoElement = document.getElementById('detalhesCriminoso');
-                const facade = new DetalhesFacade();
+        // Detalhes do criminoso pelo ID
+        async function buscarDetalhesCriminoso(id) {
+            try {
+                const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
+                const criminoso = response.data;
+                const detalhesCriminoso = document.getElementById('detalhesCriminoso');
+                const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
+                const DataPais = await buscarPais(criminoso.id_paisOrigem);
+                console.log(criminoso);
+                const dataFormat = await dataNascimentoFormatada(criminoso.dataNascimento);
+                console.log(DataOrganizacao);
 
-    
-                await facade.buscarDetalhes(idCriminoso, document.getElementById('detalhesCriminoso'), detalhesCriminosoElement);
+
+                detalhesCriminoso.innerHTML = `
+                    <h1>DETALHES DO CRIMINOSO</h1>
+                    <div class="mt-3">
+                        <p><strong>Nome Completo:</strong> ${criminoso.nomeCompleto}</p>
+                        <p><strong>Altura:</strong> ${criminoso.altura}</p>
+                        <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
+                        <p><strong>Data de Nascimento:</strong> ${dataFormat}</p>
+                        <p><strong>Nacionalidade:</strong> ${DataPais.nome}</p>
+                        <p><strong>Gênero:</strong> ${criminoso.genero}</p>
+                        <p><strong>País Visto por Último:</strong> ${criminoso.id_paisVistoPorUltimo}</p>
+                        <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
+                        <p><strong>Descrição do criminoso:</strong> ${criminoso.caracteristicas}</p>
+                        <p><strong>Status:</strong> ${criminoso.status}</p>
+                        <p><strong>Organização:</strong> ${DataOrganizacao.nome}</p>
+                    </div>
+                `;
 
                 const removerCriminosoBtn = document.getElementById('removerCriminoso');
-                removerCriminosoBtn.addEventListener('click', async function () {
-                    if (confirm('Tem certeza de que deseja remover este criminoso?')) {
-                        await facade.remover(idCriminoso);
-                    }
+                removerCriminosoBtn.addEventListener('click', function () {
+                        
+                        if (confirm('Tem certeza de que deseja remover este Criminoso?')) {
+                            removerCriminoso(id);
+                        }
+                    });
+
+                } catch (error) {
+                    console.error('Erro ao buscar detalhes do criminoso:', error);
+                }   
+
+        }; 
+          
+        async function buscarOrganizacao(idOrganizacao) {
+            try {
+                const response = await axios.get(`http://localhost:3338/api/organizacao/${idOrganizacao}`);
+                return response.data;
+            } catch (error) {
+                alert('Erro ao buscar organização:', error);
+                throw error; // Rejeita a Promise em caso de erro, se necessário.
+            }
+        }
+
+        async function buscarPais(id) {
+            try {
+                const response = await axios.get(`http://localhost:3340/api/pais/${id}`);
+                return response.data;
+            } catch (error) {
+                alert('Erro ao buscar psia:', error);
+                throw error; // Rejeita a Promise em caso de erro, se necessário.
+            }
+        }
+
+        async function dataNascimentoFormatada(dataString){
+            const data = new Date(dataString); // Cria um objeto Date
+
+            const ano = data.getFullYear(); // Obtém o ano (por exemplo, 2023)
+            const mes = data.getMonth() + 1; // Obtém o mês (0-11, então adicionamos 1 para obter o mês real)
+            const dia = data.getDate() + 1; // Obtém o dia do mês
+
+            // Agora você pode formatar a data como desejar, por exemplo, "03/10/2023"
+            const dataFormatada = `${dia}/${mes}/${ano}`;
+            return dataFormatada
+            console.log(dataFormatada);
+        }
+        
+        
+        function removerCriminoso(id) {
+            axios.delete(`http://localhost:3338/api/criminoso/${id}`)
+                .then(function (response) {
+                    alert('Criminoso removida com sucesso!');
+                    // Redireciona para a página de lista de vítimas
+                    window.location.href = 'listarCriminoso.html';
+                })
+                .catch(function (error) {
+                    console.error('Erro ao remover criminoso:', error);
                 });
-                const editarLink = document.getElementById('editarLink');
-                editarLink.href = `editarCadastroCriminoso.html?id=${idCriminoso}`;
-            });
+        }
+
+        // Buscar detalhes do criminoso pelo ID 
+        window.addEventListener('load', async function () {
+            const idCriminoso = getURLParametro('id');
+            buscarDetalhesCriminoso(idCriminoso);
+            const editarLink = document.getElementById('editarLink');
+            const historicoCriminoso =document.getElementById('historicoCriminoso');
+            editarLink.href = `editarCadastroCriminoso.html?id=${idCriminoso}`;
+            historicoCriminoso.href = `../historico/historicoCriminoso.html?id=${idCriminoso}`;
 
 
+        });
 
-
-
-
-            /*function getURLParametro(nome) {
-                 const urlParams = new URLSearchParams(window.location.search);
-                 return urlParams.get(nome);
-             }
-     
-             document.addEventListener('DOMContentLoaded', function () {
-                 const idCriminosoInput = document.getElementById('idCriminoso');
-                 const idCriminoso= idCriminosoInput.value; // Obtém o ID da vítima
-                 const imagePreview = document.getElementById('imagemPreview');
-     
-                 // Restaurar a imagem da vítima ao carregar a página
-                 const savedImage = localStorage.getItem(idCriminoso + '_imagemDoCriminoso');
-     
-                 if (savedImage) {
-                     imagePreview.src = savedImage;
-                     imagePreview.style.display = 'block';
-                 }
-             });
-     
-     
-             // Detalhes do criminoso pelo ID
-             async function buscarDetalhesCriminoso(id) {
-                 try {
-                     const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
-                     const criminoso = response.data;
-                     const detalhesCriminoso = document.getElementById('detalhesCriminoso');
-                     const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
-                     console.log(criminoso);
-                     const dataFormat = await dataNascimentoFormatada(criminoso.dataNascimento);
-                     console.log(DataOrganizacao);
-     
-     
-                     detalhesCriminoso.innerHTML = `
-                         <h1>DETALHES DO CRIMINOSO</h1>
-                         <div class="mt-3">
-                             <p><strong>Nome Completo:</strong> ${criminoso.nomeCompleto}</p>
-                             <p><strong>Altura:</strong> ${criminoso.altura}</p>
-                             <p><strong>Idade:</strong> ${criminoso.idade} anos</p>
-                             <p><strong>Data de Nascimento:</strong> ${dataFormat}</p>
-                             <p><strong>Nacionalidade:</strong> ${criminoso.id_paisOrigem}</p>
-                             <p><strong>Gênero:</strong> ${criminoso.genero}</p>
-                             <p><strong>País Visto por Último:</strong> ${criminoso.id_paisVistoPorUltimo}</p>
-                             <p><strong>Apelido:</strong> ${criminoso.apelido}</p>
-                             <p><strong>Descrição do criminoso:</strong> ${criminoso.caracteristicas}</p>
-                             <p><strong>Status:</strong> ${criminoso.status}</p>
-                             <p><strong>Organização:</strong> ${DataOrganizacao.nome}</p>
-                         </div>
-                     `;
-     
-                     const removerCriminosoBtn = document.getElementById('removerCriminoso');
-                     removerCriminosoBtn.addEventListener('click', function () {
-                             
-                             if (confirm('Tem certeza de que deseja remover este Criminoso?')) {
-                                 removerCriminoso(id);
-                             }
-                         });
-     
-                     } catch (error) {
-                         console.error('Erro ao buscar detalhes do criminoso:', error);
-                     }   
-     
-             }; 
-               
-             async function buscarOrganizacao(idOrganizacao) {
-                 try {
-                     const response = await axios.get(`http://localhost:3338/api/organizacao/${idOrganizacao}`);
-                     return response.data;
-                 } catch (error) {
-                     alert('Erro ao buscar organização:', error);
-                     throw error; // Rejeita a Promise em caso de erro, se necessário.
-                 }
-             }
-     
-             async function dataNascimentoFormatada(dataString){
-                 const data = new Date(dataString); // Cria um objeto Date
-     
-                 const ano = data.getFullYear(); // Obtém o ano (por exemplo, 2023)
-                 const mes = data.getMonth() + 1; // Obtém o mês (0-11, então adicionamos 1 para obter o mês real)
-                 const dia = data.getDate() + 1; // Obtém o dia do mês
-     
-                 // Agora você pode formatar a data como desejar, por exemplo, "03/10/2023"
-                 const dataFormatada = `${dia}/${mes}/${ano}`;
-                 return dataFormatada
-                 console.log(dataFormatada);
-             }
-             
-             
-             function removerCriminoso(id) {
-                 axios.delete(`http://localhost:3338/api/criminoso/${id}`)
-                     .then(function (response) {
-                         alert('Criminoso removida com sucesso!');
-                         // Redireciona para a página de lista de vítimas
-                         window.location.href = 'listarCriminoso.html';
-                     })
-                     .catch(function (error) {
-                         console.error('Erro ao remover criminoso:', error);
-                     });
-             }
-     
-             // Buscar detalhes do criminoso pelo ID 
-             window.addEventListener('load', function () {
-                 const idCriminoso = getURLParametro('id');
-                 buscarDetalhesCriminoso(idCriminoso);
-                 const editarLink = document.getElementById('editarLink');
-                 editarLink.href = `editarCadastroCriminoso.html?id=${idCriminoso}`;
-             });*/
-        </script>
+    
+        
+    </script>
 </body>
 </html>

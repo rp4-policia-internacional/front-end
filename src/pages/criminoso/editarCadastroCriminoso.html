@@ -144,20 +144,17 @@
         async function buscarDetalhesCriminoso() {
             var id = getIdURL();
             try {
+            
                 const response = await axios.get(`http://localhost:3338/api/criminoso/${id}`);
                 const criminoso = response.data;
-                const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao);
-
-                if (DataOrganizacao) {
-                    console.log(DataOrganizacao.nome);
-                } else {
-                    console.error('Organização não encontrada ou nome não disponível.');
-                }
-                console.log(criminoso.id_paisOrigem);
-                const DataPais = await buscarPais(criminoso.id_paisOrigem);
+                const DataOrganizacao = await buscarOrganizacao(criminoso.id_organizacao); 
+                const DataPais = await buscarPais(criminoso.id_paisOrigem);          
                 const formattedDate = await dataNascimentoFormatada(criminoso.dataNascimento);
-                console.log(criminoso.id_paisOrigem);
 
+                console.log(DataOrganizacao.nome);
+                console.log(criminoso);
+
+                
                 document.getElementById("nomeCompleto").value = criminoso.nomeCompleto;
                 document.getElementById("altura").value = criminoso.altura;
                 document.getElementById("idade").value = criminoso.idade;
@@ -166,10 +163,11 @@
                 document.getElementById("apelido").value = criminoso.apelido;
                 document.getElementById("caracteristica").value = criminoso.caracteristicas;
                 document.getElementById("genero").value = criminoso.genero;
-                document.getElementById("id_paisOrigem").value = criminoso.id_paisOrigem;
+                document.getElementById("id_paisOrigem").value = DataPais.id;
                 document.getElementById("paisVistoPorUltimo").value = criminoso.id_paisVistoPorUltimo;
-                document.getElementById("id_organizacao").value = DataOrganizacao ? DataOrganizacao.id : '';
-            } catch (error) {
+                document.getElementById("id_organizacao").value  = DataOrganizacao.id;          
+            
+            }catch (error){
                 console.error('Erro ao buscar detalhes do criminoso:', error)
             }
         }

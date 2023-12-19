@@ -28,6 +28,17 @@
                 <label for="descricao">Descrição</label>
                 <textarea class="form-control" id="descricao" placeholder="Descrição"></textarea>
             </div>
+            <div class="form-group">
+                <label for="lider">Líder:</label>
+                <select id="lider" class="form-control">
+                    
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="sigla">Sigla:</label>
+                <input class="form-control" type="text" id="sigla" placeholder="Sigla">
+            </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
 
         </form>
@@ -45,12 +56,16 @@
         
         const nome= document.getElementById("nome").value;
         const descricao = document.getElementById("descricao").value;
+        const lider = document.getElementById("lider").value;
+        const sigla = document.getElementById("sigla").value;
 
         const data = {
 
             nome: nome,
-            descricao: descricao, 
-           
+            descricao: descricao,
+            lider: lider,
+            sigla : sigla
+
         };
 
         // Envia os dados como JSON em uma solicitação POST
@@ -69,7 +84,36 @@
         .catch(function (error) {
         console.error("Erro ao cadastrar organização:", error);
         });
+
     });
+    //Coloca as organizações do banco no select
+    axios.get("http://localhost:3338/api/criminoso/")
+        .then(function (response) {
+            const select = document.getElementById("lider");
+
+                for (let i in response.data){
+                    let option = document.createElement('option');
+                        option.text = `${response.data[i].nomeCompleto} - ${response.data[i].status}`;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#lider').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        })
+        .finally(function () {
+            // sempre será executado
+        });
+    
 
 
 </script>
