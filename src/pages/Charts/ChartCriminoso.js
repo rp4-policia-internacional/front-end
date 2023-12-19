@@ -11,21 +11,21 @@ class ChartCriminoso {
       const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
       let criminososFiltrados = responseCriminosos.data;
 
+
+
       if (filtro) {
-        // Filtro de gênero
         if (filtro.getGeneroSelecionado() !== 'todos') {
           criminososFiltrados = criminososFiltrados.filter((criminoso) => {
             return criminoso.genero === filtro.getGeneroSelecionado();
-          });
+          })
         }
-  
-        // Filtro de faixa etária
         if (filtro.getFaixaEtaria() !== 'todos') {
           criminososFiltrados = criminososFiltrados.filter((criminoso) => {
             return verificarFaixaEtaria(criminoso.idade, filtro.getFaixaEtaria());
-          });
+          })
         }
       }
+
       return criminososFiltrados;
     } catch (error) {
       console.error('Erro ao buscar dados de criminosos:', error);
