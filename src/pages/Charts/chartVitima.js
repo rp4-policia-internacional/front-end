@@ -7,7 +7,7 @@ class ChartVitima {
     try {
       const responseVitima = await axios.get(`http://localhost:3337/api/vitima`);
       let vitimasFiltrados = responseVitima.data;
-  
+
       if (filtro) {
         if (filtro.getGeneroSelecionado() !== 'todos') {
           vitimasFiltrados = vitimasFiltrados.filter((vitima) => {
@@ -20,14 +20,14 @@ class ChartVitima {
           });
         }
       }
-  
-      return vitimasFiltrados; 
+
+      return vitimasFiltrados;
     } catch (error) {
       console.error('Erro ao buscar dados de vítimas:', error);
       return [];
     }
   }
-  
+
   async chartStatusDaVitima(filtro) {
     try {
       let vitimas = await this.buscandoDados(filtro);

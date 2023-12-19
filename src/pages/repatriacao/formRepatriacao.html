@@ -12,42 +12,46 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img src="../../shared/images/logo_1.png" width="75px" alt="logo"class="img"  >
+        <a class="navbar-brand" href="#"><img src="../../shared/images/logo_1.png" width="75px" alt="logo" class="img">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
-        <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+            aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+            <span class="navbar-toggler-icon"></span>
         </button>
-    
+
         <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                <a class="nav-link" href="../home/telaInicial.html">Home <span class="sr-only"></span></a>
+                    <a class="nav-link" href="../home/telaInicial.html">Home <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Criminoso
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="../criminoso/formCadastro.html">Cadastro</a>
-                    <a class="dropdown-item" active  href="../criminoso/listarCriminoso.html">Lista de criminosos</a>
-                </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Vítima
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Criminoso
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="../vitima/cadastroVitima.html">Cadastro</a>
-                    <a class="dropdown-item" active  href="../vitima/listaDeVitima.html">Lista de vitimas</a>
+                        <a class="dropdown-item" href="../criminoso/formCadastro.html">Cadastro</a>
+                        <a class="dropdown-item" active href="../criminoso/listarCriminoso.html">Lista de criminosos</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Organização Criminosa
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Vítima
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="../criminoso/formCadastroOrg.html">Cadastro</a>
-                    <a class="dropdown-item" active  href="../criminoso/listarOrg.html">Lista de organizações</a>
+                        <a class="dropdown-item" href="../vitima/cadastroVitima.html">Cadastro</a>
+                        <a class="dropdown-item" active href="../vitima/listaDeVitima.html">Lista de vitimas</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Organização Criminosa
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../criminoso/formCadastroOrg.html">Cadastro</a>
+                        <a class="dropdown-item" active href="../criminoso/listarOrg.html">Lista de organizações</a>
                     </div>
                 </li>
             </ul>
@@ -74,39 +78,40 @@
                 <label for="data">Data do fim:*</label>
                 <input type="date" id="dataF" name="dataF" class="form-control" required>
 
-            </div>
-            <div class="form-group">
-                <label for="id_paisDeOrigem">País de Origem:*</label>
-                <select name="paisOrigem" id="paisOrigem" class="form-control">
-                    <option value="0">Selecionar</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="paisOrigem">País de origem:*</label>
+                    <select id="paisOrigem" name="paisOrigem" class="form-control" required>
+                        <option value="0">Selecionar</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="paisResponsavel">Tipo de transporte:*</label>
-                <select class="form-control" id="transporte" name="transporte" required>
-                    <option value="Terrestre">Terrestre</option>
-                    <option value="Aquático">Aquático</option>
-                    <option value="Aéreo">Aéreo</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="agenteResponsavel">Agente responsável:*</label>
-                <select class="form-control" id="agenteResponsavel" name="agenteResponsavel" required>
-                    <option>Pedro</option>
-                    <option>Alice</option>
-                    <option>João</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="nomeCompleto">Nome Completo da vitima:*</label>
-                <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-control"
-                    placeholder="Informe o nome completo" required>
-            </div>
-            <button onclick="enviarRepatriacao()" type="submit" class="btn btn-secondary">Enviar</button>
+                <div class="form-group">
+                    <label for="paisResponsavel">Tipo de transporte:*</label>
+                    <select class="form-control" id="transporte" name="transporte" required>
+                        <option value="Terrestre">Terrestre</option>
+                        <option value="Aquático">Aquático</option>
+                        <option value="Aéreo">Aéreo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="agenteResponsavel">Agente responsável:*</label>
+                    <select class="form-control" id="agenteResponsavel" name="agenteResponsavel" required>
+                        <option>Pedro</option>
+                        <option>Alice</option>
+                        <option>João</option>
+                    </select>
+
+                    <div class="form-group">
+                        <label for="nomeVitima">Nome da vítima*</label>
+                        <select id="nomeVitima" name="nomeVitima" class="form-control" required>
+                            <option value="0">Selecionar</option>
+                        </select>
+                    </div>
+
+                    <button onclick="enviarRepatriacao()" type="submit" class="btn btn-secondary">Enviar</button>
         </form>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -130,7 +135,7 @@
             const dateF = document.getElementById("dataF").value;
             const id_pais_origem = document.getElementById("paisOrigem").value;
             const agente = document.getElementById("agenteResponsavel").value;
-            const nomeCompleto = document.getElementById("nomeCompleto").value;
+            const nomeCompleto = document.getElementById("nomeVitima").value;
             const transporte = document.getElementById("transporte").value;
             const dataIObj = new Date(dateI);
             const dataFObj = new Date(dateF);
@@ -153,31 +158,54 @@
             FormMediator.sendData(formData);
 
         });
-        //Coloca as pais do banco no select
-   axios.get("http://localhost:3340/api/pais/")
-        .then(function (response) {
-            const select = document.getElementById("paisOrigem");
 
-                for (let i in response.data){
-                
+
+
+
+
+        axios.get("http://localhost:3340/api/pais/")
+            .then(function (response) {
+                const select = document.getElementById("paisOrigem");
+
+                for (let i in response.data) {
                     let option = document.createElement('option');
-                        option.text = response.data[i].nome;
-                        option.value = response.data[i].id;
-                        select.add(option);
+                    option.text = response.data[i].nome;
+                    option.value = response.data[i].id;
+                    select.add(option);
                 }
-                function alteraValor(){
-                    var valor = select.options[select.selectedIndex];    
-                    $('#paisOrigem').val(valor.value).trigger('change');                                  
-                }            
-                // Adicione o evento de mudança ao select
+
+                function alteraValor() {
+                    var valor = select.options[select.selectedIndex];
+                    $('#paisOrigem').val(valor.value).trigger('change');
+                }
+
                 select.addEventListener('change', alteraValor);
-                
-           
-        })
-        .catch(function (error) {
-            // manipula erros da requisição
-            console.error(error);
-        });y
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+
+        axios.get("http://localhost:3337/api/vitima/")
+            .then(function (response) {
+                const select = document.getElementById("nomeVitima");
+
+                for (let i in response.data) {
+                    let option = document.createElement('option');
+                    option.text = response.data[i].nomeCompleto;
+                    option.value = response.data[i].id;
+                    select.add(option);
+                }
+
+                function alteraValor() {
+                    var valor = select.options[select.selectedIndex];
+                    $('#nomeVitima').val(valor.value).trigger('change');
+                }
+
+                select.addEventListener('change', alteraValor);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
         function enviarRepatriacao() {
             window.location.href = '../repatriacao/detalhesRepatriacao.html';
         }

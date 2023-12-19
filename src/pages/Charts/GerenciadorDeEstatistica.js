@@ -12,8 +12,8 @@ class GerenciadorDeEstatistica {
     this.totalRepatriacaoElement = totalRepatriacaoElement;
     this.totalVitimasElement = totalVitimasElement;
     this.totalExtradicoesElement = totalExtradicoesElement;
-  } 
-  
+  }
+
   async atualizarTotais() {
     try {
       const responseCriminosos = await axios.get('http://localhost:3338/api/criminoso');

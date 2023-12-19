@@ -3,13 +3,13 @@ class ChartCriminoso {
   constructor(contextoDoGrafico, filtro) {
     this.contextoDoGrafico = contextoDoGrafico;
     this.filtro = filtro;
-    this.chart = null; 
+    this.chart = null;
   }
   async buscandoDados(filtro) {
     try {
       const responseCriminosos = await axios.get(`http://localhost:3338/api/criminoso`);
       let criminososFiltrados = responseCriminosos.data;
-  
+
       if (filtro) {
         if (filtro.getGeneroSelecionado() !== 'todos') {
           criminososFiltrados = criminososFiltrados.filter((criminoso) => {
@@ -22,14 +22,14 @@ class ChartCriminoso {
           });
         }
       }
-  
+
       return criminososFiltrados;
     } catch (error) {
       console.error('Erro ao buscar dados de criminosos:', error);
       return [];
     }
   }
-  
+
 
 
   //Tem uma verificação p ver se o filtro de genero esta ativo, os criminosos sao filtrados com base no genero slecionado antes de gerar o grafico
@@ -87,7 +87,7 @@ class ChartCriminoso {
           },
         },
       });
-  
+
     } catch (error) {
       console.error('Erro ao gerar o gráfico de status dos criminosos:', error);
     }
@@ -101,7 +101,7 @@ class ChartCriminoso {
       const criminososComOrganizacao = criminosos.filter(criminoso => criminoso.id_organizacao);
       const organizacoes = await axios.get(`http://localhost:3338/api/organizacao`);
       const dadosOrganizacao = organizacoes.data;
-     
+
 
       // qtd de criminosos por organização
       const contagemPorOrganizacao = dadosOrganizacao.reduce((contagem, organizacao) => {
@@ -116,9 +116,9 @@ class ChartCriminoso {
       const values = Object.values(contagemPorOrganizacao);
 
       console.log("organização", values);
-     
 
-   
+
+
 
       new Chart(this.contextoDoGrafico, {
         type: 'pie',

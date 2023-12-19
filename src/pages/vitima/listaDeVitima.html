@@ -11,15 +11,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="css/bootstrap.css">
-    
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-    
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="../vitima/CSS/styles.css" rel="stylesheet">
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
@@ -78,9 +75,7 @@
         </nav>
 
         <div class="col-md-3" style="margin-top: 10px">
-            <a href="../home/telaInicial.html">
-                <button type="button" class="btn btn-secondary">Voltar</button>
-            </a>
+           
         </div>
         <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg bg-transparent" role="document">
@@ -102,6 +97,12 @@
         <div class="d-flex justify-content-end align-items-center mb-5" style="margin-right: 80px;"
             onclick="direcionaNovaVitimaPage()">
             <i class="fas fa-user-plus fa-lg"></i>
+            <style>
+                .fa-user-plus {
+                    font-size: 2em; 
+                }
+            </style>
+            
         </div>
 
         <div class="row">
@@ -182,7 +183,7 @@
                                         acionarResgate(vitima);
                                     });
                                 } else {
-                                    emitirPedidoButton.className = 'btn btn-primary';
+                                    emitirPedidoButton.className = 'btn btn-danger';
                                     emitirPedidoButton.textContent = 'Emitir pedido de busca e resgate';
                                     emitirPedidoButton.addEventListener('click', function () {
                                         const vitimaId = vitima.id;
@@ -265,7 +266,7 @@
                     window.location.href = "../vitima/cadastroVitima.html";
                 }
 
-                // chamando a funcao p preencher a atbela
+        
                 preencherTabela();
             </script>
     </body>
