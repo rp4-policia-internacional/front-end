@@ -77,8 +77,9 @@
             </div>
             <div class="form-group">
                 <label for="id_paisDeOrigem">País de Origem:*</label>
-                <input type="text" id="paisOrigem" name="paisDeOrigem" class="form-control"
-                    placeholder="Informe o país de origem" required>
+                <select name="paisOrigem" id="paisOrigem" class="form-control">
+                    <option value="0">Selecionar</option>
+                </select>
             </div>
 
             <div class="form-group">
@@ -152,6 +153,31 @@
             FormMediator.sendData(formData);
 
         });
+        //Coloca as pais do banco no select
+   axios.get("http://localhost:3340/api/pais/")
+        .then(function (response) {
+            const select = document.getElementById("paisOrigem");
+
+                for (let i in response.data){
+                
+                    let option = document.createElement('option');
+                        option.text = response.data[i].nome;
+                        option.value = response.data[i].id;
+                        select.add(option);
+                }
+                function alteraValor(){
+                    var valor = select.options[select.selectedIndex];    
+                    $('#paisOrigem').val(valor.value).trigger('change');                                  
+                }            
+                // Adicione o evento de mudança ao select
+                select.addEventListener('change', alteraValor);
+                
+           
+        })
+        .catch(function (error) {
+            // manipula erros da requisição
+            console.error(error);
+        });y
         function enviarRepatriacao() {
             window.location.href = '../repatriacao/detalhesRepatriacao.html';
         }
