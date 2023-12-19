@@ -100,8 +100,9 @@
     </div>
     <div class="form-group">
       <div class="col-md-6 offset-md-3">
-      <label for="nomeCriminoso">Nome do criminoso</label>
-      <select id="nomeCriminoso" name="nomeCriminoso" class="form-control">
+      <label for="nomeCompleto">Nome do criminoso</label>
+      <select id="nomeCompleto" name="nomeCompleto" class="form-control">
+        <option value="0">Selecionar</option>
       </select>
   </div>
   </div>
@@ -147,8 +148,7 @@
       const dateF = document.getElementById("dataF").value;
       const id_pais_origem = document.getElementById("paisOrigem").value;
       const agente = document.getElementById("agente").value;
-      const nomeCriminosoSelect = document.getElementById("nomeCriminoso");
-      const nomeCriminoso = nomeCriminosoSelect.options[nomeCriminosoSelect.selectedIndex].valor;
+      const nomeCompleto = document.getElementById("nomeCompleto");
       const transporte = document.getElementById("transporte").value;
       const dataEObj = new Date(dateE);
       const dataFObj = new Date(dateF);
@@ -156,7 +156,7 @@
      console.log(dataFObj);
      console.log(id_pais_origem);
      console.log(agente);
-     console.log(nomeCriminoso);
+     console.log(nomeCompleto);
      console.log(transporte);
 
       const formData = {
@@ -164,7 +164,7 @@
          data_fim: dataFObj,
          id_pais_origem: id_pais_origem,
          agente_id:agente,
-         id_criminoso: nomeCriminoso,
+         id_criminoso: nomeCompleto,
          transporte: transporte,
       };
 
@@ -200,7 +200,7 @@
          //Coloca os criminosos do banco no select
    axios.get("http://localhost:3338/api/criminoso/")
         .then(function (response) {
-            const select = document.getElementById("nomeCriminoso");
+            const select = document.getElementById("nomeCompleto");
 
                 for (let i in response.data){
                 
@@ -211,7 +211,7 @@
                 }
                 function alteraValor(){
                     var valor = select.options[select.selectedIndex];    
-                    $('#nomeCriminoso').val(valor.value).trigger('change');                                  
+                    $('#nomeCompleto').val(valor.value).trigger('change');                                  
                 }            
                 // Adicione o evento de mudança ao select
                 select.addEventListener('change', alteraValor);
